@@ -160,14 +160,36 @@
                     </li>
                 @endcan
 
-                @can('role-list')
-                    <li class="nav-item {{ request()->routeIs('roles.*') ? 'active' : '' }}">
-                        <a href="{{ route('roles.index') }}">
-                            <i class="ft-lock"></i>
-                            <span class="menu-title" data-i18n="">مدیریت نقش ها</span>
+
+
+                @can('car-list')
+                    <li class="nav-item {{ request()->routeIs('cars.*') ? 'active' : '' }}">
+                        <a href="{{ route('cars.index') }}">
+                            <i class="fa fa-car-alt"></i>
+                            <span class="menu-title" data-i18n="">مدیریت ماشین ها</span>
                         </a>
                     </li>
                 @endcan
+
+                @can('attribute-list')
+                    <li class="nav-item {{ request()->routeIs('attributes.*') ? 'active' : '' }}">
+                        <a href="{{ route('attributes.index') }}">
+                            <i class="ft-box"></i>
+                            <span class="menu-title" data-i18n="">مدیریت ویژگی ها</span>
+                        </a>
+                    </li>
+                @endcan
+
+
+                @can('car-files-list')
+                    <li class="nav-item {{ request()->routeIs('car-files.*') ? 'active' : '' }}">
+                        <a href="{{ route('car-files.index') }}">
+                            <i class="ft-clipboard"></i>
+                            <span class="menu-title" data-i18n="">مدیریت پرونده ها</span>
+                        </a>
+                    </li>
+                @endcan
+
 
                 {{-- <li class="nav-item"><a href="#"><i class="ft-briefcase"></i><span class="menu-title"
                             data-i18n="">سفارشات من</span></a>
@@ -182,7 +204,7 @@
                     </ul>
                 </li> --}}
 
-                @can('contact-list')
+                {{-- @can('contact-list')
                     <li class="nav-item {{ request()->routeIs('contacts.*') ? 'active' : '' }}">
                         <a href="{{ route('contacts.index') }}">
                             <i class="ft-book"></i>
@@ -198,37 +220,37 @@
                             <span class="menu-title" data-i18n="">رویدادها</span>
                         </a>
                     </li>
-                @endcan
+                @endcan --}}
 
-                @can('notification-list')
+                {{-- @can('notification-list')
                     <li class="nav-item {{ request()->routeIs('notifications.*') ? 'active' : '' }}">
                         <a href="{{ route('notifications.archive') }}">
                             <i class="ft-bell"></i>
                             <span class="menu-title" data-i18n="">نوتیفیکیشن</span>
                         </a>
                     </li>
-                @endcan
+                @endcan --}}
 
-                <li class="nav-item">
+                {{-- <li class="nav-item">
                     <a href="/UserProfile/Tickets">
                         <i class="ft-mail"></i>
                         <span class="menu-title" data-i18n="">پیامها</span>
                     </a>
-                </li>
+                </li> --}}
 
-                <li class="nav-item">
+                {{-- <li class="nav-item">
                     <a href="/UserProfile/Marketing">
                         <i class="ft-award"></i>
                         <span class="menu-title" data-i18n="">بازاریابی</span>
                     </a>
-                </li>
+                </li> --}}
 
-                <li class="nav-item">
+                {{-- <li class="nav-item">
                     <a href="/UserProfile/MyWallet">
                         <i class="icon-wallet"></i>
                         <span class="menu-title" data-i18n="">کیف پول من</span>
                     </a>
-                </li>
+                </li> --}}
 
                 @can('discount-list')
                     <li class="nav-item {{ request()->routeIs('discounts.*') ? 'active' : '' }}">
@@ -240,12 +262,12 @@
                 @endcan
 
 
-                <li class="nav-item">
+                {{-- <li class="nav-item">
                     <a href="/UserProfile/EditProfile">
                         <i class="ft-edit"></i>
                         <span class="menu-title" data-i18n="">ویرایش اطلاعات</span>
                     </a>
-                </li>
+                </li> --}}
 
                 @can('setting-list')
                     <li class="nav-item">
@@ -256,12 +278,6 @@
                     </li>
                 @endcan
 
-                <li class="nav-item">
-                    <a href="/UserProfile/Logout">
-                        <i class="ft-log-out"></i>
-                        <span class="menu-title" data-i18n="">خروج از حساب</span>
-                    </a>
-                </li>
 
 
             </ul>

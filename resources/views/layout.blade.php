@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>سامانه یاد اپ | راه حل هوشمند شما</title>
+    <title>سامانه الوماشین | راه حل هوشمند شما</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazir-font@v30.1.0/dist/font-face.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -708,7 +708,7 @@
 
             <a href="#" class="logo">
                 <img height="64px" src="{{ asset('images/logo.png') }}" alt="تالار ارتباطی کشور">
-                سامانه یاد اپ (تالار ارتباطی کشور وابسته به سازمان متخصصین و مدیران ایران)
+                سامانه الوماشین (تالار ارتباطی کشور وابسته به سازمان متخصصین و مدیران ایران)
             </a>
 
             <nav class="desktop-nav">
@@ -756,7 +756,7 @@
             <div class="footer-content">
                 <div class="footer-column">
                     <h3>درباره ما</h3>
-                    <p>سامانه یاد اپ با هدف ایجاد تحول در تجربه کاربری و ارائه راهکارهای نوین در سال ۱۴۰۴ تأسیس شد. ما به کیفیت و رضایت کاربران خود متعهد هستیم.</p>
+                    <p>سامانه الوماشین با هدف ایجاد تحول در تجربه کاربری و ارائه راهکارهای نوین در سال ۱۴۰۴ تأسیس شد. ما به کیفیت و رضایت کاربران خود متعهد هستیم.</p>
                     <div class="social-links">
                         <a href="#"><i class="fab fa-instagram"></i></a>
                         <a href="#"><i class="fab fa-telegram"></i></a>
@@ -795,7 +795,7 @@
             </div>
 
             <div class="copyright">
-                <p>تمامی حقوق برای سامانه یاد اپ محفوظ است © ۱۴۰۴</p>
+                <p>تمامی حقوق برای سامانه الوماشین محفوظ است © ۱۴۰۴</p>
             </div>
         </div>
     </footer>

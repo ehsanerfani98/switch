@@ -27,11 +27,18 @@
         <div class="col-12">
             <div class="px-2 d-flex align-items-center justify-content-between">
                 <h5 class="text-bold-700 my-2 text-white">لیست کاربران</h5>
-                @can('user-create')
-                    <a href="{{ route('users.create') }}" class="btn btn-sm text-white border-btn">
-                        <span class="text">ایجاد کاربر جدید</span>
-                    </a>
-                @endcan
+                <div>
+                    @can('role-list')
+                        <a href="{{ route('roles.index') }}" class="btn btn-sm text-white border-btn">
+                            <span class="menu-title">مدیریت نقش ها</span>
+                        </a>
+                    @endcan
+                    @can('user-create')
+                        <a href="{{ route('users.create') }}" class="btn btn-sm text-white border-btn">
+                            <span class="text">ایجاد کاربر جدید</span>
+                        </a>
+                    @endcan
+                </div>
             </div>
 
             <div class="card">

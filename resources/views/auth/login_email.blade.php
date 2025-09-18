@@ -398,10 +398,10 @@
 
 <body>
     <div class="login-container">
-       
+
         <div class="form-section">
             <div class="form-header">
-                <h2 class="form-title">ورود به سامانه یاد اپ</h2>
+                <h2 class="form-title">ورود به سامانه الوماشین</h2>
                 <p class="form-subtitle">لطفا برای دسترسی به حساب کاربری خود، اطلاعات زیر را وارد نمایید</p>
             </div>
 

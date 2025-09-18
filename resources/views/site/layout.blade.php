@@ -30,7 +30,7 @@
                             <div class="col-6">
                                 <div class="right-menu">
                                     <div class="brand">
-                                        سامانه یاد اپ
+                                        سامانه الوماشین
                                     </div>
                                 </div>
                             </div>

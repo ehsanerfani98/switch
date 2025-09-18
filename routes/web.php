@@ -1,43 +1,41 @@
 <?php
 
-use App\Facades\ZarinPal;
 use App\Http\Controllers\AdvisorsController;
+use App\Http\Controllers\AttributeController;
+use App\Http\Controllers\AttributeValueController;
 use App\Http\Controllers\BannerController;
+use App\Http\Controllers\CarController;
+use App\Http\Controllers\CarFileController;
+use App\Http\Controllers\CarFileItemController;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DiscountController;
 use App\Http\Controllers\EventController;
-use App\Http\Controllers\EventTypeController;
-use App\Http\Controllers\InfobillController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\OtpController;
-use App\Http\Controllers\OtpLoginController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\RoleController;
-use App\Http\Controllers\SendbillController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\ServiceRequestController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\Site\SiteController;
 use App\Http\Controllers\SliderController;
 use App\Http\Controllers\SubscriptionController;
-use App\Http\Controllers\SubscriptionsController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\UploadController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserDocumentController;
 use App\Http\Controllers\WalletController;
+use App\Models\Car;
 use App\Models\Permission;
-use App\Models\Role;
-use App\Models\UserSubscriptionUsage;
-use Illuminate\Support\Facades\Hash;
+use App\QueryBuilder\Filters\CarFilter;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
-use App\Models\User;
 use App\Services\TelegramService\TelegramService;
 use Illuminate\Http\Request;
+use Spatie\QueryBuilder\AllowedFilter;
 
 /*
 |--------------------------------------------------------------------------
@@ -114,11 +112,11 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/page/{slug}', [SiteController::class, 'page'])->name('page');
 
 
-    Route::resource('contacts', ContactController::class);
-    Route::resource('events', EventController::class);
+    Route::resource('/contacts', ContactController::class);
+    Route::resource('/events', EventController::class);
 
     // نمایش لیست گفتگوها
-    Route::get('user/advisors', [ChatController::class, 'advisors'])->name('user.advisors');
+    Route::get('/user/advisors', [ChatController::class, 'advisors'])->name('user.advisors');
     Route::get('/chat', [ChatController::class, 'index'])->name('chat.index');
     // آغاز گفتگو با یک مشاور خاص
     Route::get('/chat/start/{advisor}', [ChatController::class, 'startConversationUser'])->name('user.chat.start');
@@ -134,10 +132,19 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/mark-online-user', [ChatController::class, 'markOnlineUser']);
     Route::post('/mark-offline-user', [ChatController::class, 'markOfflineUser']);
 
-    Route::get('notifications/archive', [NotificationController::class, 'archive'])->name('notifications.archive');
+    Route::get('/notifications/archive', [NotificationController::class, 'archive'])->name('notifications.archive');
     Route::get('/notifications/notification', [NotificationController::class, 'create'])->name('notifications.notification');
     Route::post('/save-token', [NotificationController::class, 'saveToken'])->name('save-token');
     Route::post('/send-notification', [NotificationController::class, 'sendNotification'])->name('send.notification');
+
+
+    Route::resource('/admin/cars', CarController::class);
+    Route::resource('/admin/attributes', AttributeController::class);
+    Route::resource('/admin/attribute-values', AttributeValueController::class);
+    Route::resource('/admin/car-files', CarFileController::class);
+    Route::resource('/admin/car-file-items', CarFileItemController::class);
+
+
 });
 
 
@@ -247,27 +254,27 @@ Route::post('/otp/send-password', [OtpController::class, 'sendPassword']);
 // });
 
 
-// Route::get('/create-permissions', function () {
+Route::get('/create-permissions', function () {
 
-//     $permisions = [
-//         'notification-list' => 'لیست نوتیفیکیشن ها',
-//         'notification-create' => 'ایجاد نوتیفیکیشن',
-//         'notification-edit' => 'ویرایش نوتیفیکیشن',
-//         'notification-delete' => 'حذف نوتیفیکیشن',
-//     ];
+    $permisions = [
+        'car-file-items-list' => 'لیست آیتم‌های پرونده',
+        'car-file-items-create' => 'ایجاد آیتم‌',
+        'car-file-items-edit' => 'ویرایش آیتم‌',
+        'car-file-items-delete' => 'حذف آیتم‌',
+    ];
 
-//     foreach ($permisions as $name => $title) {
-//         Permission::create(
-//             [
-//                 'name' => $name,
-//                 'title' => $title,
-//                 'guard_name' => 'web'
-//             ]
-//         );
-//     }
+    foreach ($permisions as $name => $title) {
+        Permission::create(
+            [
+                'name' => $name,
+                'title' => $title,
+                'guard_name' => 'web'
+            ]
+        );
+    }
 
-//     return 'دیتا با موفقیت ساخته شد';
-// });
+    return 'دیتا با موفقیت ساخته شد';
+});
 
 
 // Route::get('test-reverb', function () {
@@ -331,4 +338,52 @@ Route::post('/telegram/webhook', function (Request $request, TelegramService $te
     Log::info($update);
     $telegram->handleUpdate($update);
     return response()->json(['ok' => true]);
+});
+
+use Spatie\QueryBuilder\QueryBuilder;
+// Route::get('/testfilter', function () {
+
+//     $cars = QueryBuilder::for(Car::with(['attributeValues.attribute', 'attributeValues.attributeValue']))
+//         ->allowedFilters([
+//             AllowedFilter::custom('color', new CarFilter()),
+//             AllowedFilter::custom('year', new CarFilter()),
+//         ])
+//         ->get();
+
+//     return $cars;
+// });
+use App\Http\Resources\CarResource;
+use App\Models\Attribute;
+
+Route::get('/testfilter', function () {
+    $filters = Attribute::where('is_active', 1)->pluck('slug')
+        ->map(fn($slug) => AllowedFilter::custom($slug, new CarFilter()))
+        ->toArray();
+    $cars = QueryBuilder::for(Car::with(['attributeValues.attribute', 'attributeValues.attributeValue']))
+        ->allowedFilters($filters)
+        ->get();
+    return CarResource::collection($cars);
+});
+
+Route::get('/attributes', function () {
+    return Attribute::where('is_active', 1)
+        ->with('values')
+        ->get()
+        ->map(function ($attr) {
+            $data = $attr->toArray();
+
+            if ($attr->type === 'range') {
+                // $data['min'] = $attr->carValues()->min('value_number') ?? 0;
+                $data['min'] = 0;
+                $data['max'] = $attr->carValues()->max('value_number') ?? 100;
+            }
+
+            return $data;
+        });
+});
+
+
+
+Route::get('/cars', function () {
+    return view('cars');
 });

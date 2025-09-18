@@ -5,8 +5,8 @@
     <section class="hero" id="home">
         <div class="container hero-content">
             <div class="hero-text">
-                <h1>تجربه‌ای <span>منحصر به فرد</span> با سامانه یاد اپ</h1>
-                <p>سامانه یاد اپ با امکانات پیشرفته و رابط کاربری ساده، زندگی دیجیتال شما را متحول می‌کند. همین حالا به جمع هزاران کاربر راضی ما بپیوندید.</p>
+                <h1>تجربه‌ای <span>منحصر به فرد</span> با سامانه الوماشین</h1>
+                <p>سامانه الوماشین با امکانات پیشرفته و رابط کاربری ساده، زندگی دیجیتال شما را متحول می‌کند. همین حالا به جمع هزاران کاربر راضی ما بپیوندید.</p>
                 {{-- <div class="app-badges">
                     <a href="#" class="app-badge">
                         <i class="fab fa-google-play"></i> گوگل پلی
@@ -17,7 +17,7 @@
                 </div> --}}
             </div>
             <div class="hero-image">
-                <img src="{{ asset('images/talk-mockup.png') }}" alt="سامانه یاد اپ">
+                <img src="{{ asset('images/talk-mockup.png') }}" alt="سامانه الوماشین">
             </div>
         </div>
     </section>
@@ -26,8 +26,8 @@
     <section class="features" id="features">
         <div class="container">
             <div class="section-title">
-                <h2>خدمات منحصر به فرد سامانه یاد اپ</h2>
-                <p>با خدمات پیشرفته سامانه یاد اپ ، زندگی خود را به سطح جدیدی ارتقا دهید</p>
+                <h2>خدمات منحصر به فرد سامانه الوماشین</h2>
+                <p>با خدمات پیشرفته سامانه الوماشین ، زندگی خود را به سطح جدیدی ارتقا دهید</p>
             </div>
 
             <div class="features-grid">
@@ -64,14 +64,14 @@
         <div class="container">
             <div class="section-title">
                 <h2>نحوه استفاده از اپلیکیشن</h2>
-                <p>در ۴ مرحله ساده سامانه یاد اپ را تجربه کنید</p>
+                <p>در ۴ مرحله ساده سامانه الوماشین را تجربه کنید</p>
             </div>
 
             <div class="steps">
                 <div class="step">
                     <div class="step-number">۱</div>
                     <h3>دانلود اپلیکیشن</h3>
-                    <p>سامانه یاد اپ را از فروشگاه گوگل پلی یا اپ استور دانلود کنید</p>
+                    <p>سامانه الوماشین را از فروشگاه گوگل پلی یا اپ استور دانلود کنید</p>
                 </div>
 
                 <div class="step">
@@ -89,7 +89,7 @@
                 <div class="step">
                     <div class="step-number">۴</div>
                     <h3>شروع استفاده</h3>
-                    <p>از تمام امکانات سامانه یاد اپ لذت ببرید</p>
+                    <p>از تمام امکانات سامانه الوماشین لذت ببرید</p>
                 </div>
             </div>
         </div>
@@ -100,12 +100,12 @@
         <div class="container">
             <div class="section-title">
                 <h2>نظرات کاربران</h2>
-                <p>آنچه کاربران راضی ما درباره سامانه یاد اپ می‌گویند</p>
+                <p>آنچه کاربران راضی ما درباره سامانه الوماشین می‌گویند</p>
             </div>
 
             <div class="testimonial-container">
                 <div class="testimonial">
-                    <p>من سال‌هاست که از اپلیکیشن‌های مختلف استفاده می‌کنم، اما سامانه یاد اپ واقعاً همه را تحت‌الشعاع قرار داده. سرعت، امکانات و رابط کاربری فوق‌العاده‌ای دارد.</p>
+                    <p>من سال‌هاست که از اپلیکیشن‌های مختلف استفاده می‌کنم، اما سامانه الوماشین واقعاً همه را تحت‌الشعاع قرار داده. سرعت، امکانات و رابط کاربری فوق‌العاده‌ای دارد.</p>
                     <div class="testimonial-author">
                         <div class="author-avatar">
                             <img src="https://randomuser.me/api/portraits/women/32.jpg" alt="نازنین احمدی">
@@ -123,7 +123,7 @@
     <!-- Download Section -->
     {{-- <section class="download" id="download">
         <div class="container">
-            <h2>همین حالا سامانه یاد اپ را دانلود کنید</h2>
+            <h2>همین حالا سامانه الوماشین را دانلود کنید</h2>
             <p>به جمع هزاران کاربر راضی ما بپیوندید و تجربه‌ای منحصر به فرد داشته باشید</p>
             <div class="app-badges">
                 <a href="#" class="app-badge">
