@@ -18,7 +18,7 @@
     <form action="{{ route('cars.store') }}" method="POST" id="car-form">
         @csrf
         <div class="row">
-            <div class="col-12">
+            <div class="col-lg-8">
                 <div class="card shadow">
                     <div class="card-header d-flex justify-content-between align-items-center">
                         <h6 class="m-0 font-weight-bold text-primary">اطلاعات ماشین</h6>
@@ -54,6 +54,7 @@
                                 <hr>
                                 <div id="attributes-container" class="row"></div>
                             </div>
+
                         </div>
 
                         <button type="button" id="add-attribute" class="btn btn-success btn-sm mt-2">افزودن ویژگی</button>
@@ -61,6 +62,107 @@
                     </div>
                 </div>
             </div>
+
+            <div class="col-lg-4">
+                <div class="card shadow">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h6 class="m-0 font-weight-bold text-primary">پرونده‌های خودرو</h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            @foreach ($carFiles as $file)
+                                <div class="col-lg-4 mb-2">
+                                    <h6>{{ $file->title }}</h6>
+                                    <button type="button" class="btn btn-success btn-sm" data-toggle="modal"
+                                        data-target="#fileModal{{ $file->id }}">
+                                        مشاهده پارامترها
+                                    </button>
+                                </div>
+
+                                <!-- Modal -->
+                                <div class="modal fade" id="fileModal{{ $file->id }}" tabindex="-1" role="dialog"
+                                    aria-labelledby="modalLabel{{ $file->id }}" aria-hidden="true">
+                                    <div class="modal-dialog modal-lg" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="modalLabel{{ $file->id }}">پارامترهای
+                                                    پرونده: {{ $file->title }}</h5>
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                    aria-label="بستن">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div id="accordion{{ $file->id }}" class="accordion">
+                                                    <div class="row">
+                                                        @foreach ($file->items as $item)
+                                                            <div class="col-lg-4">
+                                                                <div class="card" style="margin: 5px">
+                                                                    <div class="card-header p-0"
+                                                                        id="heading{{ $item->id }}">
+                                                                        <h5 class="mb-0">
+                                                                            <button class="btn btn-success w-100 collapsed"
+                                                                                type="button" data-toggle="collapse"
+                                                                                data-target="#collapse{{ $item->id }}"
+                                                                                aria-expanded="false"
+                                                                                aria-controls="collapse{{ $item->id }}">
+                                                                                {{ $item->title }}
+                                                                            </button>
+                                                                        </h5>
+                                                                    </div>
+
+                                                                    <div id="collapse{{ $item->id }}" class="collapse"
+                                                                        aria-labelledby="heading{{ $item->id }}"
+                                                                        data-parent="#accordion{{ $file->id }}">
+                                                                        <div class="card-body border mt-1 p-1">
+                                                                            <div class="form-group">
+                                                                                <label>وضعیت</label>
+                                                                                <select
+                                                                                    name="car_file_items[{{ $item->id }}][status]"
+                                                                                    class="form-control">
+                                                                                    <option value="">-- انتخاب وضعیت
+                                                                                        --
+                                                                                    </option>
+                                                                                    <option value="سالم">سالم</option>
+                                                                                    <option value="نامشخص">نامشخص</option>
+                                                                                    <option value="رنگ شده">رنگ شده</option>
+                                                                                    <option value="صافکاری بدون رنگ">صافکاری
+                                                                                        بدون
+                                                                                        رنگ</option>
+                                                                                    <option value="تعمیر شده">تعمیر شده
+                                                                                    </option>
+                                                                                </select>
+                                                                            </div>
+                                                                            <div class="form-group">
+                                                                                <label>توضیحات (اختیاری)</label>
+                                                                                <textarea name="car_file_items[{{ $item->id }}][status_description]" class="form-control" rows="2"></textarea>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        @endforeach
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-dismiss="modal">بستن</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+
         </div>
     </form>
 
@@ -148,7 +250,7 @@
             let selectedValue = prefill ? prefill.value : null;
             let selectedLabel = prefill ? prefill.value_boolean_label : null;
 
-            let row = $(`<div class="attribute-row mt-2 col-lg-3" data-row="${rowKey}">
+            let row = $(`<div class="attribute-row mt-2 col-lg-6" data-row="${rowKey}">
         <div class="border rounded-lg p-1">
             <div class="d-flex justify-content-between mb-2">
                 <strong>ویژگی</strong>

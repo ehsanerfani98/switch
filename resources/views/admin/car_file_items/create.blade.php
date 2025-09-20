@@ -59,7 +59,7 @@
                         <div class="row">
                             @foreach ($carFile->items as $item)
                                 <div class="col-md-1 mb-2">
-                                    <div class=" w-100 d-flex flex-column align-items-center"
+                                    <div class=" w-100 d-flex flex-column align-items-center text-center"
                                         style="gap: 1rem;border: 1px solid #ed656d;border-radius: 6px">
                                         <div style="margin-top: 6px">{{ $item->title }}</div>
                                         <div>

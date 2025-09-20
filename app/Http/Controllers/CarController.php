@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Car;
 use App\Models\Attribute;
 use App\Models\CarAttributeValue;
+use App\Models\CarFile;
+use App\Models\CarFileItem;
+use App\Models\CarFileItemValue;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -19,7 +22,9 @@ class CarController extends Controller
     public function create()
     {
         $attributes = Attribute::with('values')->orderBy('sort_order')->get();
-        return view('admin.cars.create', compact('attributes'));
+        $fileItems = CarFileItem::with('carFile')->get();
+        $carFiles = CarFile::get();
+        return view('admin.cars.create', compact('attributes', 'fileItems', 'carFiles'));
     }
 
     public function store(Request $request)
@@ -31,7 +36,7 @@ class CarController extends Controller
             'description' => 'nullable|string',
         ]);
 
-        DB::transaction(function() use ($request) {
+        DB::transaction(function () use ($request) {
             // ایجاد ماشین جدید
             $car = Car::create([
                 'title' => $request->title,
@@ -78,6 +83,19 @@ class CarController extends Controller
                 }
                 CarAttributeValue::create($carAttr);
             }
+
+
+            // ذخیره وضعیت آیتم‌های فایل
+            foreach ($request->car_file_items ?? [] as $itemId => $data) {
+                if (empty($data['status'])) continue;
+
+                CarFileItemValue::create([
+                    'car_id' => $car->id,
+                    'car_file_item_id' => $itemId,
+                    'status' => $data['status'],
+                    'status_description' => $data['status_description'] ?? null,
+                ]);
+            }
         });
 
         return redirect()->route('cars.index')->with('success', 'ماشین با موفقیت ایجاد شد');
@@ -88,7 +106,7 @@ class CarController extends Controller
         $attributes = Attribute::with('values')->orderBy('sort_order')->get();
         $car->load('attributeValues.attribute', 'attributeValues.attributeValue');
 
-        return view('admin.cars.edit', compact('car','attributes'));
+        return view('admin.cars.edit', compact('car', 'attributes'));
     }
 
     public function update(Request $request, Car $car)
@@ -100,7 +118,7 @@ class CarController extends Controller
             'description' => 'nullable|string',
         ]);
 
-        DB::transaction(function() use ($request, $car) {
+        DB::transaction(function () use ($request, $car) {
             // بروزرسانی ماشین
             $car->update([
                 'title' => $request->title,
@@ -150,6 +168,21 @@ class CarController extends Controller
                 }
 
                 CarAttributeValue::create($carAttr);
+            }
+
+            // حذف مقادیر قبلی
+            $car->fileItemValues()->delete();
+
+            // ذخیره مجدد
+            foreach ($request->car_file_items ?? [] as $itemId => $data) {
+                if (empty($data['status'])) continue;
+
+                CarFileItemValue::create([
+                    'car_id' => $car->id,
+                    'car_file_item_id' => $itemId,
+                    'status' => $data['status'],
+                    'status_description' => $data['status_description'] ?? null,
+                ]);
             }
         });
 

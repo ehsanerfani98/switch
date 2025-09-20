@@ -1257,6 +1257,8 @@ namespace App\Models {
      * @property int $id
      * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\CarAttributeValue> $attributeValues
      * @property-read int|null $attributeValues_count
+     * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\CarFileItemValue> $fileItemValues
+     * @property-read int|null $fileItemValues_count
      * @method static \Illuminate\Database\Eloquent\Builder<Car>|Car whereId($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Car>|Car whereThumbnail($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Car>|Car whereTitle($value)
