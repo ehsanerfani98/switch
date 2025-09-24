@@ -1,13 +1,5 @@
 @extends('admin.layout')
 @section('title', 'لیست کدهای تخفیف')
-@section('actions')
-    <a href="{{ route('discounts.create') }}" class="btn btn-success btn-sm btn-icon-split">
-        <span class="text-white-50">
-            <i class="fas fa-plus"></i>
-        </span>
-        <span class="text">افزودن کد تخفیف</span>
-    </a>
-@endsection
 
 
 @section('content')
@@ -99,11 +91,6 @@
             </div>
         </div>
     </div>
-
-
-
-
-
 
 
 

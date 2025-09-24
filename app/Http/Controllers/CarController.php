@@ -13,6 +13,14 @@ use Illuminate\Support\Facades\DB;
 
 class CarController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:car-list', ['only' => ['index', 'show']]);
+        $this->middleware('permission:car-create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:car-edit', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:car-delete', ['only' => ['destroy']]);
+    }
+
     public function index()
     {
         $cars = Car::with('attributeValues.attribute', 'attributeValues.attributeValue')->latest()->paginate(15);
@@ -29,10 +37,14 @@ class CarController extends Controller
 
     public function store(Request $request)
     {
+
+
+
         $request->validate([
             'title' => 'required|string',
             'slug'  => 'required|unique:cars,slug',
             'thumbnail' => 'nullable|string',
+            'gallery'     => 'nullable|string',
             'description' => 'nullable|string',
         ]);
 
@@ -40,8 +52,9 @@ class CarController extends Controller
             // ایجاد ماشین جدید
             $car = Car::create([
                 'title' => $request->title,
-                'slug'  => $request->slug,
+                'slug'  => standardizeSlug($request->slug),
                 'thumbnail' => $request->thumbnail ?? null,
+                'gallery' => $request->gallery ?? null,
                 'description' => $request->description ?? null,
             ]);
 
@@ -104,9 +117,9 @@ class CarController extends Controller
     public function edit(Car $car)
     {
         $attributes = Attribute::with('values')->orderBy('sort_order')->get();
-        $car->load('attributeValues.attribute', 'attributeValues.attributeValue');
-
-        return view('admin.cars.edit', compact('car', 'attributes'));
+        $carFiles   = CarFile::with('items')->get(); // <--- اضافه کنید
+        $car->load('attributeValues.attribute', 'attributeValues.attributeValue', 'fileItemValues');
+        return view('admin.cars.edit', compact('car', 'attributes', 'carFiles'));
     }
 
     public function update(Request $request, Car $car)

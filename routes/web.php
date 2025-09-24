@@ -12,6 +12,7 @@ use App\Http\Controllers\ContactController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DiscountController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\MediaController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\OtpController;
 use App\Http\Controllers\PageController;
@@ -50,7 +51,8 @@ use Spatie\QueryBuilder\AllowedFilter;
 
 
 Route::get('/', function () {
-    return redirect()->route('login');
+    // return redirect()->route('login');
+    return view('car_deatils');
 })->name('home');
 
 Auth::routes();
@@ -145,6 +147,15 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('/admin/car-file-items', CarFileItemController::class);
 
 
+    Route::get('/media', [MediaController::class, 'index'])->name('media.index');
+    Route::post('/media', [MediaController::class, 'store'])->name('media.store');
+    Route::delete('/media/{media}', [MediaController::class, 'destroy'])->name('media.destroy');
+    Route::get('/media/manager', [MediaController::class, 'manager'])->name('media.manager');
+
+    // صفحه‌ای که CKEditor آن را باز می‌کند
+    Route::get('/media/manager/ckeditor', [MediaController::class, 'manager_ckeditor'])->name('media.manager.ckeditor');
+
+
 });
 
 
@@ -159,6 +170,8 @@ Route::middleware(['auth', 'profile.complete', 'hasActiveSubscription'])->group(
 Route::post('/otp/send', [OtpController::class, 'send'])->middleware('throttle:5,1');
 Route::post('/otp/verify', [OtpController::class, 'verify']);
 Route::post('/otp/send-password', [OtpController::class, 'sendPassword']);
+
+
 
 
 
@@ -257,10 +270,10 @@ Route::post('/otp/send-password', [OtpController::class, 'sendPassword']);
 Route::get('/create-permissions', function () {
 
     $permisions = [
-        'car-file-items-list' => 'لیست آیتم‌های پرونده',
-        'car-file-items-create' => 'ایجاد آیتم‌',
-        'car-file-items-edit' => 'ویرایش آیتم‌',
-        'car-file-items-delete' => 'حذف آیتم‌',
+        'media-list' => 'مدیریت کتابخانه',
+        'media-create' => 'بارگذاری فایل',
+        'media-edit' => 'ویرایش فایل',
+        'media-delete' => 'حذف فایل',
     ];
 
     foreach ($permisions as $name => $title) {

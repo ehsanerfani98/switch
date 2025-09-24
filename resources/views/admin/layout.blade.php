@@ -161,6 +161,15 @@
                 @endcan
 
 
+                @can('media-list')
+                    <li class="nav-item {{ request()->routeIs('media.*') ? 'active' : '' }}">
+                        <a href="{{ route('media.index') }}">
+                            <i class="ft-image"></i>
+                            <span class="menu-title" data-i18n="">کتابخانه</span>
+                        </a>
+                    </li>
+                @endcan
+
 
                 @can('car-list')
                     <li class="nav-item {{ request()->routeIs('cars.*') ? 'active' : '' }}">

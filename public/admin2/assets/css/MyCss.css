@@ -788,3 +788,15 @@ jdp-container .jdp-btn-today {
 form label{
     color: #2b345f;
 }
+
+.btn-outline-danger {
+    color: #ed656d;
+    border-color: #ed656d;
+}
+
+.btn-outline-danger:hover {
+    color: #fff;
+    border-color: #d5565e;
+    background-color: #ed656d;
+}
+

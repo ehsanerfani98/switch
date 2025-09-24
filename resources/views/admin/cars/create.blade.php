@@ -1,6 +1,18 @@
 @extends('admin.layout')
 @section('title', 'ایجاد ماشین')
 
+@push('style')
+    <link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor4/4.17.1/full-all/ckeditor.css">
+    <style>
+        .cke_combo_text,
+        .cke_combo_inlinelabel,
+        .cke_button_label,
+        .cke_panel {
+            font-family: 'Vazir-FD', sans-serif !important;
+        }
+    </style>
+@endpush
+
 @section('content')
 
     @if ($errors->any())
@@ -45,7 +57,7 @@
                             <div class="col-12">
                                 <div class="form-group">
                                     <label>توضیحات</label>
-                                    <textarea name="description" class="form-control">{{ old('description') }}</textarea>
+                                    <textarea name="description" class="form-control" id="editor">{{ old('description') }}</textarea>
                                 </div>
                             </div>
 
@@ -64,6 +76,40 @@
             </div>
 
             <div class="col-lg-4">
+
+
+                <!-- تصویر شاخص -->
+                <div class="card shadow ">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h6 class="m-0 font-weight-bold text-primary">تصویر شاخص</h6>
+                    </div>
+                    <div class="card-body" id="thumbnail_container">
+                        <div class="input-group">
+                            <input type="text" id="thumbnail" name="thumbnail" class="form-control"
+                                placeholder="آدرس تصویر انتخاب‌شده">
+                            <button type="button" class="btn btn-outline-danger"
+                                onclick="openMediaManager('thumbnail', true)">انتخاب تصویر</button>
+                        </div>
+                        <img id="thumbnail_preview" style="max-width:200px; display:block; margin-top:10px;">
+                    </div>
+                </div>
+
+                <!-- گالری تصاویر -->
+                <div class="card shadow">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h6 class="m-0 font-weight-bold text-primary">گالری تصاویر</h6>
+                    </div>
+                    <div class="card-body" id="gallery_container">
+                        <div class="input-group mb-2">
+                            <input type="hidden" id="gallery" name="gallery">
+                            <button type="button" class="btn btn-outline-danger"
+                                onclick="openMediaManager('gallery', true, true)">انتخاب تصاویر</button>
+                        </div>
+                        <div id="gallery_preview" class="d-flex flex-wrap gap-2"></div>
+                    </div>
+                </div>
+
+
                 <div class="card shadow">
                     <div class="card-header d-flex justify-content-between align-items-center">
                         <h6 class="m-0 font-weight-bold text-primary">پرونده‌های خودرو</h6>
@@ -71,7 +117,7 @@
                     <div class="card-body">
                         <div class="row">
                             @foreach ($carFiles as $file)
-                                <div class="col-lg-4 mb-2">
+                                <div class="col-12 col-lg-6 col-lg-4 mb-2">
                                     <h6>{{ $file->title }}</h6>
                                     <button type="button" class="btn btn-success btn-sm" data-toggle="modal"
                                         data-target="#fileModal{{ $file->id }}">
@@ -111,7 +157,8 @@
                                                                         </h5>
                                                                     </div>
 
-                                                                    <div id="collapse{{ $item->id }}" class="collapse"
+                                                                    <div id="collapse{{ $item->id }}"
+                                                                        class="collapse"
                                                                         aria-labelledby="heading{{ $item->id }}"
                                                                         data-parent="#accordion{{ $file->id }}">
                                                                         <div class="card-body border mt-1 p-1">
@@ -123,10 +170,13 @@
                                                                                     <option value="">-- انتخاب وضعیت
                                                                                         --
                                                                                     </option>
-                                                                                    <option value="سالم">سالم</option>
+                                                                                    <option selected value="سالم">سالم
+                                                                                    </option>
                                                                                     <option value="نامشخص">نامشخص</option>
-                                                                                    <option value="رنگ شده">رنگ شده</option>
-                                                                                    <option value="صافکاری بدون رنگ">صافکاری
+                                                                                    <option value="رنگ شده">رنگ شده
+                                                                                    </option>
+                                                                                    <option value="صافکاری بدون رنگ">
+                                                                                        صافکاری
                                                                                         بدون
                                                                                         رنگ</option>
                                                                                     <option value="تعمیر شده">تعمیر شده
@@ -169,7 +219,105 @@
 @endsection
 
 @push('script')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ckeditor/4.17.1/ckeditor.js"
+        integrity="sha512-VXEKi5eNc7ECuyIueuledlqeUWiJ7hcxBe9fnsCiVzeZ0XwJxAPemnq01/LBIBnp3i0szhvKNd9Us7fqNPsRmQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
     <script>
+        function openMediaManager(inputId, preview = false, multiple = false) {
+
+            const w = 1000,
+                h = 600;
+            const left = (window.innerWidth - w) / 2;
+            const top = (window.innerHeight - h) / 2 + 80;
+
+            let url = "{{ route('media.manager') }}?input=" + inputId;
+            if (multiple) url += "&multiple=1";
+
+            window.open(url, "mediaManager_" + inputId,
+                `scrollbars=yes,width=${w},height=${h},top=${top},left=${left}`);
+
+            /* --------- فقط یک‌بار گوش کنیم --------- */
+            function handleMessage(event) {
+                if (!event.data.input || event.data.input !== inputId) return; // پیام مال ما نیست
+
+                window.removeEventListener('message', handleMessage); // دیگر تکرار نشود
+
+                const input = document.getElementById(inputId);
+                const container = document.getElementById(inputId + '_container');
+
+                /* ----------- تصویر شاخص (تک) ----------- */
+                if (!multiple && event.data.url) {
+                    input.value = event.data.url;
+
+                    /* فقط img قبلی را بردار، input و button بمانند */
+                    let oldImg = container.querySelector('#' + inputId + '_preview');
+                    if (oldImg) oldImg.remove();
+
+                    const img = document.createElement('img');
+                    img.src = event.data.url;
+                    img.id = inputId + '_preview';
+                    img.style.maxWidth = '200px';
+                    img.style.display = 'block';
+                    img.style.marginTop = '10px';
+                    container.appendChild(img);
+                }
+
+                /* ----------- گالری (چندتایی) ----------- */
+                if (multiple && event.data.urls && event.data.urls.length) {
+                    input.value = JSON.stringify(event.data.urls);
+
+                    /* فقط تصاویر جدید را اضافه می‌کنیم */
+                    event.data.urls.forEach(src => {
+                        /* اگر همین تصویر قبلاً وجود دارد، نمی‌گذاریم تکرار شود */
+                        if (container.querySelector(`img[data-src="${src}"]`)) return;
+
+                        const wrapper = document.createElement('div');
+                        wrapper.className = 'position-relative d-inline-block';
+
+                        const img = document.createElement('img');
+                        img.src = src;
+                        img.dataset.src = src; // برای تشخیص تکراری
+                        img.style.maxWidth = '100px';
+                        img.className = 'm-1';
+
+                        const del = document.createElement('button');
+                        del.type = 'button';
+                        del.className = 'btn btn-danger btn-sm position-absolute';
+                        del.style.top = '0';
+                        del.style.left = '0';
+                        del.innerHTML = '×';
+                        del.onclick = function() {
+                            wrapper.remove();
+                            /* آرایه‌ی hidden را هم به‌روزرسانی کنیم */
+                            const urls = Array.from(container.querySelectorAll('img'))
+                                .map(i => i.dataset.src);
+                            input.value = JSON.stringify(urls);
+                        };
+
+                        wrapper.appendChild(img);
+                        wrapper.appendChild(del);
+                        container.appendChild(wrapper);
+                    });
+                }
+            }
+
+            window.addEventListener('message', handleMessage);
+        }
+
+
+
+        // مقداردهی اولیه CKEditor
+        CKEDITOR.replace('editor', {
+            filebrowserImageBrowseUrl: '{{ route('media.manager.ckeditor') }}',
+            filebrowserImageUploadUrl: '{{ route('media.store') }}',
+            filebrowserWindowWidth: 1000,
+            filebrowserWindowHeight: 600,
+            height: 200,
+            language: 'fa',
+            contentsLangDirection: 'rtl',
+        });
+
         let attributes = @json($attributes);
 
         function findAttribute(id) {
@@ -183,7 +331,8 @@
                 let sel = selectedId && String(selectedId) === String(a.id) ? 'selected' : '';
                 options += `<option value="${a.id}" data-type="${a.type}" ${sel}>${a.label}</option>`;
             });
-            return `<select name="car_attributes[${rowKey}][attribute_id]" class="form-control attribute-select">${options}</select>`;
+            return `<select name="car_attributes[${rowKey}][attribute_id]"
+        class="form-control attribute-select">${options}</select>`;
         }
 
         // ساخت input مناسب برای مقدار ویژگی
@@ -197,9 +346,10 @@
                     let checked = selectedValue && String(selectedValue) === String(v.id) ? 'checked' : '';
                     if (checked) hasSelected = true;
                     return `<div class="form-check">
-                <input class="form-check-input" type="radio" name="car_attributes[${rowKey}][value]" value="${v.id}" ${checked}>
-                <label class="form-check-label">${v.value}</label>
-            </div>`;
+        <input class="form-check-input" type="radio" name="car_attributes[${rowKey}][value]" value="${v.id}"
+            ${checked}>
+        <label class="form-check-label">${v.value}</label>
+    </div>`;
                 }).join('');
 
                 // اگر هیچ گزینه‌ای انتخاب نشده بود، اولین گزینه را انتخاب کن
@@ -212,7 +362,8 @@
 
                 return optionsHtml;
             } else if (['string', 'number', 'range'].includes(attr.type)) {
-                return `<input type="text" name="car_attributes[${rowKey}][value]" class="form-control" value="${selectedValue ?? ''}">`;
+                return `<input type="text" name="car_attributes[${rowKey}][value]" class="form-control"
+        value="${selectedValue ?? ''}">`;
             } else if (attr.type === 'boolean') {
                 let labels = (attr.value_boolean_label ?? 'بله,خیر').split(',');
                 let trueLabel = selectedLabel?.split(',')[0] ?? labels[0] ?? 'بله';
@@ -229,15 +380,18 @@
                 }
 
                 return `
-        <div class="form-check d-inline me-2">
-            <input class="form-check-input" type="radio" name="car_attributes[${rowKey}][value]" value="1" ${checkedTrue}>
-            <label class="form-check-label boolean-label" data-row="${rowKey}" data-value="1">${trueLabel}</label>
-        </div>
-        <div class="form-check d-inline">
-            <input class="form-check-input" type="radio" name="car_attributes[${rowKey}][value]" value="0" ${checkedFalse}>
-            <label class="form-check-label boolean-label" data-row="${rowKey}" data-value="0">${falseLabel}</label>
-        </div>
-        <input type="hidden" name="car_attributes[${rowKey}][value_boolean_label]" class="boolean-label-input" value="${trueLabel},${falseLabel}">`;
+    <div class="form-check d-inline me-2">
+        <input class="form-check-input" type="radio" name="car_attributes[${rowKey}][value]" value="1"
+            ${checkedTrue}>
+        <label class="form-check-label boolean-label" data-row="${rowKey}" data-value="1">${trueLabel}</label>
+    </div>
+    <div class="form-check d-inline">
+        <input class="form-check-input" type="radio" name="car_attributes[${rowKey}][value]" value="0"
+            ${checkedFalse}>
+        <label class="form-check-label boolean-label" data-row="${rowKey}" data-value="0">${falseLabel}</label>
+    </div>
+    <input type="hidden" name="car_attributes[${rowKey}][value_boolean_label]" class="boolean-label-input"
+        value="${trueLabel},${falseLabel}">`;
             }
 
             return '';
@@ -359,6 +513,25 @@
                 });
             });
 
+        });
+
+
+        /* ---------- استاندارد‌سازی اسلاگ (بدون تبدیل حروف) ---------- */
+        function standardizeSlug(str) {
+            return str
+                .trim()
+                // هرچه غیر از حروف، اعداد، فضا و - است را حذف کن
+                .replace(/[^\p{L}\p{N}\s-]+/gu, '')
+                // فضا و خط‌تیره‌های پیاپی را به یک - تبدیل کن
+                .replace(/[\s-]+/g, '-')
+                // - اضافی ابتدا/انتها را بردار
+                .replace(/^-+|-+$/g, '');
+        }
+
+        /* ---------- اتصال به فیلد عنوان ---------- */
+        $(document).on('input', 'input[name="title"]', function() {
+            const slug = standardizeSlug($(this).val());
+            $('input[name="slug"]').val(slug);
         });
     </script>
 @endpush

@@ -10,7 +10,12 @@ class Car extends Model
         'title',
         'slug',
         'thumbnail',
+        'gallery',
         'description'
+    ];
+
+    protected $casts = [
+        'gallery' => "json",
     ];
 
     public function attributeValues()
@@ -22,4 +27,12 @@ class Car extends Model
     {
         return $this->hasMany(CarFileItemValue::class);
     }
+
+    public function setGalleryAttribute($value)
+{
+    if (is_string($value)) {
+        $value = json_decode($value, true);
+    }
+    $this->attributes['gallery'] = json_encode($value);
+}
 }

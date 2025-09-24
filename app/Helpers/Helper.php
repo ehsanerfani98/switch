@@ -548,14 +548,26 @@ function getRemainingServiceQuota($user)
 
 function getUnreadCount($fromUserId, $toUserId)
 {
-    return Message::whereHas('conversation', function($q) use ($fromUserId, $toUserId) {
+    return Message::whereHas('conversation', function ($q) use ($fromUserId, $toUserId) {
         $q->where(function ($q2) use ($fromUserId, $toUserId) {
             $q2->where('user_id', $fromUserId)->where('advisor_id', $toUserId);
         })->orWhere(function ($q2) use ($fromUserId, $toUserId) {
             $q2->where('user_id', $toUserId)->where('advisor_id', $fromUserId);
         });
     })
-    ->where('sender_id', $fromUserId)
-    ->where('seen', 0)
-    ->count();
+        ->where('sender_id', $fromUserId)
+        ->where('seen', 0)
+        ->count();
 }
+
+
+    function standardizeSlug(string $str): string
+    {
+        $str = trim($str);
+        // هر کاراکتر غیر از حروف، اعداد، فضا و - را حذف کن
+        $str = preg_replace('/[^\p{L}\p{N}\s\-]+/u', '', $str);
+        // فضاها و خط تیره‌های پیاپی را به یک - تبدیل کن
+        $str = preg_replace('/[\s\-]+/u', '-', $str);
+        // - اضافی ابتدا/انتها را بردار
+        return trim($str, '-');
+    }
