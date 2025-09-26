@@ -78,6 +78,20 @@
             <div class="col-lg-4">
 
 
+                <!-- وضعیت ماشین -->
+                <div class="card shadow ">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h6 class="m-0 font-weight-bold text-primary">وضعیت ماشین</h6>
+                    </div>
+                    <div class="card-body">
+                        <select class="form-control" name="status" id="status">
+                            <option value="inreview">در حال کارشناسی</option>
+                            <option value="assessed">کارشناسی شده</option>
+                            <option value="sold">فروخته شده</option>
+                        </select>
+                    </div>
+                </div>
+
                 <!-- تصویر شاخص -->
                 <div class="card shadow ">
                     <div class="card-header d-flex justify-content-between align-items-center">
@@ -175,6 +189,7 @@
                                                                                     <option value="نامشخص">نامشخص</option>
                                                                                     <option value="رنگ شده">رنگ شده
                                                                                     </option>
+                                                                                    <option value="تعویض و مشکل‌دار">تعویض و مشکل‌دار</option>
                                                                                     <option value="صافکاری بدون رنگ">
                                                                                         صافکاری
                                                                                         بدون

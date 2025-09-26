@@ -11,7 +11,8 @@ class Car extends Model
         'slug',
         'thumbnail',
         'gallery',
-        'description'
+        'description',
+        'status'
     ];
 
     protected $casts = [

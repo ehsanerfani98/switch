@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('title');
             $table->string('slug')->unique();
             $table->text('description')->nullable();
+            $table->enum('status' , ['inreview', 'assessed', 'sold'])->default('inreview');
             $table->timestamps();
         });
     }

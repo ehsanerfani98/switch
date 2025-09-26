@@ -21,6 +21,7 @@ use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\ServiceRequestController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\Site\SiteController;
+use App\Http\Controllers\SiteController as ControllersSiteController;
 use App\Http\Controllers\SliderController;
 use App\Http\Controllers\SubscriptionController;
 use App\Http\Controllers\TransactionController;
@@ -50,14 +51,17 @@ use Spatie\QueryBuilder\AllowedFilter;
 */
 
 
-Route::get('/', function () {
-    // return redirect()->route('login');
-    return view('car_deatils');
-})->name('home');
+// Site Routes
+Route::get('/', [ControllersSiteController::class, 'home'])->name('home');
+Route::get('/car/{slug}', [ControllersSiteController::class, 'car_single'])->name('car');
+
 
 Auth::routes();
 
 Route::get('/admin/login', function () {
+    if (Auth::check()) {
+        return redirect()->route('dashboard');
+    }
     return view('auth.login_email');
 });
 
@@ -154,8 +158,6 @@ Route::middleware(['auth'])->group(function () {
 
     // صفحه‌ای که CKEditor آن را باز می‌کند
     Route::get('/media/manager/ckeditor', [MediaController::class, 'manager_ckeditor'])->name('media.manager.ckeditor');
-
-
 });
 
 

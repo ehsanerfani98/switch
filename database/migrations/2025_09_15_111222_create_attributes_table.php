@@ -16,8 +16,11 @@ return new class extends Migration
             $table->string('name');
             $table->string('slug')->unique();
             $table->string('label');
+            $table->string('icon')->nullable();
             $table->enum('type' , ['string', 'number', 'boolean', 'select', 'range'])->default('string');
             $table->boolean('is_multiple')->default(false);
+            $table->boolean('show_in_card')->default(false);
+            $table->boolean('format_thousands')->default(false);
             $table->boolean('is_active')->default(true);
             $table->unsignedSmallInteger('sort_order')->default(0);
 

@@ -55,6 +55,7 @@
                                         <th>نام</th>
                                         <th>لیبل</th>
                                         <th>نوع</th>
+                                        <th>نمایش در کارت</th>
                                         <th>فعال</th>
                                         <th>چند مقداری</th>
                                         <th>عملیات</th>
@@ -68,6 +69,13 @@
                                             <td>{{ $attr->name }}</td>
                                             <td>{{ $attr->label }}</td>
                                             <td>{{ $attr->type }}</td>
+                                            <td>
+                                                @if ($attr->show_in_card)
+                                                    <label class="badge badge-success">بله</label>
+                                                @else
+                                                    <label class="badge badge-danger">خیر</label>
+                                                @endif
+                                            </td>
                                             <td>
                                                 @if ($attr->is_active)
                                                     <label class="badge badge-success">بله</label>

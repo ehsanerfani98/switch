@@ -52,7 +52,13 @@
                                         value="{{ $attribute->label }}">
                                 </div>
                             </div>
-
+                            <div class="col-xs-12 col-sm-12 col-md-6">
+                                <div class="form-group">
+                                    <label>آیکن</label>
+                                    <input type="text" placeholder="fas fa-tachometer-alt" name="icon"
+                                        class="form-control" value="{{ $attribute->icon }}">
+                                </div>
+                            </div>
                             <div class="col-xs-12 col-sm-12 col-md-6">
                                 <div class="form-group">
                                     <label>نوع</label>
@@ -78,24 +84,39 @@
                                         value="{{ $attribute->sort_order }}">
                                 </div>
                             </div>
-                            <div class="col-xs-12 col-sm-12 col-md-6">
-                            </div>
 
-                            <div class="col-xs-12 col-sm-12 col-md-6">
+                            <div class="col-xs-12 col-sm-12 col-md-3">
                                 <div class="form-group">
                                     <div class="form-check">
-                                        <input type="checkbox" name="is_active" class="form-check-input" id="is_active" value="1"
-                                            {{ $attribute->is_active ? 'checked' : '' }}>
+                                        <input type="checkbox" name="is_active" class="form-check-input" id="is_active"
+                                            value="1" {{ $attribute->is_active ? 'checked' : '' }}>
                                         <label for="is_active" class="form-check-label">فعال</label>
                                     </div>
                                 </div>
                             </div>
-
-                            <div class="col-xs-12 col-sm-12 col-md-6">
+                            <div class="col-xs-12 col-sm-12 col-md-3">
                                 <div class="form-group">
                                     <div class="form-check">
-                                        <input type="checkbox" name="is_multiple" class="form-check-input" id="is_multiple" value="1"
-                                            {{ $attribute->is_multiple ? 'checked' : '' }}>
+                                        <input type="checkbox" name="format_thousands" id="format_thousands" class="form-check-input"
+                                            value="1" {{ $attribute->format_thousands ? 'checked' : '' }}>
+                                        <label for="format_thousands" class="form-check-label">جدا کننده ارقام (برای مقادیری مانند قیمت)</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-3">
+                                <div class="form-group">
+                                    <div class="form-check">
+                                        <input type="checkbox" name="show_in_card" id="show_in_card" class="form-check-input" value="1"
+                                            {{ $attribute->show_in_card ? 'checked' : '' }}>
+                                        <label for="show_in_card" class="form-check-label">نمایش در کارت ماشین</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-3">
+                                <div class="form-group">
+                                    <div class="form-check">
+                                        <input type="checkbox" name="is_multiple" class="form-check-input" id="is_multiple"
+                                            value="1" {{ $attribute->is_multiple ? 'checked' : '' }}>
                                         <label for="is_multiple" class="form-check-label">چند مقداری</label>
                                     </div>
                                 </div>

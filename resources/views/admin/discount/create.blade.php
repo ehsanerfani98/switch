@@ -10,8 +10,8 @@
 @endsection
 
 @push('style')
-    <link type="text/css" rel="stylesheet" href="{{ asset('admin2/plugins/JalaliDatePicker/jalalidatepicker.min.css') }}" />
-    <link rel="stylesheet" href="{{ asset('admin2/plugins/select2/dist/css/select2.min.css') }}">
+    <link type="text/css" rel="stylesheet" href="{{ asset('admin/plugins/JalaliDatePicker/jalalidatepicker.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset('admin/plugins/select2/dist/css/select2.min.css') }}">
 @endpush
 
 
@@ -201,9 +201,9 @@
 @endsection
 
 @push('script')
-    <script src="{{ asset('admin2/plugins/select2/dist/js/select2.full.min.js') }}"></script>
-    <script src="{{ asset('admin2/plugins/select2/dist/js/i18n/fa.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('admin2/plugins/JalaliDatePicker/jalalidatepicker.min.js') }}"></script>
+    <script src="{{ asset('admin/plugins/select2/dist/js/select2.full.min.js') }}"></script>
+    <script src="{{ asset('admin/plugins/select2/dist/js/i18n/fa.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('admin/plugins/JalaliDatePicker/jalalidatepicker.min.js') }}"></script>
     <script>
         jalaliDatepicker.startWatch({
             minDate: "today",

@@ -10,33 +10,33 @@
     <link rel="apple-touch-icon" href="{{ asset('admin/img/logo.webp') }}">
     <link rel="shortcut icon" type="image/x-icon" href="{{ asset('admin/img/logo.webp') }}">
 
-    <link href="{{ asset('admin2') }}/plugins/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="{{ asset('admin') }}/plugins/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
 
-    <link rel="stylesheet" type="text/css" href="{{ asset('admin2/assets') }}/css/font.css">
+    <link rel="stylesheet" type="text/css" href="{{ asset('admin/assets') }}/css/font.css">
 
     <!-- BEGIN: Vendor CSS-->
-    <link rel="stylesheet" type="text/css" href="{{ asset('admin2/assets') }}/css/vendors-rtl.min.css">
+    <link rel="stylesheet" type="text/css" href="{{ asset('admin/assets') }}/css/vendors-rtl.min.css">
     <!-- END: Vendor CSS-->
 
     <!-- BEGIN: Theme CSS-->
-    <link rel="stylesheet" type="text/css" href="{{ asset('admin2/assets') }}/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="{{ asset('admin2/assets') }}/css/bootstrap-extended.min.css">
-    <link rel="stylesheet" type="text/css" href="{{ asset('admin2/assets') }}/css/components.min.css">
-    <link rel="stylesheet" type="text/css" href="{{ asset('admin2/assets') }}/css/custom-rtl.min.css">
-    <link rel="stylesheet" type="text/css" href="{{ asset('admin2/assets') }}/css/style.min.css">
+    <link rel="stylesheet" type="text/css" href="{{ asset('admin/assets') }}/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="{{ asset('admin/assets') }}/css/bootstrap-extended.min.css">
+    <link rel="stylesheet" type="text/css" href="{{ asset('admin/assets') }}/css/components.min.css">
+    <link rel="stylesheet" type="text/css" href="{{ asset('admin/assets') }}/css/custom-rtl.min.css">
+    <link rel="stylesheet" type="text/css" href="{{ asset('admin/assets') }}/css/style.min.css">
     <!-- END: Theme CSS-->
 
     <!-- BEGIN: Page CSS-->
-    <link rel="stylesheet" type="text/css" href="{{ asset('admin2/assets') }}/css/vertical-menu.min.css">
-    <link rel="stylesheet" type="text/css" href="{{ asset('admin2/assets') }}/css/palette-gradient.min.css">
+    <link rel="stylesheet" type="text/css" href="{{ asset('admin/assets') }}/css/vertical-menu.min.css">
+    <link rel="stylesheet" type="text/css" href="{{ asset('admin/assets') }}/css/palette-gradient.min.css">
 
 
     <!-- END: Page CSS-->
-    <link rel="stylesheet" type="text/css" href="{{ asset('admin2/assets') }}/css/MyCss.css">
-    <script src="{{ asset('admin2/assets') }}/js/jquery-3.2.1.js"></script>
+    <link rel="stylesheet" type="text/css" href="{{ asset('admin/assets') }}/css/MyCss.css">
+    <script src="{{ asset('admin/assets') }}/js/jquery-3.2.1.js"></script>
 
-    <link rel="stylesheet" href="{{ asset('admin2/plugins/awesome-notifications/dist/style.css') }}">
-    <script src="{{ asset('admin2/plugins/awesome-notifications/dist/index.var.js') }}"></script>
+    <link rel="stylesheet" href="{{ asset('admin/plugins/awesome-notifications/dist/style.css') }}">
+    <script src="{{ asset('admin/plugins/awesome-notifications/dist/index.var.js') }}"></script>
     <script>
         let notifier = new AWN({
             position: "bottom-left",
@@ -126,11 +126,11 @@
 
     <!-- BEGIN: Main Menu-->
     <div class="main-menu menu-fixed menu-light menu-accordion    menu-shadow " data-scroll-to-active="true"
-        data-img="{{ asset('admin2/assets/img/02.jpg') }}">
+        data-img="{{ asset('admin/assets/img/02.jpg') }}">
         <div class="navbar-header">
             <ul class="nav navbar-nav flex-row">
                 <li class="nav-item mr-auto"><a class="navbar-brand" href="/"><img class="brand-logo"
-                            alt="Chameleon admin logo" src="{{ asset('admin2/assets/img/logo-panel.png') }}" />
+                            alt="Chameleon admin logo" src="{{ asset('admin/assets/img/logo-panel.png') }}" />
                         <h3 class="brand-text">پنل کاربری</h3>
                     </a></li>
                 <li class="nav-item d-md-none"><a class="nav-link close-navbar"><i class="ft-x"
@@ -358,13 +358,13 @@
     </div>
 
     <!-- BEGIN: Vendor JS-->
-    <script src="{{ asset('admin2/assets') }}/js/vendors.min.js" type="text/javascript"></script>
+    <script src="{{ asset('admin/assets') }}/js/vendors.min.js" type="text/javascript"></script>
     <!-- BEGIN Vendor JS-->
 
 
     <!-- BEGIN: Theme JS-->
-    <script src="{{ asset('admin2/assets') }}/js/app-menu.min.js" type="text/javascript"></script>
-    <script src="{{ asset('admin2/assets') }}/js/app.min.js" type="text/javascript"></script>
+    <script src="{{ asset('admin/assets') }}/js/app-menu.min.js" type="text/javascript"></script>
+    <script src="{{ asset('admin/assets') }}/js/app.min.js" type="text/javascript"></script>
     <!-- END: Theme JS-->
 
     <script src="https://www.gstatic.com/firebasejs/7.23.0/firebase.js"></script>

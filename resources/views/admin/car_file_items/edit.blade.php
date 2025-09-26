@@ -41,7 +41,7 @@
 @endsection
 
 @push('script')
-<script src="{{ asset('admin2/plugins/select2/dist/js/select2.full.min.js') }}"></script>
+<script src="{{ asset('admin/plugins/select2/dist/js/select2.full.min.js') }}"></script>
 <script>
 $(".select2").select2({ rtl:true, placeholder:"یک پرونده انتخاب کنید" });
 </script>

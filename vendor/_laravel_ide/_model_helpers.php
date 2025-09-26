@@ -314,8 +314,11 @@ namespace App\Models {
      * @property \Illuminate\Support\Carbon|null $created_at
      * @property int $sort_order
      * @property bool $is_active
+     * @property bool $format_thousands
+     * @property bool $show_in_card
      * @property bool $is_multiple
      * @property mixed $type
+     * @property string|null $icon
      * @property string $label
      * @property string $slug
      * @property string $name
@@ -328,8 +331,11 @@ namespace App\Models {
      * @method static \Illuminate\Database\Eloquent\Builder<Attribute>|Attribute whereName($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Attribute>|Attribute whereSlug($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Attribute>|Attribute whereLabel($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<Attribute>|Attribute whereIcon($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Attribute>|Attribute whereType($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Attribute>|Attribute whereIsMultiple($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<Attribute>|Attribute whereShowInCard($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<Attribute>|Attribute whereFormatThousands($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Attribute>|Attribute whereIsActive($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Attribute>|Attribute whereSortOrder($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Attribute>|Attribute whereCreatedAt($value)
@@ -1250,6 +1256,7 @@ namespace App\Models {
      *
      * @property \Illuminate\Support\Carbon|null $updated_at
      * @property \Illuminate\Support\Carbon|null $created_at
+     * @property mixed $status
      * @property string|null $description
      * @property string $slug
      * @property string $title
@@ -1265,6 +1272,7 @@ namespace App\Models {
      * @method static \Illuminate\Database\Eloquent\Builder<Car>|Car whereTitle($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Car>|Car whereSlug($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Car>|Car whereDescription($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<Car>|Car whereStatus($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Car>|Car whereCreatedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Car>|Car whereUpdatedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Car>|Car newModelQuery()
@@ -1572,6 +1580,7 @@ namespace App\Models {
      * @property int $attribute_id
      * @property int $car_id
      * @property int $id
+     * @property-read mixed $formatted_value
      * @property-read \App\Models\Car $car
      * @property-read \App\Models\Attribute $attribute
      * @property-read \App\Models\AttributeValue $attributeValue
@@ -1585,6 +1594,7 @@ namespace App\Models {
      * @method static \Illuminate\Database\Eloquent\Builder<CarAttributeValue>|CarAttributeValue whereValueBooleanLabel($value)
      * @method static \Illuminate\Database\Eloquent\Builder<CarAttributeValue>|CarAttributeValue whereCreatedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder<CarAttributeValue>|CarAttributeValue whereUpdatedAt($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<CarAttributeValue>|CarAttributeValue valueOf()
      * @method static \Illuminate\Database\Eloquent\Builder<CarAttributeValue>|CarAttributeValue newModelQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<CarAttributeValue>|CarAttributeValue newQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<CarAttributeValue>|CarAttributeValue query()

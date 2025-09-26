@@ -56,6 +56,7 @@ class CarController extends Controller
                 'thumbnail' => $request->thumbnail ?? null,
                 'gallery' => $request->gallery ?? null,
                 'description' => $request->description ?? null,
+                'status' => $request->status,
             ]);
 
             // ذخیره ویژگی‌ها
@@ -128,6 +129,7 @@ class CarController extends Controller
             'title' => 'required|string',
             'slug'  => 'required|unique:cars,slug,' . $car->id,
             'thumbnail' => 'nullable|string',
+            'gallery'     => 'nullable|string',
             'description' => 'nullable|string',
         ]);
 
@@ -135,15 +137,17 @@ class CarController extends Controller
             // بروزرسانی ماشین
             $car->update([
                 'title' => $request->title,
-                'slug'  => $request->slug,
+                'slug'  => standardizeSlug($request->slug), // استفاده از تابع standardizeSlug مانند متد store
                 'thumbnail' => $request->thumbnail ?? null,
+                'gallery' => $request->gallery ?? null, // اضافه کردن فیلد gallery که در متد store وجود داشت
                 'description' => $request->description ?? null,
+                'status' => $request->status,
             ]);
 
             // حذف مقادیر قبلی ویژگی‌ها
             $car->attributeValues()->delete();
 
-            // ذخیره مجدد ویژگی‌ها
+            // ذخیره مجدد ویژگی‌ها با همان الگوی متد store
             foreach ($request->car_attributes ?? [] as $attrData) {
                 if (empty($attrData['attribute_id'])) continue;
 
@@ -179,14 +183,13 @@ class CarController extends Controller
                         $carAttr['value_string'] = $attrData['value'] ?? null;
                         break;
                 }
-
                 CarAttributeValue::create($carAttr);
             }
 
-            // حذف مقادیر قبلی
+            // حذف مقادیر قبلی آیتم‌های فایل
             $car->fileItemValues()->delete();
 
-            // ذخیره مجدد
+            // ذخیره مجدد آیتم‌های فایل با همان الگوی متد store
             foreach ($request->car_file_items ?? [] as $itemId => $data) {
                 if (empty($data['status'])) continue;
 
@@ -204,7 +207,16 @@ class CarController extends Controller
 
     public function destroy(Car $car)
     {
-        $car->delete();
-        return redirect()->route('cars.index')->with('success', 'ماشین حذف شد');
+        DB::transaction(function () use ($car) {
+
+            $car->attributeValues()->delete();
+
+            $car->fileItemValues()->delete();
+
+            $car->delete();
+
+        });
+
+        return redirect()->route('cars.index')->with('success', 'ماشین با موفقیت حذف شد');
     }
 }

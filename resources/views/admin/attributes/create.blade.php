@@ -46,6 +46,12 @@
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-6">
                                 <div class="form-group">
+                                    <label>آیکن</label>
+                                    <input type="text" placeholder="fas fa-tachometer-alt" name="icon" class="form-control" value="{{ old('icon') }}">
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-6">
+                                <div class="form-group">
                                     <label>نوع</label>
                                     <select name="type" class="form-control">
                                         <option value="string">String</option>
@@ -65,11 +71,10 @@
                                         value="">
                                 </div>
                             </div>
-                            <div class="col-xs-12 col-sm-12 col-md-6">
-                            </div>
 
 
-                            <div class="col-xs-12 col-sm-12 col-md-6">
+
+                            <div class="col-xs-12 col-sm-12 col-md-3">
                                 <div class="form-group">
                                     <div class="form-check">
                                         <input type="checkbox" name="is_active" class="form-check-input" value="1"
@@ -78,7 +83,23 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-xs-12 col-sm-12 col-md-6">
+                            <div class="col-xs-12 col-sm-12 col-md-3">
+                                <div class="form-group">
+                                    <div class="form-check">
+                                        <input type="checkbox" name="format_thousands" id="format_thousands" class="form-check-input" value="1">
+                                        <label for="format_thousands" class="form-check-label">جدا کننده ارقام (برای مقادیری مانند قیمت)</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-3">
+                                <div class="form-group">
+                                    <div class="form-check">
+                                        <input type="checkbox" name="show_in_card" id="show_in_card" class="form-check-input" value="1">
+                                        <label for="show_in_card" class="form-check-label">نمایش در کارت ماشین</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-3">
                                 <div class="form-group">
                                     <div class="form-check">
                                         <input type="checkbox" name="is_multiple" class="form-check-input" value="1">

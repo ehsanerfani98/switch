@@ -77,6 +77,24 @@
             </div>
 
             <div class="col-lg-4">
+
+                <!-- وضعیت ماشین -->
+                <div class="card shadow ">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h6 class="m-0 font-weight-bold text-primary">وضعیت ماشین</h6>
+                    </div>
+                    <div class="card-body">
+                        <select class="form-control" name="status" id="status">
+                            <option {{ optional($car)->status == 'inreview' ? 'selected' : '' }} value="inreview">در حال
+                                کارشناسی</option>
+                            <option {{ optional($car)->status == 'assessed' ? 'selected' : '' }} value="assessed">کارشناسی
+                                شده</option>
+                            <option {{ optional($car)->status == 'sold' ? 'selected' : '' }} value="sold">فروخته شده
+                            </option>
+                        </select>
+                    </div>
+                </div>
+
                 <!-- تصویر شاخص -->
                 <div class="card shadow">
                     <div class="card-header d-flex justify-content-between align-items-center">
@@ -198,6 +216,9 @@
                                                                                     <option value="رنگ شده"
                                                                                         {{ optional($old)->status == 'رنگ شده' ? 'selected' : '' }}>
                                                                                         رنگ شده</option>
+                                                                                    <option value="تعویض و مشکل‌دار"
+                                                                                        {{ optional($old)->status == 'تعویض و مشکل‌دار' ? 'selected' : '' }}>
+                                                                                        تعویض و مشکل‌دار</option>
                                                                                     <option value="صافکاری بدون رنگ"
                                                                                         {{ optional($old)->status == 'صافکاری بدون رنگ' ? 'selected' : '' }}>
                                                                                         صافکاری بدون رنگ</option>

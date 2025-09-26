@@ -2,7 +2,7 @@
 @section('title', 'ویرایش نقش')
 
 @push('style')
-    <link rel="stylesheet" href="{{ asset('admin2/plugins/select2/dist/css/select2.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('admin/plugins/select2/dist/css/select2.min.css') }}">
 @endpush
 
 @section('content')
@@ -85,7 +85,7 @@
                             </div>
                         </div>
 
-                        
+
                         <button type="submit" class="btn btn-success btn-sm">
                             ذخیره
                         </button>
@@ -100,8 +100,8 @@
 @endsection
 
 @push('script')
-    <script src="{{ asset('admin2/plugins/select2/dist/js/select2.full.min.js') }}"></script>
-    <script src="{{ asset('admin2/plugins/select2/dist/js/i18n/fa.js') }}"></script>
+    <script src="{{ asset('admin/plugins/select2/dist/js/select2.full.min.js') }}"></script>
+    <script src="{{ asset('admin/plugins/select2/dist/js/i18n/fa.js') }}"></script>
     <script>
         $(".select2").select2({
             rtl: true,

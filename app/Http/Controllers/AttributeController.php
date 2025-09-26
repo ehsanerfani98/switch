@@ -64,6 +64,14 @@ class AttributeController extends Controller
             $request['is_active'] = 0;
         }
 
+        if(is_null($request->show_in_card)){
+            $request['show_in_card'] = 0;
+        }
+
+        if(is_null($request->format_thousands)){
+            $request['format_thousands'] = 0;
+        }
+
         $attribute->update($request->all());
 
         return redirect()->route('attributes.index')->with('success', 'ویژگی بروزرسانی شد');
