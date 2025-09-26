@@ -46,19 +46,17 @@ mobileMenuLinks.forEach(link => {
 });
 
 // جستجو
-const searchForm = document.querySelector('.search-form');
+// const searchForm = document.querySelector('.search-form');
 
-searchForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const searchInput = document.querySelector('.search-input');
-    const searchTerm = searchInput.value.trim();
+// searchForm.addEventListener('submit', (e) => {
+//     e.preventDefault();
+//     const searchInput = document.querySelector('.search-input');
+//     const searchTerm = searchInput.value.trim();
 
-    if (searchTerm) {
-        // در اینجا می‌توانید عملیات جستجو را انجام دهید
-        console.log('جستجو برای:', searchTerm);
-        // مثال: window.location.href = `/search?q=${encodeURIComponent(searchTerm)}`;
-    }
-});
+//     if (searchTerm) {
+//         console.log('جستجو برای:', searchTerm);
+//     }
+// });
 
 // اسلایدرها با Slick
 $(document).ready(function () {

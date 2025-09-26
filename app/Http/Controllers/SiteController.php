@@ -10,7 +10,7 @@ class SiteController extends Controller
 {
     public function home()
     {
-        return view('car_deatils');
+        // return view('car_deatils');
         return view('site.home');
     }
     public function car_single($slug)
@@ -46,6 +46,9 @@ class SiteController extends Controller
             },
             'items' // مطمئن می‌شویم items هم لود شده
         ])->get();
+
+
+
 
         return view('site.car_single', compact('car', 'carFiles', 'price'));
     }

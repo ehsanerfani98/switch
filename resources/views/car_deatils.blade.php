@@ -154,10 +154,10 @@
         .container {
             max-width: 100%;
         }
-        .slick-list.draggable{
+
+        .slick-list.draggable {
             padding: 10px;
         }
-
     </style>
 </head>
 
@@ -1099,6 +1099,7 @@
                 responsive: [{
                         breakpoint: 1200,
                         settings: {
+                            arrows: false,
                             slidesToShow: 5,
                             slidesToScroll: 1
                         }
@@ -1106,6 +1107,7 @@
                     {
                         breakpoint: 992,
                         settings: {
+                            arrows: false,
                             slidesToShow: 4,
                             slidesToScroll: 1
                         }
@@ -1113,6 +1115,7 @@
                     {
                         breakpoint: 768,
                         settings: {
+                            arrows: false,
                             slidesToShow: 3,
                             slidesToScroll: 1
                         }
@@ -1120,6 +1123,7 @@
                     {
                         breakpoint: 576,
                         settings: {
+                            arrows: false,
                             slidesToShow: 2,
                             slidesToScroll: 1
                         }
