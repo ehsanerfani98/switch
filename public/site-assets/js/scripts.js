@@ -3,9 +3,11 @@ const scrollTopBtn = document.querySelector('.scroll-top');
 
 window.addEventListener('scroll', () => {
     if (window.pageYOffset > 300) {
-        scrollTopBtn.classList.add('show');
+        scrollTopBtn.classList.add('show', 'opacity-100', 'visible');
+        scrollTopBtn.classList.remove('opacity-0', 'invisible');
     } else {
-        scrollTopBtn.classList.remove('show');
+        scrollTopBtn.classList.remove('show', 'opacity-100', 'visible');
+        scrollTopBtn.classList.add('opacity-0', 'invisible');
     }
 });
 
@@ -25,15 +27,19 @@ const mobileMenuLinks = document.querySelectorAll('.mobile-menu-nav li a');
 
 // باز کردن منوی موبایل
 mobileMenuBtn.addEventListener('click', () => {
-    mobileMenuOverlay.classList.add('active');
-    mobileMenu.classList.add('active');
+    mobileMenuOverlay.classList.add('opacity-100', 'visible');
+    mobileMenuOverlay.classList.remove('opacity-0', 'invisible');
+    mobileMenu.classList.add('right-0');
+    mobileMenu.classList.remove('-right-80');
     document.body.style.overflow = 'hidden'; // جلوگیری از اسکرول صفحه
 });
 
 // بستن منوی موبایل
 function closeMobileMenu() {
-    mobileMenuOverlay.classList.remove('active');
-    mobileMenu.classList.remove('active');
+    mobileMenuOverlay.classList.remove('opacity-100', 'visible');
+    mobileMenuOverlay.classList.add('opacity-0', 'invisible');
+    mobileMenu.classList.remove('right-0');
+    mobileMenu.classList.add('-right-80');
     document.body.style.overflow = ''; // بازگرداندن اسکرول صفحه
 }
 
@@ -59,7 +65,7 @@ mobileMenuLinks.forEach(link => {
 // });
 
 // اسلایدرها با Slick
-$(document).ready(function () {
+$(document).ready(function() {
     // اسلایدر برندها
     $('.brands-slider').slick({
         dots: false,
@@ -68,40 +74,46 @@ $(document).ready(function () {
         speed: 300,
         slidesToShow: 6,
         slidesToScroll: 1,
+        variableWidth: true,
         rtl: true,
         responsive: [{
-            breakpoint: 1200,
-            settings: {
-                slidesToShow: 5,
-                slidesToScroll: 1
+                breakpoint: 1200,
+                settings: {
+                    arrows: false,
+                    slidesToShow: 5,
+                    slidesToScroll: 1
+                }
+            },
+            {
+                breakpoint: 992,
+                settings: {
+                    arrows: false,
+                    slidesToShow: 4,
+                    slidesToScroll: 1
+                }
+            },
+            {
+                breakpoint: 768,
+                settings: {
+                    arrows: false,
+                    slidesToShow: 3,
+                    slidesToScroll: 1
+                }
+            },
+            {
+                breakpoint: 576,
+                settings: {
+                    arrows: false,
+                    slidesToShow: 2,
+                    slidesToScroll: 1
+                }
             }
-        },
-        {
-            breakpoint: 992,
-            settings: {
-                slidesToShow: 4,
-                slidesToScroll: 1
-            }
-        },
-        {
-            breakpoint: 768,
-            settings: {
-                slidesToShow: 3,
-                slidesToScroll: 1
-            }
-        },
-        {
-            breakpoint: 576,
-            settings: {
-                slidesToShow: 2,
-                slidesToScroll: 1
-            }
-        }
         ]
     });
 
     // اسلایدر بودجه‌ها
     $('.budget-slider').slick({
+        arrows: false,
         dots: false,
         infinite: false,
         speed: 300,
@@ -109,25 +121,26 @@ $(document).ready(function () {
         slidesToScroll: 1,
         rtl: true,
         responsive: [{
-            breakpoint: 1200,
-            settings: {
-                slidesToShow: 2,
-                slidesToScroll: 1
+                breakpoint: 1200,
+                settings: {
+                    slidesToShow: 2,
+                    slidesToScroll: 1
+                }
+            },
+            {
+                breakpoint: 768,
+                settings: {
+                    variableWidth: true,
+                    slidesToShow: 1,
+                    slidesToScroll: 1
+                }
             }
-        },
-        {
-            breakpoint: 768,
-            settings: {
-                variableWidth: true,
-                slidesToShow: 1,
-                slidesToScroll: 1
-            }
-        }
         ]
     });
 
     // اسلایدر پیشنهادات ویژه
     $('.special-slider').slick({
+        arrows: false,
         dots: false,
         infinite: false,
         speed: 300,
@@ -135,25 +148,26 @@ $(document).ready(function () {
         slidesToScroll: 1,
         rtl: true,
         responsive: [{
-            breakpoint: 1200,
-            settings: {
-                slidesToShow: 2,
-                slidesToScroll: 1
+                breakpoint: 1200,
+                settings: {
+                    slidesToShow: 2,
+                    slidesToScroll: 1
+                }
+            },
+            {
+                breakpoint: 768,
+                settings: {
+                    variableWidth: true,
+                    slidesToShow: 1,
+                    slidesToScroll: 1
+                }
             }
-        },
-        {
-            breakpoint: 768,
-            settings: {
-                variableWidth: true,
-                slidesToShow: 1,
-                slidesToScroll: 1
-            }
-        }
         ]
     });
 
     // اسلایدر جدیدترین آگهی‌ها
     $('.new-slider').slick({
+        arrows: false,
         dots: false,
         infinite: false,
         speed: 300,
@@ -161,20 +175,23 @@ $(document).ready(function () {
         slidesToScroll: 1,
         rtl: true,
         responsive: [{
-            breakpoint: 1200,
-            settings: {
-                slidesToShow: 2,
-                slidesToScroll: 1
+                breakpoint: 1200,
+                settings: {
+                    slidesToShow: 2,
+                    slidesToScroll: 1
+                }
+            },
+            {
+                breakpoint: 768,
+                settings: {
+                    variableWidth: true,
+                    slidesToShow: 1,
+                    slidesToScroll: 1
+                }
             }
-        },
-        {
-            breakpoint: 768,
-            settings: {
-                variableWidth: true,
-                slidesToShow: 1,
-                slidesToScroll: 1
-            }
-        }
         ]
     });
+
+
+
 });

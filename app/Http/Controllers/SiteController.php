@@ -13,6 +13,11 @@ class SiteController extends Controller
         // return view('car_deatils');
         return view('site.home');
     }
+    public function cars()
+    {
+        // return view('car_deatils');
+        return view('site.cars');
+    }
     public function car_single($slug)
     {
         // اول ماشین رو بگیر و relation های لازم رو eager load کن

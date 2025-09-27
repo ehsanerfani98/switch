@@ -9,11 +9,11 @@ use App\Models\Setting;
 use App\Models\Slider;
 use App\Models\Useddiscount;
 use App\Models\User;
-use App\Models\UserSubscription;
 use App\Models\UserSubscriptionUsage;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 // if (!function_exists('getRoles')) {
 //     function getRoles()
@@ -570,4 +570,10 @@ function getUnreadCount($fromUserId, $toUserId)
         $str = preg_replace('/[\s\-]+/u', '-', $str);
         // - اضافی ابتدا/انتها را بردار
         return trim($str, '-');
+    }
+
+
+    function text_limit($text, $limit = 100, $end = '...')
+    {
+        return Str::limit(strip_tags($text), $limit, $end);
     }

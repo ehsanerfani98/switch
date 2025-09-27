@@ -25,73 +25,21 @@
         content="سامانه خرید و فروش خودروهای نو و کارکرده خارجی، خرید و فروش خودرو بی دغدغه، بی ریسک و بی معطلی توسط الوماشین در تهران">
     <meta property="twitter:image"
         content="https://file.switch.ir/api/v1/webp/1728/528/80/0ab739b0-9e2a-4969-97c9-90f04b071b99.webp">
-
     <!-- فاوآیکون -->
     <link rel="icon" type="image/png" sizes="32x32" href="https://img.icons8.com/color/48/car--v1.png">
-
-
-
     <!-- فونت‌ها -->
     <link rel="stylesheet" href="{{ asset('admin/assets/css/font.css') }}">
-
-
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
     <!-- Slick Slider -->
     <link rel="stylesheet" type="text/css"
         href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css" />
     <link rel="stylesheet" type="text/css"
         href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css" />
-
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        'vazir': ['Vazirmatn', 'sans-serif'],
-                    },
-                    colors: {
-                        primary: '#2563eb',
-                        secondary: '#10b981',
-                        accent: '#f0f9ff',
-                        'text-dark': '#1f2937',
-                        'text-medium': '#374151',
-                        'text-light': '#6b7280',
-                        'text-lighter': '#9ca3af',
-                        'border-color': '#e5e7eb',
-                    },
-                    boxShadow: {
-                        'custom': '0 1px 3px rgba(0, 0, 0, 0.1)',
-                        'custom-light': '0 4px 6px rgba(0, 0, 0, 0.05)',
-                    },
-                    animation: {
-                        'slide-in-right': 'slideInRight 0.3s ease-out',
-                    },
-                    keyframes: {
-                        slideInRight: {
-                            '0%': {
-                                transform: 'translateX(100%)'
-                            },
-                            '100%': {
-                                transform: 'translateX(0)'
-                            },
-                        }
-                    }
-                },
-            }
-        }
-    </script>
-    <style type="text/tailwindcss">
-        @layer utilities {
-            .content-auto {
-                content-visibility: auto;
-            }
-        }
-    </style>
-
+    <script src="{{ asset('site-assets/js/tailwind.js') }}"></script>
+    <link rel="stylesheet" href="{{ asset('site-assets/css/tailwind.css') }}">
     <!-- اسکریپت‌های ضروری -->
     <script type="application/ld+json">
     {
@@ -101,67 +49,8 @@
       "url": "https://www.switch.ir/"
     }
   </script>
-
-    <style>
-        /* استایل‌های Slick Slider */
-        .slick-prev,
-        .slick-next {
-            width: 40px;
-            height: 40px;
-            z-index: 1;
-        }
-
-        .slick-prev {
-            left: 10px;
-        }
-
-        .slick-next {
-            right: 10px;
-        }
-
-        .slick-prev:before,
-        .slick-next:before {
-            font-size: 34px;
-            color: #cfcfcf;
-        }
-
-        .slick-dots li button:before {
-            font-size: 12px;
-        }
-
-        /* رفع مشکل اسکرول افقی */
-        html,
-        body {
-            overflow-x: hidden;
-            width: 100%;
-            position: relative;
-        }
-
-        * {
-            box-sizing: border-box;
-        }
-
-        img,
-        video,
-        iframe {
-            max-width: 100%;
-            height: auto;
-        }
-
-        .container {
-            max-width: 100%;
-        }
-
-        .slick-list.draggable {
-            padding: 10px;
-        }
-    </style>
-
-
-@stack('styles')
-
-
-
+    <link rel="stylesheet" href="{{ asset('site-assets/css/style.css') }}">
+    @stack('styles')
 </head>
 
 <body class="font-vazir text-text-medium bg-white leading-relaxed">
@@ -257,7 +146,7 @@
         </div>
     </div>
 
- @yield('content')
+    @yield('content')
 
     <!-- فوتر -->
     <footer class="bg-text-dark text-white py-12 pb-5">
@@ -385,209 +274,8 @@
     <!-- اسکریپت‌ها -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
-    <script>
-        // دکمه بازگشت به بالا
-        const scrollTopBtn = document.querySelector('.scroll-top');
-
-        window.addEventListener('scroll', () => {
-            if (window.pageYOffset > 300) {
-                scrollTopBtn.classList.add('show', 'opacity-100', 'visible');
-                scrollTopBtn.classList.remove('opacity-0', 'invisible');
-            } else {
-                scrollTopBtn.classList.remove('show', 'opacity-100', 'visible');
-                scrollTopBtn.classList.add('opacity-0', 'invisible');
-            }
-        });
-
-        scrollTopBtn.addEventListener('click', () => {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-        });
-
-        // منوی موبایل اسلایدر
-        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
-        const closeMenuBtn = document.querySelector('.close-menu-btn');
-        const mobileMenuOverlay = document.querySelector('.mobile-menu-overlay');
-        const mobileMenu = document.querySelector('.mobile-menu');
-        const mobileMenuLinks = document.querySelectorAll('.mobile-menu-nav li a');
-
-        // باز کردن منوی موبایل
-        mobileMenuBtn.addEventListener('click', () => {
-            mobileMenuOverlay.classList.add('opacity-100', 'visible');
-            mobileMenuOverlay.classList.remove('opacity-0', 'invisible');
-            mobileMenu.classList.add('right-0');
-            mobileMenu.classList.remove('-right-80');
-            document.body.style.overflow = 'hidden'; // جلوگیری از اسکرول صفحه
-        });
-
-        // بستن منوی موبایل
-        function closeMobileMenu() {
-            mobileMenuOverlay.classList.remove('opacity-100', 'visible');
-            mobileMenuOverlay.classList.add('opacity-0', 'invisible');
-            mobileMenu.classList.remove('right-0');
-            mobileMenu.classList.add('-right-80');
-            document.body.style.overflow = ''; // بازگرداندن اسکرول صفحه
-        }
-
-        closeMenuBtn.addEventListener('click', closeMobileMenu);
-        mobileMenuOverlay.addEventListener('click', closeMobileMenu);
-
-        // بستن منو با کلیک روی لینک‌ها
-        mobileMenuLinks.forEach(link => {
-            link.addEventListener('click', closeMobileMenu);
-        });
-
-        // جستجو
-        // const searchForm = document.querySelector('.search-form');
-
-        // searchForm.addEventListener('submit', (e) => {
-        //     e.preventDefault();
-        //     const searchInput = document.querySelector('.search-input');
-        //     const searchTerm = searchInput.value.trim();
-
-        //     if (searchTerm) {
-        //         console.log('جستجو برای:', searchTerm);
-        //     }
-        // });
-
-        // اسلایدرها با Slick
-        $(document).ready(function() {
-            // اسلایدر برندها
-            $('.brands-slider').slick({
-                dots: false,
-                infinite: true,
-                autoplay: true,
-                speed: 300,
-                slidesToShow: 6,
-                slidesToScroll: 1,
-                variableWidth: true,
-                rtl: true,
-                responsive: [{
-                        breakpoint: 1200,
-                        settings: {
-                            arrows: false,
-                            slidesToShow: 5,
-                            slidesToScroll: 1
-                        }
-                    },
-                    {
-                        breakpoint: 992,
-                        settings: {
-                            arrows: false,
-                            slidesToShow: 4,
-                            slidesToScroll: 1
-                        }
-                    },
-                    {
-                        breakpoint: 768,
-                        settings: {
-                            arrows: false,
-                            slidesToShow: 3,
-                            slidesToScroll: 1
-                        }
-                    },
-                    {
-                        breakpoint: 576,
-                        settings: {
-                            arrows: false,
-                            slidesToShow: 2,
-                            slidesToScroll: 1
-                        }
-                    }
-                ]
-            });
-
-            // اسلایدر بودجه‌ها
-            $('.budget-slider').slick({
-                arrows: false,
-                dots: false,
-                infinite: false,
-                speed: 300,
-                slidesToShow: 4,
-                slidesToScroll: 1,
-                rtl: true,
-                responsive: [{
-                        breakpoint: 1200,
-                        settings: {
-                            slidesToShow: 2,
-                            slidesToScroll: 1
-                        }
-                    },
-                    {
-                        breakpoint: 768,
-                        settings: {
-                            variableWidth: true,
-                            slidesToShow: 1,
-                            slidesToScroll: 1
-                        }
-                    }
-                ]
-            });
-
-            // اسلایدر پیشنهادات ویژه
-            $('.special-slider').slick({
-                arrows: false,
-                dots: false,
-                infinite: false,
-                speed: 300,
-                slidesToShow: 4,
-                slidesToScroll: 1,
-                rtl: true,
-                responsive: [{
-                        breakpoint: 1200,
-                        settings: {
-                            slidesToShow: 2,
-                            slidesToScroll: 1
-                        }
-                    },
-                    {
-                        breakpoint: 768,
-                        settings: {
-                            variableWidth: true,
-                            slidesToShow: 1,
-                            slidesToScroll: 1
-                        }
-                    }
-                ]
-            });
-
-            // اسلایدر جدیدترین آگهی‌ها
-            $('.new-slider').slick({
-                arrows: false,
-                dots: false,
-                infinite: false,
-                speed: 300,
-                slidesToShow: 4,
-                slidesToScroll: 1,
-                rtl: true,
-                responsive: [{
-                        breakpoint: 1200,
-                        settings: {
-                            slidesToShow: 2,
-                            slidesToScroll: 1
-                        }
-                    },
-                    {
-                        breakpoint: 768,
-                        settings: {
-                            variableWidth: true,
-                            slidesToShow: 1,
-                            slidesToScroll: 1
-                        }
-                    }
-                ]
-            });
-
-
-
-        });
-    </script>
-
-
-
-@stack('scripts')
+    <script src="{{ asset('site-assets/js/scripts.js') }}"></script>
+    @stack('scripts')
 </body>
 
 </html>

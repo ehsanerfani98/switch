@@ -38,6 +38,9 @@ use Illuminate\Support\Facades\Log;
 use App\Services\TelegramService\TelegramService;
 use Illuminate\Http\Request;
 use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\QueryBuilder;
+use App\Http\Resources\CarResource;
+use App\Models\Attribute;
 
 /*
 |--------------------------------------------------------------------------
@@ -53,7 +56,34 @@ use Spatie\QueryBuilder\AllowedFilter;
 
 // Site Routes
 Route::get('/', [ControllersSiteController::class, 'home'])->name('home');
+Route::get('/cars', [ControllersSiteController::class, 'cars'])->name('cars');
 Route::get('/car/{slug}', [ControllersSiteController::class, 'car_single'])->name('car');
+Route::get('/testfilter', function () {
+    $filters = Attribute::where('is_active', 1)->pluck('slug')
+        ->map(fn($slug) => AllowedFilter::custom($slug, new CarFilter()))
+        ->toArray();
+    $cars = QueryBuilder::for(Car::with(['attributeValues.attribute', 'attributeValues.attributeValue']))
+        ->allowedFilters($filters)
+        ->get();
+    return CarResource::collection($cars);
+});
+Route::get('/attributes', function () {
+    return Attribute::where('is_active', 1)
+        ->with('values')
+        ->get()
+        ->map(function ($attr) {
+            $data = $attr->toArray();
+
+            if ($attr->type === 'range') {
+                // $data['min'] = $attr->carValues()->min('value_number') ?? 0;
+                $data['min'] = 0;
+                $data['max'] = $attr->carValues()->max('value_number') ?? 100;
+            }
+
+            return $data;
+        });
+});
+
 
 
 Auth::routes();
@@ -353,52 +383,4 @@ Route::post('/telegram/webhook', function (Request $request, TelegramService $te
     Log::info($update);
     $telegram->handleUpdate($update);
     return response()->json(['ok' => true]);
-});
-
-use Spatie\QueryBuilder\QueryBuilder;
-// Route::get('/testfilter', function () {
-
-//     $cars = QueryBuilder::for(Car::with(['attributeValues.attribute', 'attributeValues.attributeValue']))
-//         ->allowedFilters([
-//             AllowedFilter::custom('color', new CarFilter()),
-//             AllowedFilter::custom('year', new CarFilter()),
-//         ])
-//         ->get();
-
-//     return $cars;
-// });
-use App\Http\Resources\CarResource;
-use App\Models\Attribute;
-
-Route::get('/testfilter', function () {
-    $filters = Attribute::where('is_active', 1)->pluck('slug')
-        ->map(fn($slug) => AllowedFilter::custom($slug, new CarFilter()))
-        ->toArray();
-    $cars = QueryBuilder::for(Car::with(['attributeValues.attribute', 'attributeValues.attributeValue']))
-        ->allowedFilters($filters)
-        ->get();
-    return CarResource::collection($cars);
-});
-
-Route::get('/attributes', function () {
-    return Attribute::where('is_active', 1)
-        ->with('values')
-        ->get()
-        ->map(function ($attr) {
-            $data = $attr->toArray();
-
-            if ($attr->type === 'range') {
-                // $data['min'] = $attr->carValues()->min('value_number') ?? 0;
-                $data['min'] = 0;
-                $data['max'] = $attr->carValues()->max('value_number') ?? 100;
-            }
-
-            return $data;
-        });
-});
-
-
-
-Route::get('/cars', function () {
-    return view('cars');
 });
