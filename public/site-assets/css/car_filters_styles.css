@@ -1,0 +1,229 @@
+body{
+    background-color: #F6F7F9 !important;
+}
+
+/* استایل‌های اسلایدر بهبود یافته */
+        .range-slider-wrapper {
+            margin: 20px 0;
+            position: relative;
+        }
+
+        .range-slider {
+            height: 8px;
+            background: #e5e7eb;
+            border-radius: 4px;
+            position: relative;
+            margin: 30px 0;
+        }
+
+        .range-slider .noUi-connect {
+            background: linear-gradient(90deg, #3b82f6, #2563eb);
+            height: 8px;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(37, 99, 235, 0.3);
+        }
+
+        .range-slider .noUi-handle {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: #ffffff;
+            border: 3px solid #2563eb;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+            cursor: grab;
+            top: -8px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .range-slider .noUi-handle:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4);
+        }
+
+        .range-slider .noUi-handle:active {
+            cursor: grabbing;
+            transform: scale(1.15);
+        }
+
+        .range-slider .noUi-handle:before,
+        .range-slider .noUi-handle:after {
+            display: none;
+        }
+
+        .range-values {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+            position: relative;
+        }
+
+        .range-value {
+            background: #f3f4f6;
+            border: 1px solid #e5e7eb;
+            border-radius: 6px;
+            padding: 8px 12px;
+            font-size: 14px;
+            font-weight: 500;
+            color: #374151;
+            min-width: 100px;
+            text-align: center;
+            position: relative;
+        }
+
+        .range-value.min {
+            margin-right: 15px;
+        }
+
+        .range-value.max {
+            margin-left: 15px;
+        }
+
+        .range-value::before {
+            content: '';
+            position: absolute;
+            top: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-bottom: 8px solid #e5e7eb;
+        }
+
+        .range-value::after {
+            content: '';
+            position: absolute;
+            top: -7px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 7px solid transparent;
+            border-right: 7px solid transparent;
+            border-bottom: 7px solid #f3f4f6;
+        }
+
+        .range-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 5px;
+            font-size: 12px;
+            color: #6b7280;
+        }
+
+        .range-label {
+            text-align: center;
+        }
+
+        .range-label.min {
+            margin-right: 15px;
+        }
+
+        .range-label.max {
+            margin-left: 15px;
+        }
+
+        /* استایل‌های سوییچ بولین */
+        .switch-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 48px;
+            height: 24px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 24px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked+.slider {
+            background-color: #2563eb;
+        }
+
+        input:focus+.slider {
+            box-shadow: 0 0 1px #2563eb;
+        }
+
+        input:checked+.slider:before {
+            transform: translateX(24px);
+        }
+
+        /* استایل‌های آکاردئون */
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+
+        .accordion-filter.active .accordion-content {
+            max-height: 500px;
+        }
+
+        .accordion-filter.active .accordion-icon {
+            transform: rotate(180deg);
+        }
+
+        /* استایل‌های کارت ماشین */
+        .car-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .car-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        /* بهبود نمایش در دستگاه‌های کوچک */
+        @media (max-width: 768px) {
+            .car-attributes {
+                font-size: 0.8rem;
+            }
+
+            .car-actions {
+                flex-wrap: wrap;
+                gap: 0.5rem;
+            }
+
+            .car-actions button {
+                flex: 1;
+                min-width: 80px;
+            }
+
+            .range-value {
+                min-width: 80px;
+                padding: 6px 10px;
+                font-size: 12px;
+            }
+        }
