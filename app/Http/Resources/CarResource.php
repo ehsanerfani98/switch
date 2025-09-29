@@ -14,11 +14,45 @@ class CarResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        $statusIcon = 'fas fa-question-circle';
+        $statusColor = '#999';
+        $statusLabel = 'نامشخص';
+
+        switch ($this->status) {
+            case 'assessed':
+                $statusIcon = 'fas fa-check-circle';
+                $bgColor = 'rgba(16, 185, 129, 0.12)';
+                $statusColor = '#10b981';
+                $statusLabel = 'کارشناسی شده';
+                break;
+
+            case 'inreview':
+                $statusIcon = 'fas fa-clock';
+                $bgColor = '#ffab1c17';
+                $statusColor = '#ffab1c';
+                $statusLabel = 'در حال کارشناسی';
+                break;
+
+            case 'sold':
+                $statusIcon = 'fas fa-times-circle';
+                $bgColor = '#e74c3c14';
+                $statusColor = '#e74c3c';
+                $statusLabel = 'فروخته شد';
+                break;
+        }
+
         return [
             'id'          => $this->id,
             'title'       => $this->title,
             'slug'        => $this->slug,
             'description' => $this->description,
+            'status' => [
+                "statusIcon" => $statusIcon,
+                "bgColor" => $bgColor,
+                "statusColor" => $statusColor,
+                "statusLabel" => $statusLabel
+            ],
+
 
             // فیلدهای مستقیم بر اساس scopeValueOf
             'kilometer'   => $this->attributeValues()->valueOf('kilometer'),

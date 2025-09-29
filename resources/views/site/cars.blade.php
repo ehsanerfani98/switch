@@ -6,9 +6,9 @@
     <link rel="stylesheet" href="{{ asset('site-assets/css/car_filters_styles.css') }}">
 @endpush
 @section('content')
-    <div class="container mx-auto px-4 py-6">
+    <div class="container mx-auto py-6">
         <!-- هدر صفحه -->
-        <header class="bg-white rounded-lg shadow-md p-6 mb-6">
+        <header class="bg-white rounded-lg p-6 mb-6">
             <div class="flex flex-col md:flex-row justify-between items-center gap-4">
                 <div class="flex items-center">
                     <i class="fas fa-car text-2xl text-primary ml-3"></i>
@@ -26,7 +26,7 @@
         <div class="flex flex-col lg:flex-row gap-6">
             <!-- سایدبار فیلترها -->
             <aside class="w-full lg:w-1/4">
-                <div class="bg-white rounded-lg shadow-md p-5 sticky top-4">
+                <div class="bg-white rounded-lg  p-5 sticky top-4">
                     <div class="flex justify-between items-center mb-4 pb-3 border-b border-gray-200">
                         <h2 class="text-lg font-bold text-gray-900">فیلترها</h2>
                         <button class="clear-filters text-sm text-primary hover:text-blue-700 transition-colors"
@@ -38,11 +38,11 @@
 
             <!-- محتوای اصلی -->
             <main class="w-full lg:w-3/4">
-                <div class="bg-white rounded-lg shadow-md p-5 mb-6">
+                <div class="bg-white rounded-lg p-5 mb-6">
                     <span class="results-count text-gray-700 font-medium" id="resultsCount">در حال بارگذاری...</span>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6" id="carsContainer">
+                <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-3" id="carsContainer">
                     <!-- محتوای ماشین‌ها اینجا لود می‌شود -->
                 </div>
             </main>

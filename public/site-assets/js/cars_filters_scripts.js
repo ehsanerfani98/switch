@@ -440,27 +440,30 @@ function createCarCard(car) {
     const defaultImage = 'https://file.switch.ir/api/v1/webp/1200/672/80/f5f013e8-fda3-4cbf-9fcd-546b8d087b95.webp';
 
     return `
-        <div class="car-card bg-white rounded-lg shadow-md overflow-hidden" data-car-id="${car.id}">
+        <div class="car-card bg-white rounded-lg overflow-hidden" data-car-id="${car.id}">
             <div class="car-image-container relative">
                 <img src="${car.image || defaultImage}"
-                     class="car-image w-full h-48 object-cover"
+                     class="car-image w-full h-25 object-cover"
                      alt="${car.title}"
                      onerror="this.src='${defaultImage}'">
-                <div class="car-badge absolute top-3 right-3 bg-primary text-white text-xs font-bold px-2 py-1 rounded-full">در حال فروش</div>
+                <div class="car-badge absolute top-3 right-3 bg-black text-white text-xs font-bold px-2 py-1 rounded-lg">امکان خرید قسطی</div>
             </div>
-            <div class="car-card-body p-4">
-                <h5 class="car-title text-lg font-bold text-gray-900 mb-2">${car.title}</h5>
-                <div class="car-attributes space-y-2 mb-4">
+            <div class="car-card-body px-3 py-2">
+                <h5 class="car-title text-lg font-bold text-gray-900 mb-3">${car.title}</h5>
+                <div class="car-attributes space-y-2 mb-2">
                         <div class="attribute-item flex justify-between text-sm">
-                            <span class="attribute-name text-gray-500">کیلومتر</span>
-                            <span class="attribute-value text-gray-900 font-medium">${car.kilometer}</span>
-                        </div>
-                        <div class="attribute-item flex justify-between text-sm">
-                            <span class="attribute-name text-gray-500">گیربکس</span>
-                            <span class="attribute-value text-gray-900 font-medium">${car.gearbox}</span>
+                            <span class="attribute-name text-gray-500">${car.kilometer} کیلومتر - ${car.gearbox}</span>
                         </div>
                 </div>
-               
+                <div class="inline-flex items-center bg-green-100 text-green-800 px-3 py-1 rounded-lg text-xs font-semibold mb-3"
+                    style="color: ${car.status.statusColor}; background-color: ${car.status.bgColor}">
+                    <i class="${car.status.statusIcon} ml-1"></i>
+                    ${car.status.statusLabel}
+                </div>
+               <div class="car-card-footer">
+               <span>قیمت</span>
+               <span class="car-card-price"><small class="card-card-amount">${car.price}</small> <small>تومان</small></span>
+               </div>
             </div>
         </div>
     `;

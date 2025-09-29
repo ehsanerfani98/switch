@@ -227,3 +227,34 @@ body{
                 font-size: 12px;
             }
         }
+
+.car-title{
+    font-size: 14px !important;
+    font-weight: bold;
+}
+
+.car-card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 12px;
+    border-top: 1px solid #e7e7e7;
+    padding-top: 10px;
+}
+
+.car-card-footer small{
+    font-size: 12px;
+}
+
+.card-card-amount{
+    font-size: 14px !important; 
+    font-weight: bold;
+}
+
+.container {
+    max-width: 1308px !important;
+}
+
+span.attribute-name {
+    font-size: 12px;
+}
