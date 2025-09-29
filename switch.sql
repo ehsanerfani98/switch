@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost:3306
--- Generation Time: Sep 27, 2025 at 07:31 AM
--- Server version: 8.0.30
--- PHP Version: 8.2.23
+-- Host: 127.0.0.1
+-- Generation Time: Sep 29, 2025 at 12:10 PM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -28,17 +28,18 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `attributes` (
-  `id` bigint UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `slug` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `label` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `icon` varchar(256) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `type` enum('string','number','boolean','select','range') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'string',
-  `is_multiple` tinyint(1) NOT NULL DEFAULT '0',
-  `show_in_card` tinyint NOT NULL DEFAULT '0',
-  `format_thousands` tinyint NOT NULL DEFAULT '0',
-  `is_active` tinyint(1) NOT NULL DEFAULT '1',
-  `sort_order` smallint UNSIGNED NOT NULL DEFAULT '0',
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `slug` varchar(255) NOT NULL,
+  `label` varchar(255) NOT NULL,
+  `icon` varchar(256) DEFAULT NULL,
+  `type` enum('string','number','boolean','select','range') NOT NULL DEFAULT 'string',
+  `is_multiple` tinyint(1) NOT NULL DEFAULT 0,
+  `show_in_card` tinyint(4) NOT NULL DEFAULT 0,
+  `is_filter` tinyint(4) NOT NULL DEFAULT 0,
+  `format_thousands` tinyint(4) NOT NULL DEFAULT 0,
+  `is_active` tinyint(1) NOT NULL DEFAULT 1,
+  `sort_order` smallint(5) UNSIGNED NOT NULL DEFAULT 0,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -47,11 +48,13 @@ CREATE TABLE `attributes` (
 -- Dumping data for table `attributes`
 --
 
-INSERT INTO `attributes` (`id`, `name`, `slug`, `label`, `icon`, `type`, `is_multiple`, `show_in_card`, `format_thousands`, `is_active`, `sort_order`, `created_at`, `updated_at`) VALUES
-(1, 'color', 'color', 'رنگ', 'fas fa-palette', 'select', 0, 1, 0, 1, 1, '2025-09-15 09:14:27', '2025-09-25 17:40:07'),
-(2, 'year', 'year', 'سال تولید', 'fas fa-calendar', 'select', 0, 1, 0, 1, 2, '2025-09-15 09:14:47', '2025-09-25 18:06:07'),
-(3, 'price', 'price', 'قیمت', 'fas fa-money-bill', 'range', 0, 0, 1, 1, 4, '2025-09-15 10:49:25', '2025-09-26 12:38:07'),
-(4, 'insurance', 'insurance', 'بیمه', 'fas fa-shield-alt', 'boolean', 0, 1, 1, 1, 3, '2025-09-16 07:52:47', '2025-09-25 18:05:46');
+INSERT INTO `attributes` (`id`, `name`, `slug`, `label`, `icon`, `type`, `is_multiple`, `show_in_card`, `is_filter`, `format_thousands`, `is_active`, `sort_order`, `created_at`, `updated_at`) VALUES
+(1, 'color', 'color', 'رنگ', 'fas fa-palette', 'select', 0, 1, 1, 0, 1, 1, '2025-09-15 09:14:27', '2025-09-29 07:51:53'),
+(2, 'year', 'year', 'سال تولید', 'fas fa-calendar', 'select', 0, 1, 1, 0, 1, 2, '2025-09-15 09:14:47', '2025-09-29 07:51:56'),
+(3, 'price', 'price', 'قیمت', 'fas fa-money-bill', 'range', 0, 0, 1, 1, 1, 4, '2025-09-15 10:49:25', '2025-09-29 07:54:50'),
+(4, 'insurance', 'insurance', 'بیمه', 'fas fa-shield-alt', 'boolean', 0, 1, 1, 1, 1, 3, '2025-09-16 07:52:47', '2025-09-29 07:55:35'),
+(5, 'gearbox', 'gearbox', 'نوع گیربکس', NULL, 'select', 0, 0, 1, 0, 1, 5, '2025-09-29 08:24:12', '2025-09-29 08:24:12'),
+(6, 'kilometer', 'kilometer', 'کیلومتر', NULL, 'range', 0, 0, 1, 1, 1, 6, '2025-09-29 08:26:00', '2025-09-29 08:26:00');
 
 -- --------------------------------------------------------
 
@@ -60,10 +63,10 @@ INSERT INTO `attributes` (`id`, `name`, `slug`, `label`, `icon`, `type`, `is_mul
 --
 
 CREATE TABLE `attribute_values` (
-  `id` bigint UNSIGNED NOT NULL,
-  `attribute_id` bigint UNSIGNED NOT NULL,
-  `value` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `slug` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `attribute_id` bigint(20) UNSIGNED NOT NULL,
+  `value` varchar(255) NOT NULL,
+  `slug` varchar(255) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -77,7 +80,9 @@ INSERT INTO `attribute_values` (`id`, `attribute_id`, `value`, `slug`, `created_
 (2, 1, 'مشکی', 'black', '2025-09-15 09:15:11', '2025-09-15 09:15:11'),
 (3, 2, '1394', '1394', '2025-09-15 09:15:57', '2025-09-15 09:15:57'),
 (4, 2, '1404', '1404', '2025-09-15 09:15:57', '2025-09-15 09:15:57'),
-(5, 1, 'خاکستری', 'gray', '2025-09-17 07:47:53', '2025-09-17 07:47:53');
+(5, 1, 'خاکستری', 'gray', '2025-09-17 07:47:53', '2025-09-17 07:47:53'),
+(6, 5, 'اتومات', 'automatic', '2025-09-29 08:28:41', '2025-09-29 08:28:41'),
+(7, 5, 'دنده ای', 'gear', '2025-09-29 08:30:41', '2025-09-29 08:30:55');
 
 -- --------------------------------------------------------
 
@@ -86,12 +91,12 @@ INSERT INTO `attribute_values` (`id`, `attribute_id`, `value`, `slug`, `created_
 --
 
 CREATE TABLE `banners` (
-  `id` bigint UNSIGNED NOT NULL,
-  `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `image` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `link` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `order` int NOT NULL DEFAULT '0',
-  `is_active` tinyint(1) NOT NULL DEFAULT '1',
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `title` varchar(255) DEFAULT NULL,
+  `image` varchar(255) NOT NULL,
+  `link` varchar(255) DEFAULT NULL,
+  `order` int(11) NOT NULL DEFAULT 0,
+  `is_active` tinyint(1) NOT NULL DEFAULT 1,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -111,13 +116,13 @@ INSERT INTO `banners` (`id`, `title`, `image`, `link`, `order`, `is_active`, `cr
 --
 
 CREATE TABLE `cars` (
-  `id` bigint UNSIGNED NOT NULL,
-  `thumbnail` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `gallery` json DEFAULT NULL,
-  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `slug` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `description` text COLLATE utf8mb4_unicode_ci,
-  `status` enum('inreview','assessed','sold') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'inreview',
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `thumbnail` varchar(255) DEFAULT NULL,
+  `gallery` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`gallery`)),
+  `title` varchar(255) NOT NULL,
+  `slug` varchar(255) NOT NULL,
+  `description` text DEFAULT NULL,
+  `status` enum('inreview','assessed','sold') NOT NULL DEFAULT 'inreview',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -127,7 +132,7 @@ CREATE TABLE `cars` (
 --
 
 INSERT INTO `cars` (`id`, `thumbnail`, `gallery`, `title`, `slug`, `description`, `status`, `created_at`, `updated_at`) VALUES
-(16, '/media-upload/YJ08ZCC54Vgi4ihEwVyRLEwIY6K0plpvdkVUcqCc.webp', '[\"/media-upload/YJ08ZCC54Vgi4ihEwVyRLEwIY6K0plpvdkVUcqCc.webp\", \"/media-upload/tnuRlLBQva4qqgfKg2CSiqruq2mBBsDK147CZ40U.webp\", \"/media-upload/qA1kk8oEJb1CuQaUguw2yzbjl2MPrh4kKIow4tfb.webp\", \"/media-upload/Vgn05y2GMtFYRu0FW1U9UrOKeSMAVWBQCcMW2aE5.webp\", \"/media-upload/ffGaGLGktO8Spb7OGRPaxolsxzFsw2KcmPKvN4zW.webp\"]', 'بنز کلاس E 2011', 'بنز-کلاس-E-2011', '<p>بنز کلاس E 350 مدل 2011 یک سدان لوکس و قدرتمند است که با موتور V6 با حجم 3.5 لیتر ارائه می&zwnj;شود. این خودرو با طراحی کلاسیک و مدرن، امکانات رفاهی و ایمنی بالایی را در اختیار سرنشینان قرار می&zwnj;دهد. مدل فول این خودرو شامل تمامی آپشن&zwnj;های روز مانند سیستم صوتی حرفه&zwnj;ای، سیستم ناوبری، دوربین&zwnj;های 360 درجه، سیستم تهویه مطبوع چهار منطقه&zwnj;ای، صندلی&zwnj;های چرمی با قابلیت تنظیم برقی و گرمکن و سردکن صندلی&zwnj;ها می&zwnj;باشد.</p>\r\n\r\n<p>این خودرو با کارکرد 158,669 کیلومتر در شرایط بسیار خوبی قرار دارد و تمامی سرویس&zwnj;های دوره&zwnj;ای آن به موقع انجام شده است. رنگ داخلی مشکی با چرم مرغوب و نمای خارجی سفید براق، ظاهری شیک و لاکچری به این بخش داده است. سیستم تعلیق و فرمان این خودرو عملکرد بسیار نرم و دقیقی دارد و مصرف سوخت آن برای یک خودروی لوکس در این کلاس مناسب است.</p>', 'inreview', '2025-09-25 16:13:48', '2025-09-26 13:06:27');
+(16, '/media-upload/YJ08ZCC54Vgi4ihEwVyRLEwIY6K0plpvdkVUcqCc.webp', '[\"/media-upload/YJ08ZCC54Vgi4ihEwVyRLEwIY6K0plpvdkVUcqCc.webp\", \"/media-upload/tnuRlLBQva4qqgfKg2CSiqruq2mBBsDK147CZ40U.webp\", \"/media-upload/qA1kk8oEJb1CuQaUguw2yzbjl2MPrh4kKIow4tfb.webp\", \"/media-upload/Vgn05y2GMtFYRu0FW1U9UrOKeSMAVWBQCcMW2aE5.webp\", \"/media-upload/ffGaGLGktO8Spb7OGRPaxolsxzFsw2KcmPKvN4zW.webp\"]', 'بنز کلاس E 2011', 'بنز-کلاس-E-2011', '<p>بنز کلاس E 350 مدل 2011 یک سدان لوکس و قدرتمند است که با موتور V6 با حجم 3.5 لیتر ارائه می&zwnj;شود. این خودرو با طراحی کلاسیک و مدرن، امکانات رفاهی و ایمنی بالایی را در اختیار سرنشینان قرار می&zwnj;دهد. مدل فول این خودرو شامل تمامی آپشن&zwnj;های روز مانند سیستم صوتی حرفه&zwnj;ای، سیستم ناوبری، دوربین&zwnj;های 360 درجه، سیستم تهویه مطبوع چهار منطقه&zwnj;ای، صندلی&zwnj;های چرمی با قابلیت تنظیم برقی و گرمکن و سردکن صندلی&zwnj;ها می&zwnj;باشد.</p>\r\n\r\n<p>این خودرو با کارکرد 158,669 کیلومتر در شرایط بسیار خوبی قرار دارد و تمامی سرویس&zwnj;های دوره&zwnj;ای آن به موقع انجام شده است. رنگ داخلی مشکی با چرم مرغوب و نمای خارجی سفید براق، ظاهری شیک و لاکچری به این بخش داده است. سیستم تعلیق و فرمان این خودرو عملکرد بسیار نرم و دقیقی دارد و مصرف سوخت آن برای یک خودروی لوکس در این کلاس مناسب است.</p>', 'assessed', '2025-09-25 16:13:48', '2025-09-29 10:05:22');
 
 -- --------------------------------------------------------
 
@@ -136,14 +141,14 @@ INSERT INTO `cars` (`id`, `thumbnail`, `gallery`, `title`, `slug`, `description`
 --
 
 CREATE TABLE `car_attribute_values` (
-  `id` bigint UNSIGNED NOT NULL,
-  `car_id` bigint UNSIGNED NOT NULL,
-  `attribute_id` bigint UNSIGNED NOT NULL,
-  `attribute_value_id` bigint UNSIGNED DEFAULT NULL,
-  `value_string` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `value_number` bigint UNSIGNED DEFAULT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `car_id` bigint(20) UNSIGNED NOT NULL,
+  `attribute_id` bigint(20) UNSIGNED NOT NULL,
+  `attribute_value_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `value_string` varchar(255) DEFAULT NULL,
+  `value_number` bigint(20) UNSIGNED DEFAULT NULL,
   `value_boolean` tinyint(1) DEFAULT NULL,
-  `value_boolean_label` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `value_boolean_label` varchar(255) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -153,10 +158,12 @@ CREATE TABLE `car_attribute_values` (
 --
 
 INSERT INTO `car_attribute_values` (`id`, `car_id`, `attribute_id`, `attribute_value_id`, `value_string`, `value_number`, `value_boolean`, `value_boolean_label`, `created_at`, `updated_at`) VALUES
-(225, 16, 1, 5, NULL, NULL, NULL, NULL, '2025-09-26 13:06:27', '2025-09-26 13:06:27'),
-(226, 16, 2, 3, NULL, NULL, NULL, NULL, '2025-09-26 13:06:27', '2025-09-26 13:06:27'),
-(227, 16, 3, NULL, NULL, 4500000000, NULL, NULL, '2025-09-26 13:06:27', '2025-09-26 13:06:27'),
-(228, 16, 4, NULL, NULL, NULL, 1, 'دارد,ندارد', '2025-09-26 13:06:27', '2025-09-26 13:06:27');
+(240, 16, 1, 5, NULL, NULL, NULL, NULL, '2025-09-29 10:05:22', '2025-09-29 10:05:22'),
+(241, 16, 2, 3, NULL, NULL, NULL, NULL, '2025-09-29 10:05:22', '2025-09-29 10:05:22'),
+(242, 16, 3, NULL, NULL, 4500000000, NULL, NULL, '2025-09-29 10:05:22', '2025-09-29 10:05:22'),
+(243, 16, 4, NULL, NULL, NULL, 1, 'دارد,ندارد', '2025-09-29 10:05:22', '2025-09-29 10:05:22'),
+(244, 16, 6, NULL, NULL, 220000, NULL, NULL, '2025-09-29 10:05:22', '2025-09-29 10:05:22'),
+(245, 16, 5, 6, NULL, NULL, NULL, NULL, '2025-09-29 10:05:22', '2025-09-29 10:05:22');
 
 -- --------------------------------------------------------
 
@@ -165,8 +172,8 @@ INSERT INTO `car_attribute_values` (`id`, `car_id`, `attribute_id`, `attribute_v
 --
 
 CREATE TABLE `car_files` (
-  `id` bigint UNSIGNED NOT NULL,
-  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `title` varchar(255) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -188,9 +195,9 @@ INSERT INTO `car_files` (`id`, `title`, `created_at`, `updated_at`) VALUES
 --
 
 CREATE TABLE `car_file_items` (
-  `id` bigint UNSIGNED NOT NULL,
-  `car_file_id` bigint UNSIGNED NOT NULL,
-  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `car_file_id` bigint(20) UNSIGNED NOT NULL,
+  `title` varchar(255) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -292,11 +299,11 @@ INSERT INTO `car_file_items` (`id`, `car_file_id`, `title`, `created_at`, `updat
 --
 
 CREATE TABLE `car_file_item_values` (
-  `id` bigint UNSIGNED NOT NULL,
-  `car_id` bigint UNSIGNED NOT NULL,
-  `car_file_item_id` bigint UNSIGNED NOT NULL,
-  `status` enum('سالم','نامشخص','رنگ شده','صافکاری بدون رنگ','تعمیر شده','تعویض و مشکل‌دار') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'سالم',
-  `status_description` text COLLATE utf8mb4_unicode_ci,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `car_id` bigint(20) UNSIGNED NOT NULL,
+  `car_file_item_id` bigint(20) UNSIGNED NOT NULL,
+  `status` enum('سالم','نامشخص','رنگ شده','صافکاری بدون رنگ','تعمیر شده','تعویض و مشکل‌دار') NOT NULL DEFAULT 'سالم',
+  `status_description` text DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -306,90 +313,90 @@ CREATE TABLE `car_file_item_values` (
 --
 
 INSERT INTO `car_file_item_values` (`id`, `car_id`, `car_file_item_id`, `status`, `status_description`, `created_at`, `updated_at`) VALUES
-(2442, 16, 32, 'رنگ شده', NULL, '2025-09-26 13:06:27', '2025-09-26 13:06:27'),
-(2443, 16, 33, 'سالم', NULL, '2025-09-26 13:06:27', '2025-09-26 13:06:27'),
-(2444, 16, 34, 'تعویض و مشکل‌دار', NULL, '2025-09-26 13:06:27', '2025-09-26 13:06:27'),
-(2445, 16, 35, 'سالم', NULL, '2025-09-26 13:06:27', '2025-09-26 13:06:27'),
-(2446, 16, 36, 'سالم', NULL, '2025-09-26 13:06:27', '2025-09-26 13:06:27'),
-(2447, 16, 37, 'سالم', NULL, '2025-09-26 13:06:27', '2025-09-26 13:06:27'),
-(2448, 16, 38, 'سالم', NULL, '2025-09-26 13:06:27', '2025-09-26 13:06:27'),
-(2449, 16, 39, 'سالم', NULL, '2025-09-26 13:06:27', '2025-09-26 13:06:27'),
-(2450, 16, 40, 'سالم', NULL, '2025-09-26 13:06:27', '2025-09-26 13:06:27'),
-(2451, 16, 41, 'سالم', NULL, '2025-09-26 13:06:27', '2025-09-26 13:06:27'),
-(2452, 16, 42, 'سالم', NULL, '2025-09-26 13:06:27', '2025-09-26 13:06:27'),
-(2453, 16, 43, 'سالم', NULL, '2025-09-26 13:06:27', '2025-09-26 13:06:27'),
-(2454, 16, 44, 'سالم', NULL, '2025-09-26 13:06:27', '2025-09-26 13:06:27'),
-(2455, 16, 45, 'سالم', NULL, '2025-09-26 13:06:27', '2025-09-26 13:06:27'),
-(2456, 16, 46, 'سالم', NULL, '2025-09-26 13:06:27', '2025-09-26 13:06:27'),
-(2457, 16, 47, 'سالم', NULL, '2025-09-26 13:06:27', '2025-09-26 13:06:27'),
-(2458, 16, 48, 'سالم', NULL, '2025-09-26 13:06:27', '2025-09-26 13:06:27'),
-(2459, 16, 49, 'صافکاری بدون رنگ', NULL, '2025-09-26 13:06:27', '2025-09-26 13:06:27'),
-(2460, 16, 50, 'سالم', NULL, '2025-09-26 13:06:27', '2025-09-26 13:06:27'),
-(2461, 16, 51, 'سالم', NULL, '2025-09-26 13:06:27', '2025-09-26 13:06:27'),
-(2462, 16, 52, 'سالم', NULL, '2025-09-26 13:06:27', '2025-09-26 13:06:27'),
-(2463, 16, 53, 'سالم', NULL, '2025-09-26 13:06:27', '2025-09-26 13:06:27'),
-(2464, 16, 54, 'نامشخص', NULL, '2025-09-26 13:06:27', '2025-09-26 13:06:27'),
-(2465, 16, 55, 'سالم', NULL, '2025-09-26 13:06:27', '2025-09-26 13:06:27'),
-(2466, 16, 56, 'تعمیر شده', NULL, '2025-09-26 13:06:27', '2025-09-26 13:06:27'),
-(2467, 16, 57, 'سالم', NULL, '2025-09-26 13:06:27', '2025-09-26 13:06:27'),
-(2468, 16, 31, 'سالم', NULL, '2025-09-26 13:06:27', '2025-09-26 13:06:27'),
-(2469, 16, 58, 'سالم', NULL, '2025-09-26 13:06:27', '2025-09-26 13:06:27'),
-(2470, 16, 59, 'سالم', NULL, '2025-09-26 13:06:27', '2025-09-26 13:06:27'),
-(2471, 16, 60, 'سالم', NULL, '2025-09-26 13:06:27', '2025-09-26 13:06:27'),
-(2472, 16, 61, 'سالم', NULL, '2025-09-26 13:06:27', '2025-09-26 13:06:27'),
-(2473, 16, 62, 'سالم', NULL, '2025-09-26 13:06:27', '2025-09-26 13:06:27'),
-(2474, 16, 63, 'سالم', NULL, '2025-09-26 13:06:27', '2025-09-26 13:06:27'),
-(2475, 16, 64, 'سالم', NULL, '2025-09-26 13:06:27', '2025-09-26 13:06:27'),
-(2476, 16, 65, 'سالم', NULL, '2025-09-26 13:06:27', '2025-09-26 13:06:27'),
-(2477, 16, 66, 'رنگ شده', NULL, '2025-09-26 13:06:27', '2025-09-26 13:06:27'),
-(2478, 16, 67, 'سالم', NULL, '2025-09-26 13:06:27', '2025-09-26 13:06:27'),
-(2479, 16, 68, 'سالم', NULL, '2025-09-26 13:06:27', '2025-09-26 13:06:27'),
-(2480, 16, 69, 'سالم', NULL, '2025-09-26 13:06:27', '2025-09-26 13:06:27'),
-(2481, 16, 70, 'سالم', NULL, '2025-09-26 13:06:27', '2025-09-26 13:06:27'),
-(2482, 16, 71, 'سالم', NULL, '2025-09-26 13:06:27', '2025-09-26 13:06:27'),
-(2483, 16, 72, 'سالم', NULL, '2025-09-26 13:06:27', '2025-09-26 13:06:27'),
-(2484, 16, 73, 'سالم', NULL, '2025-09-26 13:06:27', '2025-09-26 13:06:27'),
-(2485, 16, 74, 'سالم', NULL, '2025-09-26 13:06:27', '2025-09-26 13:06:27'),
-(2486, 16, 75, 'صافکاری بدون رنگ', NULL, '2025-09-26 13:06:27', '2025-09-26 13:06:27'),
-(2487, 16, 76, 'سالم', NULL, '2025-09-26 13:06:27', '2025-09-26 13:06:27'),
-(2488, 16, 77, 'سالم', NULL, '2025-09-26 13:06:27', '2025-09-26 13:06:27'),
-(2489, 16, 78, 'سالم', NULL, '2025-09-26 13:06:27', '2025-09-26 13:06:27'),
-(2490, 16, 79, 'سالم', NULL, '2025-09-26 13:06:27', '2025-09-26 13:06:27'),
-(2491, 16, 80, 'نامشخص', NULL, '2025-09-26 13:06:27', '2025-09-26 13:06:27'),
-(2492, 16, 81, 'تعمیر شده', NULL, '2025-09-26 13:06:27', '2025-09-26 13:06:27'),
-(2493, 16, 82, 'سالم', NULL, '2025-09-26 13:06:27', '2025-09-26 13:06:27'),
-(2494, 16, 83, 'سالم', NULL, '2025-09-26 13:06:27', '2025-09-26 13:06:27'),
-(2495, 16, 84, 'سالم', NULL, '2025-09-26 13:06:27', '2025-09-26 13:06:27'),
-(2496, 16, 85, 'سالم', NULL, '2025-09-26 13:06:27', '2025-09-26 13:06:27'),
-(2497, 16, 86, 'رنگ شده', NULL, '2025-09-26 13:06:27', '2025-09-26 13:06:27'),
-(2498, 16, 87, 'سالم', NULL, '2025-09-26 13:06:27', '2025-09-26 13:06:27'),
-(2499, 16, 88, 'سالم', NULL, '2025-09-26 13:06:27', '2025-09-26 13:06:27'),
-(2500, 16, 89, 'سالم', NULL, '2025-09-26 13:06:27', '2025-09-26 13:06:27'),
-(2501, 16, 90, 'سالم', NULL, '2025-09-26 13:06:27', '2025-09-26 13:06:27'),
-(2502, 16, 91, 'نامشخص', NULL, '2025-09-26 13:06:27', '2025-09-26 13:06:27'),
-(2503, 16, 92, 'سالم', NULL, '2025-09-26 13:06:27', '2025-09-26 13:06:27'),
-(2504, 16, 93, 'سالم', NULL, '2025-09-26 13:06:27', '2025-09-26 13:06:27'),
-(2505, 16, 94, 'تعمیر شده', NULL, '2025-09-26 13:06:27', '2025-09-26 13:06:27'),
-(2506, 16, 95, 'سالم', NULL, '2025-09-26 13:06:27', '2025-09-26 13:06:27'),
-(2507, 16, 96, 'سالم', NULL, '2025-09-26 13:06:27', '2025-09-26 13:06:27'),
-(2508, 16, 97, 'سالم', NULL, '2025-09-26 13:06:27', '2025-09-26 13:06:27'),
-(2509, 16, 98, 'نامشخص', NULL, '2025-09-26 13:06:27', '2025-09-26 13:06:27'),
-(2510, 16, 99, 'سالم', NULL, '2025-09-26 13:06:27', '2025-09-26 13:06:27'),
-(2511, 16, 100, 'سالم', NULL, '2025-09-26 13:06:27', '2025-09-26 13:06:27'),
-(2512, 16, 101, 'سالم', NULL, '2025-09-26 13:06:27', '2025-09-26 13:06:27'),
-(2513, 16, 102, 'سالم', NULL, '2025-09-26 13:06:27', '2025-09-26 13:06:27'),
-(2514, 16, 103, 'تعمیر شده', NULL, '2025-09-26 13:06:27', '2025-09-26 13:06:27'),
-(2515, 16, 104, 'صافکاری بدون رنگ', NULL, '2025-09-26 13:06:27', '2025-09-26 13:06:27'),
-(2516, 16, 105, 'نامشخص', NULL, '2025-09-26 13:06:27', '2025-09-26 13:06:27'),
-(2517, 16, 106, 'سالم', NULL, '2025-09-26 13:06:27', '2025-09-26 13:06:27'),
-(2518, 16, 107, 'تعمیر شده', NULL, '2025-09-26 13:06:27', '2025-09-26 13:06:27'),
-(2519, 16, 108, 'سالم', NULL, '2025-09-26 13:06:27', '2025-09-26 13:06:27'),
-(2520, 16, 109, 'سالم', NULL, '2025-09-26 13:06:27', '2025-09-26 13:06:27'),
-(2521, 16, 110, 'رنگ شده', NULL, '2025-09-26 13:06:27', '2025-09-26 13:06:27'),
-(2522, 16, 111, 'صافکاری بدون رنگ', NULL, '2025-09-26 13:06:27', '2025-09-26 13:06:27'),
-(2523, 16, 112, 'سالم', NULL, '2025-09-26 13:06:27', '2025-09-26 13:06:27'),
-(2524, 16, 113, 'سالم', NULL, '2025-09-26 13:06:27', '2025-09-26 13:06:27'),
-(2525, 16, 114, 'سالم', NULL, '2025-09-26 13:06:27', '2025-09-26 13:06:27');
+(2694, 16, 32, 'رنگ شده', NULL, '2025-09-29 10:05:22', '2025-09-29 10:05:22'),
+(2695, 16, 33, 'سالم', NULL, '2025-09-29 10:05:22', '2025-09-29 10:05:22'),
+(2696, 16, 34, 'تعویض و مشکل‌دار', NULL, '2025-09-29 10:05:22', '2025-09-29 10:05:22'),
+(2697, 16, 35, 'سالم', NULL, '2025-09-29 10:05:22', '2025-09-29 10:05:22'),
+(2698, 16, 36, 'سالم', NULL, '2025-09-29 10:05:22', '2025-09-29 10:05:22'),
+(2699, 16, 37, 'سالم', NULL, '2025-09-29 10:05:22', '2025-09-29 10:05:22'),
+(2700, 16, 38, 'سالم', NULL, '2025-09-29 10:05:22', '2025-09-29 10:05:22'),
+(2701, 16, 39, 'سالم', NULL, '2025-09-29 10:05:22', '2025-09-29 10:05:22'),
+(2702, 16, 40, 'سالم', NULL, '2025-09-29 10:05:22', '2025-09-29 10:05:22'),
+(2703, 16, 41, 'سالم', NULL, '2025-09-29 10:05:22', '2025-09-29 10:05:22'),
+(2704, 16, 42, 'سالم', NULL, '2025-09-29 10:05:22', '2025-09-29 10:05:22'),
+(2705, 16, 43, 'سالم', NULL, '2025-09-29 10:05:22', '2025-09-29 10:05:22'),
+(2706, 16, 44, 'سالم', NULL, '2025-09-29 10:05:22', '2025-09-29 10:05:22'),
+(2707, 16, 45, 'سالم', NULL, '2025-09-29 10:05:22', '2025-09-29 10:05:22'),
+(2708, 16, 46, 'سالم', NULL, '2025-09-29 10:05:22', '2025-09-29 10:05:22'),
+(2709, 16, 47, 'سالم', NULL, '2025-09-29 10:05:22', '2025-09-29 10:05:22'),
+(2710, 16, 48, 'سالم', NULL, '2025-09-29 10:05:22', '2025-09-29 10:05:22'),
+(2711, 16, 49, 'صافکاری بدون رنگ', NULL, '2025-09-29 10:05:22', '2025-09-29 10:05:22'),
+(2712, 16, 50, 'سالم', NULL, '2025-09-29 10:05:22', '2025-09-29 10:05:22'),
+(2713, 16, 51, 'سالم', NULL, '2025-09-29 10:05:22', '2025-09-29 10:05:22'),
+(2714, 16, 52, 'سالم', NULL, '2025-09-29 10:05:22', '2025-09-29 10:05:22'),
+(2715, 16, 53, 'سالم', NULL, '2025-09-29 10:05:22', '2025-09-29 10:05:22'),
+(2716, 16, 54, 'نامشخص', NULL, '2025-09-29 10:05:22', '2025-09-29 10:05:22'),
+(2717, 16, 55, 'سالم', NULL, '2025-09-29 10:05:22', '2025-09-29 10:05:22'),
+(2718, 16, 56, 'تعمیر شده', NULL, '2025-09-29 10:05:22', '2025-09-29 10:05:22'),
+(2719, 16, 57, 'سالم', NULL, '2025-09-29 10:05:22', '2025-09-29 10:05:22'),
+(2720, 16, 31, 'سالم', NULL, '2025-09-29 10:05:22', '2025-09-29 10:05:22'),
+(2721, 16, 58, 'سالم', NULL, '2025-09-29 10:05:22', '2025-09-29 10:05:22'),
+(2722, 16, 59, 'سالم', NULL, '2025-09-29 10:05:22', '2025-09-29 10:05:22'),
+(2723, 16, 60, 'سالم', NULL, '2025-09-29 10:05:22', '2025-09-29 10:05:22'),
+(2724, 16, 61, 'سالم', NULL, '2025-09-29 10:05:22', '2025-09-29 10:05:22'),
+(2725, 16, 62, 'سالم', NULL, '2025-09-29 10:05:22', '2025-09-29 10:05:22'),
+(2726, 16, 63, 'سالم', NULL, '2025-09-29 10:05:22', '2025-09-29 10:05:22'),
+(2727, 16, 64, 'سالم', NULL, '2025-09-29 10:05:22', '2025-09-29 10:05:22'),
+(2728, 16, 65, 'سالم', NULL, '2025-09-29 10:05:22', '2025-09-29 10:05:22'),
+(2729, 16, 66, 'رنگ شده', NULL, '2025-09-29 10:05:22', '2025-09-29 10:05:22'),
+(2730, 16, 67, 'سالم', NULL, '2025-09-29 10:05:22', '2025-09-29 10:05:22'),
+(2731, 16, 68, 'سالم', NULL, '2025-09-29 10:05:22', '2025-09-29 10:05:22'),
+(2732, 16, 69, 'سالم', NULL, '2025-09-29 10:05:22', '2025-09-29 10:05:22'),
+(2733, 16, 70, 'سالم', NULL, '2025-09-29 10:05:22', '2025-09-29 10:05:22'),
+(2734, 16, 71, 'سالم', NULL, '2025-09-29 10:05:22', '2025-09-29 10:05:22'),
+(2735, 16, 72, 'سالم', NULL, '2025-09-29 10:05:22', '2025-09-29 10:05:22'),
+(2736, 16, 73, 'سالم', NULL, '2025-09-29 10:05:22', '2025-09-29 10:05:22'),
+(2737, 16, 74, 'سالم', NULL, '2025-09-29 10:05:22', '2025-09-29 10:05:22'),
+(2738, 16, 75, 'صافکاری بدون رنگ', NULL, '2025-09-29 10:05:22', '2025-09-29 10:05:22'),
+(2739, 16, 76, 'سالم', NULL, '2025-09-29 10:05:22', '2025-09-29 10:05:22'),
+(2740, 16, 77, 'سالم', NULL, '2025-09-29 10:05:22', '2025-09-29 10:05:22'),
+(2741, 16, 78, 'سالم', NULL, '2025-09-29 10:05:22', '2025-09-29 10:05:22'),
+(2742, 16, 79, 'سالم', NULL, '2025-09-29 10:05:22', '2025-09-29 10:05:22'),
+(2743, 16, 80, 'نامشخص', NULL, '2025-09-29 10:05:22', '2025-09-29 10:05:22'),
+(2744, 16, 81, 'تعمیر شده', NULL, '2025-09-29 10:05:22', '2025-09-29 10:05:22'),
+(2745, 16, 82, 'سالم', NULL, '2025-09-29 10:05:22', '2025-09-29 10:05:22'),
+(2746, 16, 83, 'سالم', NULL, '2025-09-29 10:05:22', '2025-09-29 10:05:22'),
+(2747, 16, 84, 'سالم', NULL, '2025-09-29 10:05:22', '2025-09-29 10:05:22'),
+(2748, 16, 85, 'سالم', NULL, '2025-09-29 10:05:22', '2025-09-29 10:05:22'),
+(2749, 16, 86, 'رنگ شده', NULL, '2025-09-29 10:05:22', '2025-09-29 10:05:22'),
+(2750, 16, 87, 'سالم', NULL, '2025-09-29 10:05:22', '2025-09-29 10:05:22'),
+(2751, 16, 88, 'سالم', NULL, '2025-09-29 10:05:23', '2025-09-29 10:05:23'),
+(2752, 16, 89, 'سالم', NULL, '2025-09-29 10:05:23', '2025-09-29 10:05:23'),
+(2753, 16, 90, 'سالم', NULL, '2025-09-29 10:05:23', '2025-09-29 10:05:23'),
+(2754, 16, 91, 'نامشخص', NULL, '2025-09-29 10:05:23', '2025-09-29 10:05:23'),
+(2755, 16, 92, 'سالم', NULL, '2025-09-29 10:05:23', '2025-09-29 10:05:23'),
+(2756, 16, 93, 'سالم', NULL, '2025-09-29 10:05:23', '2025-09-29 10:05:23'),
+(2757, 16, 94, 'تعمیر شده', NULL, '2025-09-29 10:05:23', '2025-09-29 10:05:23'),
+(2758, 16, 95, 'سالم', NULL, '2025-09-29 10:05:23', '2025-09-29 10:05:23'),
+(2759, 16, 96, 'سالم', NULL, '2025-09-29 10:05:23', '2025-09-29 10:05:23'),
+(2760, 16, 97, 'سالم', NULL, '2025-09-29 10:05:23', '2025-09-29 10:05:23'),
+(2761, 16, 98, 'نامشخص', NULL, '2025-09-29 10:05:23', '2025-09-29 10:05:23'),
+(2762, 16, 99, 'سالم', NULL, '2025-09-29 10:05:23', '2025-09-29 10:05:23'),
+(2763, 16, 100, 'سالم', NULL, '2025-09-29 10:05:23', '2025-09-29 10:05:23'),
+(2764, 16, 101, 'سالم', NULL, '2025-09-29 10:05:23', '2025-09-29 10:05:23'),
+(2765, 16, 102, 'سالم', NULL, '2025-09-29 10:05:23', '2025-09-29 10:05:23'),
+(2766, 16, 103, 'تعمیر شده', NULL, '2025-09-29 10:05:23', '2025-09-29 10:05:23'),
+(2767, 16, 104, 'صافکاری بدون رنگ', NULL, '2025-09-29 10:05:23', '2025-09-29 10:05:23'),
+(2768, 16, 105, 'نامشخص', NULL, '2025-09-29 10:05:23', '2025-09-29 10:05:23'),
+(2769, 16, 106, 'سالم', NULL, '2025-09-29 10:05:23', '2025-09-29 10:05:23'),
+(2770, 16, 107, 'تعمیر شده', NULL, '2025-09-29 10:05:23', '2025-09-29 10:05:23'),
+(2771, 16, 108, 'سالم', NULL, '2025-09-29 10:05:23', '2025-09-29 10:05:23'),
+(2772, 16, 109, 'سالم', NULL, '2025-09-29 10:05:23', '2025-09-29 10:05:23'),
+(2773, 16, 110, 'رنگ شده', NULL, '2025-09-29 10:05:23', '2025-09-29 10:05:23'),
+(2774, 16, 111, 'صافکاری بدون رنگ', NULL, '2025-09-29 10:05:23', '2025-09-29 10:05:23'),
+(2775, 16, 112, 'سالم', NULL, '2025-09-29 10:05:23', '2025-09-29 10:05:23'),
+(2776, 16, 113, 'سالم', NULL, '2025-09-29 10:05:23', '2025-09-29 10:05:23'),
+(2777, 16, 114, 'سالم', NULL, '2025-09-29 10:05:23', '2025-09-29 10:05:23');
 
 -- --------------------------------------------------------
 
@@ -398,11 +405,11 @@ INSERT INTO `car_file_item_values` (`id`, `car_id`, `car_file_item_id`, `status`
 --
 
 CREATE TABLE `contacts` (
-  `id` bigint UNSIGNED NOT NULL,
-  `user_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `phone` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `user_id` char(36) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `phone` varchar(255) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -422,10 +429,10 @@ INSERT INTO `contacts` (`id`, `user_id`, `name`, `phone`, `email`, `created_at`,
 --
 
 CREATE TABLE `conversations` (
-  `id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `user_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `advisor_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `status` enum('active','closed') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'active',
+  `id` char(36) NOT NULL,
+  `user_id` char(36) NOT NULL,
+  `advisor_id` char(36) NOT NULL,
+  `status` enum('active','closed') NOT NULL DEFAULT 'active',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -437,10 +444,10 @@ CREATE TABLE `conversations` (
 --
 
 CREATE TABLE `conversation_user_statuses` (
-  `id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `conversation_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `user_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `in_room` tinyint(1) NOT NULL DEFAULT '0',
+  `id` char(36) NOT NULL,
+  `conversation_id` char(36) NOT NULL,
+  `user_id` char(36) NOT NULL,
+  `in_room` tinyint(1) NOT NULL DEFAULT 0,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -452,17 +459,17 @@ CREATE TABLE `conversation_user_statuses` (
 --
 
 CREATE TABLE `discounts` (
-  `id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `user_ids` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `amount` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `percent` int UNSIGNED DEFAULT NULL,
-  `type` enum('amount','percent') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'percent',
+  `id` char(36) NOT NULL,
+  `user_ids` longtext DEFAULT NULL,
+  `title` varchar(255) NOT NULL,
+  `code` varchar(255) NOT NULL,
+  `amount` varchar(255) DEFAULT NULL,
+  `percent` int(10) UNSIGNED DEFAULT NULL,
+  `type` enum('amount','percent') NOT NULL DEFAULT 'percent',
   `expiration` datetime DEFAULT NULL,
-  `status` enum('disable','enable') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'disable',
-  `access` enum('public','private') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'private',
-  `limitdiscount` int UNSIGNED NOT NULL DEFAULT '0',
+  `status` enum('disable','enable') NOT NULL DEFAULT 'disable',
+  `access` enum('public','private') NOT NULL DEFAULT 'private',
+  `limitdiscount` int(10) UNSIGNED NOT NULL DEFAULT 0,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -482,9 +489,9 @@ INSERT INTO `discounts` (`id`, `user_ids`, `title`, `code`, `amount`, `percent`,
 --
 
 CREATE TABLE `document_files` (
-  `id` bigint UNSIGNED NOT NULL,
-  `user_document_id` bigint UNSIGNED NOT NULL,
-  `path` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `user_document_id` bigint(20) UNSIGNED NOT NULL,
+  `path` varchar(255) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -496,16 +503,16 @@ CREATE TABLE `document_files` (
 --
 
 CREATE TABLE `events` (
-  `id` bigint UNSIGNED NOT NULL,
-  `contact_id` bigint UNSIGNED NOT NULL,
-  `type_id` bigint UNSIGNED NOT NULL,
-  `user_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `notes` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `contact_id` bigint(20) UNSIGNED NOT NULL,
+  `type_id` bigint(20) UNSIGNED NOT NULL,
+  `user_id` char(36) NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `notes` text DEFAULT NULL,
   `send_date` datetime NOT NULL,
   `remind_at` datetime NOT NULL,
-  `status` enum('pending','sent','failed') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'pending',
-  `status_remind` enum('pending','sent','failed') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'pending',
+  `status` enum('pending','sent','failed') NOT NULL DEFAULT 'pending',
+  `status_remind` enum('pending','sent','failed') NOT NULL DEFAULT 'pending',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -524,9 +531,9 @@ INSERT INTO `events` (`id`, `contact_id`, `type_id`, `user_id`, `title`, `notes`
 --
 
 CREATE TABLE `event_types` (
-  `id` bigint UNSIGNED NOT NULL,
-  `name` enum('birthday','wedding-anniversary') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'شناسه داخلی نوع رویداد',
-  `display_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'نام نمایشی نوع رویداد'
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` enum('birthday','wedding-anniversary') NOT NULL COMMENT 'شناسه داخلی نوع رویداد',
+  `display_name` varchar(255) NOT NULL COMMENT 'نام نمایشی نوع رویداد'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -544,13 +551,13 @@ INSERT INTO `event_types` (`id`, `name`, `display_name`) VALUES
 --
 
 CREATE TABLE `failed_jobs` (
-  `id` bigint UNSIGNED NOT NULL,
-  `uuid` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `connection` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `queue` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `payload` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `exception` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `failed_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `uuid` varchar(255) NOT NULL,
+  `connection` text NOT NULL,
+  `queue` text NOT NULL,
+  `payload` longtext NOT NULL,
+  `exception` longtext NOT NULL,
+  `failed_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -560,12 +567,12 @@ CREATE TABLE `failed_jobs` (
 --
 
 CREATE TABLE `media` (
-  `id` bigint UNSIGNED NOT NULL,
-  `filename` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `original_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `mime` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `size` bigint UNSIGNED DEFAULT NULL,
-  `user_id` char(36) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `filename` varchar(255) NOT NULL,
+  `original_name` varchar(255) NOT NULL,
+  `mime` varchar(255) DEFAULT NULL,
+  `size` bigint(20) UNSIGNED DEFAULT NULL,
+  `user_id` char(36) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -588,11 +595,11 @@ INSERT INTO `media` (`id`, `filename`, `original_name`, `mime`, `size`, `user_id
 --
 
 CREATE TABLE `messages` (
-  `id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `conversation_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `sender_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `message` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `seen` tinyint(1) NOT NULL DEFAULT '0',
+  `id` char(36) NOT NULL,
+  `conversation_id` char(36) NOT NULL,
+  `sender_id` char(36) NOT NULL,
+  `message` text NOT NULL,
+  `seen` tinyint(1) NOT NULL DEFAULT 0,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -604,9 +611,9 @@ CREATE TABLE `messages` (
 --
 
 CREATE TABLE `migrations` (
-  `id` int UNSIGNED NOT NULL,
-  `migration` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `batch` int NOT NULL
+  `id` int(10) UNSIGNED NOT NULL,
+  `migration` varchar(255) NOT NULL,
+  `batch` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -671,9 +678,9 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 --
 
 CREATE TABLE `model_has_permissions` (
-  `permission_id` bigint UNSIGNED NOT NULL,
-  `model_type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `model_id` bigint UNSIGNED NOT NULL
+  `permission_id` bigint(20) UNSIGNED NOT NULL,
+  `model_type` varchar(255) NOT NULL,
+  `model_id` bigint(20) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -683,9 +690,9 @@ CREATE TABLE `model_has_permissions` (
 --
 
 CREATE TABLE `model_has_roles` (
-  `role_id` bigint UNSIGNED NOT NULL,
-  `model_type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `model_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL
+  `role_id` bigint(20) UNSIGNED NOT NULL,
+  `model_type` varchar(255) NOT NULL,
+  `model_id` char(36) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -697,9 +704,9 @@ INSERT INTO `model_has_roles` (`role_id`, `model_type`, `model_id`) VALUES
 (1, 'App\\Models\\User', '9efc463a-7c58-4f5b-a649-cc59dc48b599'),
 (7, 'App\\Models\\User', '9f61d659-2507-49b2-9e14-6bf56e98b9d4'),
 (7, 'App\\Models\\User', '9f634456-868d-4a3c-b2b3-61fa0f293795'),
-(8, 'App\\Models\\User', '9f655a1e-a5a6-4796-86a9-fecffacff4ee'),
 (7, 'App\\Models\\User', '9f65637c-2a5c-4d77-85d1-132609779fea'),
-(7, 'App\\Models\\User', '9f81e4b6-7da6-47ff-b50f-205507c260e0');
+(7, 'App\\Models\\User', '9f81e4b6-7da6-47ff-b50f-205507c260e0'),
+(8, 'App\\Models\\User', '9f655a1e-a5a6-4796-86a9-fecffacff4ee');
 
 -- --------------------------------------------------------
 
@@ -708,10 +715,10 @@ INSERT INTO `model_has_roles` (`role_id`, `model_type`, `model_id`) VALUES
 --
 
 CREATE TABLE `notifications` (
-  `id` bigint UNSIGNED NOT NULL,
-  `receivers` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `body` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `receivers` longtext DEFAULT NULL,
+  `title` varchar(255) DEFAULT NULL,
+  `body` text DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -753,13 +760,13 @@ INSERT INTO `notifications` (`id`, `receivers`, `title`, `body`, `created_at`, `
 --
 
 CREATE TABLE `pages` (
-  `id` bigint UNSIGNED NOT NULL,
-  `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `slug` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `featured_image` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `user_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `is_published` tinyint(1) NOT NULL DEFAULT '0',
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `slug` varchar(255) NOT NULL,
+  `description` text NOT NULL,
+  `featured_image` varchar(255) DEFAULT NULL,
+  `user_id` char(36) NOT NULL,
+  `is_published` tinyint(1) NOT NULL DEFAULT 0,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -771,8 +778,8 @@ CREATE TABLE `pages` (
 --
 
 CREATE TABLE `password_resets` (
-  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `token` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `token` varchar(255) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -783,8 +790,8 @@ CREATE TABLE `password_resets` (
 --
 
 CREATE TABLE `password_reset_tokens` (
-  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `token` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `token` varchar(255) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -795,19 +802,19 @@ CREATE TABLE `password_reset_tokens` (
 --
 
 CREATE TABLE `payments` (
-  `id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `user_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `user_subscription_id` bigint UNSIGNED DEFAULT NULL,
-  `type` enum('wallet_topup','subscription_direct','subscription_wallet') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` char(36) NOT NULL,
+  `user_id` char(36) NOT NULL,
+  `user_subscription_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `type` enum('wallet_topup','subscription_direct','subscription_wallet') NOT NULL,
   `amount` float NOT NULL,
   `discount_amount` float DEFAULT NULL,
-  `discount_code` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `transaction_id` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `invoice_number` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `authority` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `description` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `status` enum('pending','paid','failed') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'pending',
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `discount_code` varchar(256) DEFAULT NULL,
+  `transaction_id` varchar(256) DEFAULT NULL,
+  `invoice_number` varchar(256) DEFAULT NULL,
+  `authority` varchar(256) DEFAULT NULL,
+  `description` varchar(256) DEFAULT NULL,
+  `status` enum('pending','paid','failed') NOT NULL DEFAULT 'pending',
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -825,10 +832,10 @@ INSERT INTO `payments` (`id`, `user_id`, `user_subscription_id`, `type`, `amount
 --
 
 CREATE TABLE `permissions` (
-  `id` bigint UNSIGNED NOT NULL,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `title` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `guard_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `title` varchar(256) NOT NULL,
+  `guard_name` varchar(255) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -924,12 +931,12 @@ INSERT INTO `permissions` (`id`, `name`, `title`, `guard_name`, `created_at`, `u
 --
 
 CREATE TABLE `personal_access_tokens` (
-  `id` bigint UNSIGNED NOT NULL,
-  `tokenable_type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `tokenable_id` bigint UNSIGNED NOT NULL,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `token` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `abilities` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `tokenable_type` varchar(255) NOT NULL,
+  `tokenable_id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `token` varchar(64) NOT NULL,
+  `abilities` text DEFAULT NULL,
   `last_used_at` timestamp NULL DEFAULT NULL,
   `expires_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -943,10 +950,10 @@ CREATE TABLE `personal_access_tokens` (
 --
 
 CREATE TABLE `referrals` (
-  `id` bigint UNSIGNED NOT NULL,
-  `inviter_id` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `invitee_id` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `inviter_id` char(36) NOT NULL,
+  `invitee_id` char(36) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -956,12 +963,12 @@ CREATE TABLE `referrals` (
 --
 
 CREATE TABLE `roles` (
-  `id` bigint UNSIGNED NOT NULL,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `guard_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `guard_name` varchar(255) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `title` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL
+  `title` varchar(256) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -980,8 +987,8 @@ INSERT INTO `roles` (`id`, `name`, `guard_name`, `created_at`, `updated_at`, `ti
 --
 
 CREATE TABLE `role_has_permissions` (
-  `permission_id` bigint UNSIGNED NOT NULL,
-  `role_id` bigint UNSIGNED NOT NULL
+  `permission_id` bigint(20) UNSIGNED NOT NULL,
+  `role_id` bigint(20) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -990,40 +997,79 @@ CREATE TABLE `role_has_permissions` (
 
 INSERT INTO `role_has_permissions` (`permission_id`, `role_id`) VALUES
 (1, 1),
+(1, 8),
 (2, 1),
+(2, 8),
 (3, 1),
+(3, 8),
 (4, 1),
+(4, 8),
 (5, 1),
+(5, 8),
 (6, 1),
+(6, 8),
 (7, 1),
+(7, 8),
 (8, 1),
+(8, 8),
 (9, 1),
+(9, 8),
 (10, 1),
+(10, 8),
 (11, 1),
+(11, 7),
+(11, 8),
+(12, 8),
 (13, 1),
+(13, 8),
 (14, 1),
+(14, 8),
 (15, 1),
+(15, 8),
 (16, 1),
+(16, 8),
 (17, 1),
+(17, 8),
 (18, 1),
+(18, 8),
 (19, 1),
+(19, 8),
 (20, 1),
+(20, 8),
 (21, 1),
+(21, 8),
 (22, 1),
+(22, 8),
 (23, 1),
+(23, 8),
 (24, 1),
+(24, 8),
 (29, 1),
+(29, 8),
 (30, 1),
+(30, 8),
 (31, 1),
+(31, 8),
 (32, 1),
+(32, 8),
 (33, 1),
+(33, 8),
 (34, 1),
+(34, 8),
 (35, 1),
+(35, 8),
 (36, 1),
+(36, 8),
 (37, 1),
+(37, 8),
 (38, 1),
+(38, 8),
 (39, 1),
+(39, 8),
 (40, 1),
+(40, 8),
+(41, 8),
+(42, 8),
 (43, 1),
 (44, 1),
 (45, 1),
@@ -1063,46 +1109,7 @@ INSERT INTO `role_has_permissions` (`permission_id`, `role_id`) VALUES
 (79, 1),
 (80, 1),
 (81, 1),
-(82, 1),
-(11, 7),
-(1, 8),
-(2, 8),
-(3, 8),
-(4, 8),
-(5, 8),
-(6, 8),
-(7, 8),
-(8, 8),
-(9, 8),
-(10, 8),
-(11, 8),
-(12, 8),
-(13, 8),
-(14, 8),
-(15, 8),
-(16, 8),
-(17, 8),
-(18, 8),
-(19, 8),
-(20, 8),
-(21, 8),
-(22, 8),
-(23, 8),
-(24, 8),
-(29, 8),
-(30, 8),
-(31, 8),
-(32, 8),
-(33, 8),
-(34, 8),
-(35, 8),
-(36, 8),
-(37, 8),
-(38, 8),
-(39, 8),
-(40, 8),
-(41, 8),
-(42, 8);
+(82, 1);
 
 -- --------------------------------------------------------
 
@@ -1111,13 +1118,13 @@ INSERT INTO `role_has_permissions` (`permission_id`, `role_id`) VALUES
 --
 
 CREATE TABLE `services` (
-  `id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `parent_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `icon` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `rules` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `is_active` tinyint UNSIGNED NOT NULL DEFAULT '0',
+  `id` char(36) NOT NULL,
+  `parent_id` char(36) DEFAULT NULL,
+  `icon` text NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `description` text DEFAULT NULL,
+  `rules` text DEFAULT NULL,
+  `is_active` tinyint(3) UNSIGNED NOT NULL DEFAULT 0,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -1180,13 +1187,13 @@ INSERT INTO `services` (`id`, `parent_id`, `icon`, `name`, `description`, `rules
 --
 
 CREATE TABLE `service_requests` (
-  `id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `user_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `service_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `status` enum('pending','in_progress','approved','rejected','completed','cancelled') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'pending',
-  `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `admin_notes` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `rejection_reason` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `id` char(36) NOT NULL,
+  `user_id` char(36) NOT NULL,
+  `service_id` char(36) NOT NULL,
+  `status` enum('pending','in_progress','approved','rejected','completed','cancelled') NOT NULL DEFAULT 'pending',
+  `description` text DEFAULT NULL,
+  `admin_notes` text DEFAULT NULL,
+  `rejection_reason` text DEFAULT NULL,
   `completed_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -1199,9 +1206,9 @@ CREATE TABLE `service_requests` (
 --
 
 CREATE TABLE `settings` (
-  `id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `key` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `value` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `id` char(36) NOT NULL,
+  `key` varchar(255) NOT NULL,
+  `value` longtext DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -1249,12 +1256,12 @@ INSERT INTO `settings` (`id`, `key`, `value`, `created_at`, `updated_at`) VALUES
 --
 
 CREATE TABLE `sliders` (
-  `id` bigint UNSIGNED NOT NULL,
-  `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `image` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `link` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `order` int NOT NULL DEFAULT '0',
-  `is_active` tinyint(1) NOT NULL DEFAULT '1',
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `title` varchar(255) DEFAULT NULL,
+  `image` varchar(255) NOT NULL,
+  `link` varchar(255) DEFAULT NULL,
+  `order` int(11) NOT NULL DEFAULT 0,
+  `is_active` tinyint(1) NOT NULL DEFAULT 1,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -1277,13 +1284,13 @@ INSERT INTO `sliders` (`id`, `title`, `image`, `link`, `order`, `is_active`, `cr
 --
 
 CREATE TABLE `subscriptions` (
-  `id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `icon` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `price` int NOT NULL,
-  `duration_days` int NOT NULL,
-  `service_limit` int NOT NULL DEFAULT '0',
-  `is_active` tinyint UNSIGNED NOT NULL DEFAULT '0',
+  `id` char(36) NOT NULL,
+  `icon` text NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `price` int(11) NOT NULL,
+  `duration_days` int(11) NOT NULL,
+  `service_limit` int(11) NOT NULL DEFAULT 0,
+  `is_active` tinyint(3) UNSIGNED NOT NULL DEFAULT 0,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -1302,10 +1309,10 @@ INSERT INTO `subscriptions` (`id`, `icon`, `name`, `price`, `duration_days`, `se
 --
 
 CREATE TABLE `useddiscounts` (
-  `id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `user_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `discount_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `used` int UNSIGNED NOT NULL DEFAULT '0',
+  `id` char(36) NOT NULL,
+  `user_id` char(36) NOT NULL,
+  `discount_id` char(36) NOT NULL,
+  `used` int(10) UNSIGNED NOT NULL DEFAULT 0,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -1317,15 +1324,15 @@ CREATE TABLE `useddiscounts` (
 --
 
 CREATE TABLE `users` (
-  `id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `device_token` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `email` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `phone` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `remember_token` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `id` char(36) NOT NULL,
+  `device_token` varchar(255) DEFAULT NULL,
+  `email` varchar(256) DEFAULT NULL,
+  `phone` varchar(255) DEFAULT NULL,
+  `password` varchar(255) DEFAULT NULL,
+  `remember_token` varchar(100) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `is_online` tinyint(1) NOT NULL DEFAULT '0'
+  `is_online` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -1343,11 +1350,11 @@ INSERT INTO `users` (`id`, `device_token`, `email`, `phone`, `password`, `rememb
 --
 
 CREATE TABLE `user_daily_limits` (
-  `id` bigint UNSIGNED NOT NULL,
-  `user_id` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `user_id` char(36) NOT NULL,
   `date` date NOT NULL,
-  `searches_count` int NOT NULL DEFAULT '0',
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `searches_count` int(11) NOT NULL DEFAULT 0,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -1357,18 +1364,18 @@ CREATE TABLE `user_daily_limits` (
 --
 
 CREATE TABLE `user_documents` (
-  `id` bigint UNSIGNED NOT NULL,
-  `user_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `type` enum('real','legal') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `first_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `last_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `mobile` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `company_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `national_id` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `company_address` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `is_verified` tinyint(1) NOT NULL DEFAULT '0',
-  `needs_correction` tinyint NOT NULL DEFAULT '0',
-  `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `user_id` char(36) NOT NULL,
+  `type` enum('real','legal') NOT NULL,
+  `first_name` varchar(255) DEFAULT NULL,
+  `last_name` varchar(255) DEFAULT NULL,
+  `mobile` varchar(256) DEFAULT NULL,
+  `company_name` varchar(255) DEFAULT NULL,
+  `national_id` varchar(20) DEFAULT NULL,
+  `company_address` text DEFAULT NULL,
+  `is_verified` tinyint(1) NOT NULL DEFAULT 0,
+  `needs_correction` tinyint(4) NOT NULL DEFAULT 0,
+  `description` text DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -1388,10 +1395,10 @@ INSERT INTO `user_documents` (`id`, `user_id`, `type`, `first_name`, `last_name`
 --
 
 CREATE TABLE `user_services` (
-  `id` bigint UNSIGNED NOT NULL,
-  `user_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `service_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `user_id` char(36) NOT NULL,
+  `service_id` char(36) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -1401,12 +1408,12 @@ CREATE TABLE `user_services` (
 --
 
 CREATE TABLE `user_subscriptions` (
-  `id` bigint UNSIGNED NOT NULL,
-  `user_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `subscription_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `starts_at` timestamp NOT NULL,
-  `ends_at` timestamp NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `user_id` char(36) NOT NULL,
+  `subscription_id` char(36) NOT NULL,
+  `starts_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `ends_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -1423,11 +1430,11 @@ INSERT INTO `user_subscriptions` (`id`, `user_id`, `subscription_id`, `starts_at
 --
 
 CREATE TABLE `user_subscription_usages` (
-  `id` bigint UNSIGNED NOT NULL,
-  `user_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `user_subscription_id` bigint UNSIGNED NOT NULL,
-  `used_services` int NOT NULL DEFAULT '0',
-  `used` tinyint(1) NOT NULL DEFAULT '0',
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `user_id` char(36) NOT NULL,
+  `user_subscription_id` bigint(20) UNSIGNED NOT NULL,
+  `used_services` int(11) NOT NULL DEFAULT 0,
+  `used` tinyint(1) NOT NULL DEFAULT 0,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -1446,11 +1453,11 @@ INSERT INTO `user_subscription_usages` (`id`, `user_id`, `user_subscription_id`,
 --
 
 CREATE TABLE `videos` (
-  `id` bigint UNSIGNED NOT NULL,
-  `title` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `video` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `subtitle` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `title` text NOT NULL,
+  `video` text NOT NULL,
+  `subtitle` text NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -1460,9 +1467,9 @@ CREATE TABLE `videos` (
 --
 
 CREATE TABLE `wallets` (
-  `id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `user_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `balance` int NOT NULL DEFAULT '0',
+  `id` char(36) NOT NULL,
+  `user_id` char(36) NOT NULL,
+  `balance` int(11) NOT NULL DEFAULT 0,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -1474,13 +1481,13 @@ CREATE TABLE `wallets` (
 --
 
 CREATE TABLE `wallet_transactions` (
-  `id` bigint UNSIGNED NOT NULL,
-  `wallet_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `payment_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `type` enum('credit','debit') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `amount` int NOT NULL,
-  `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `wallet_id` char(36) NOT NULL,
+  `payment_id` char(36) DEFAULT NULL,
+  `type` enum('credit','debit') NOT NULL,
+  `amount` int(11) NOT NULL,
+  `description` text DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -1828,175 +1835,175 @@ ALTER TABLE `wallet_transactions`
 -- AUTO_INCREMENT for table `attributes`
 --
 ALTER TABLE `attributes`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `attribute_values`
 --
 ALTER TABLE `attribute_values`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `banners`
 --
 ALTER TABLE `banners`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `cars`
 --
 ALTER TABLE `cars`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `car_attribute_values`
 --
 ALTER TABLE `car_attribute_values`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=229;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=246;
 
 --
 -- AUTO_INCREMENT for table `car_files`
 --
 ALTER TABLE `car_files`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `car_file_items`
 --
 ALTER TABLE `car_file_items`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=115;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=115;
 
 --
 -- AUTO_INCREMENT for table `car_file_item_values`
 --
 ALTER TABLE `car_file_item_values`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2526;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2778;
 
 --
 -- AUTO_INCREMENT for table `contacts`
 --
 ALTER TABLE `contacts`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `document_files`
 --
 ALTER TABLE `document_files`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- AUTO_INCREMENT for table `events`
 --
 ALTER TABLE `events`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `event_types`
 --
 ALTER TABLE `event_types`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`
 --
 ALTER TABLE `failed_jobs`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `media`
 --
 ALTER TABLE `media`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=76;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=76;
 
 --
 -- AUTO_INCREMENT for table `notifications`
 --
 ALTER TABLE `notifications`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT for table `pages`
 --
 ALTER TABLE `pages`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `permissions`
 --
 ALTER TABLE `permissions`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=83;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=83;
 
 --
 -- AUTO_INCREMENT for table `personal_access_tokens`
 --
 ALTER TABLE `personal_access_tokens`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `referrals`
 --
 ALTER TABLE `referrals`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `roles`
 --
 ALTER TABLE `roles`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `sliders`
 --
 ALTER TABLE `sliders`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `user_daily_limits`
 --
 ALTER TABLE `user_daily_limits`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `user_documents`
 --
 ALTER TABLE `user_documents`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `user_services`
 --
 ALTER TABLE `user_services`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `user_subscriptions`
 --
 ALTER TABLE `user_subscriptions`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
 
 --
 -- AUTO_INCREMENT for table `user_subscription_usages`
 --
 ALTER TABLE `user_subscription_usages`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `videos`
 --
 ALTER TABLE `videos`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `wallet_transactions`
 --
 ALTER TABLE `wallet_transactions`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- Constraints for dumped tables
