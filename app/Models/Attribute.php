@@ -14,6 +14,7 @@ class Attribute extends Model
         'type',
         'is_multiple',
         'show_in_card',
+        'is_filter',
         'format_thousands',
         'is_active',
         'sort_order'

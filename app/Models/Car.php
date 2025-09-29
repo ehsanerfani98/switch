@@ -30,10 +30,32 @@ class Car extends Model
     }
 
     public function setGalleryAttribute($value)
-{
-    if (is_string($value)) {
-        $value = json_decode($value, true);
+    {
+        if (is_string($value)) {
+            $value = json_decode($value, true);
+        }
+        $this->attributes['gallery'] = json_encode($value);
     }
-    $this->attributes['gallery'] = json_encode($value);
-}
+
+    // متد دستی برای گرفتن مقدار
+    public function valueOf($slugOrName)
+    {
+        return $this->attributeValues()->valueOf($slugOrName);
+    }
+
+    public function getGearboxAttribute()
+    {
+        return $this->valueOf('gearbox');
+    }
+
+    public function getKiloMeterAttribute()
+    {
+        return $this->valueOf('kilometer');
+    }
+
+    public function getPriceAttribute()
+    {
+        return $this->valueOf('price');
+    }
+
 }

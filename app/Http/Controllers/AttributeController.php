@@ -68,6 +68,10 @@ class AttributeController extends Controller
             $request['show_in_card'] = 0;
         }
 
+        if(is_null($request->is_filter)){
+            $request['is_filter'] = 0;
+        }
+
         if(is_null($request->format_thousands)){
             $request['format_thousands'] = 0;
         }

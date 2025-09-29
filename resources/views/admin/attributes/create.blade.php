@@ -74,7 +74,7 @@
 
 
 
-                            <div class="col-xs-12 col-sm-12 col-md-3">
+                            <div class="col-xs-12 col-sm-12 col-md-4">
                                 <div class="form-group">
                                     <div class="form-check">
                                         <input type="checkbox" name="is_active" class="form-check-input" value="1"
@@ -83,7 +83,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-xs-12 col-sm-12 col-md-3">
+                            <div class="col-xs-12 col-sm-12 col-md-4">
                                 <div class="form-group">
                                     <div class="form-check">
                                         <input type="checkbox" name="format_thousands" id="format_thousands" class="form-check-input" value="1">
@@ -91,7 +91,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-xs-12 col-sm-12 col-md-3">
+                            <div class="col-xs-12 col-sm-12 col-md-4">
                                 <div class="form-group">
                                     <div class="form-check">
                                         <input type="checkbox" name="show_in_card" id="show_in_card" class="form-check-input" value="1">
@@ -99,7 +99,15 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-xs-12 col-sm-12 col-md-3">
+                            <div class="col-xs-12 col-sm-12 col-md-4">
+                                <div class="form-group">
+                                    <div class="form-check">
+                                        <input type="checkbox" name="is_filter" id="is_filter" class="form-check-input" value="1">
+                                        <label for="is_filter" class="form-check-label">استفاده به عنوان فیلتر</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-4">
                                 <div class="form-group">
                                     <div class="form-check">
                                         <input type="checkbox" name="is_multiple" class="form-check-input" value="1">

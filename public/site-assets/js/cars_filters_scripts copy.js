@@ -451,14 +451,12 @@ function createCarCard(car) {
             <div class="car-card-body p-4">
                 <h5 class="car-title text-lg font-bold text-gray-900 mb-2">${car.title}</h5>
                 <div class="car-attributes space-y-2 mb-4">
+                    ${car.attributes.map(attr => `
                         <div class="attribute-item flex justify-between text-sm">
-                            <span class="attribute-name text-gray-500">کیلومتر</span>
-                            <span class="attribute-value text-gray-900 font-medium">${car.kilometer}</span>
+                            <span class="attribute-name text-gray-500">${attr.attribute.label}:</span>
+                            <span class="attribute-value text-gray-900 font-medium">${attr.value}</span>
                         </div>
-                        <div class="attribute-item flex justify-between text-sm">
-                            <span class="attribute-name text-gray-500">گیربکس</span>
-                            <span class="attribute-value text-gray-900 font-medium">${car.gearbox}</span>
-                        </div>
+                    `).join("")}
                 </div>
                
             </div>

@@ -56,8 +56,8 @@
                                         <th>لیبل</th>
                                         <th>نوع</th>
                                         <th>نمایش در کارت</th>
+                                        <th>به عنوان فیلتر</th>
                                         <th>فعال</th>
-                                        <th>چند مقداری</th>
                                         <th>عملیات</th>
                                     </tr>
                                 </thead>
@@ -77,14 +77,14 @@
                                                 @endif
                                             </td>
                                             <td>
-                                                @if ($attr->is_active)
+                                                @if ($attr->is_filter)
                                                     <label class="badge badge-success">بله</label>
                                                 @else
                                                     <label class="badge badge-danger">خیر</label>
                                                 @endif
                                             </td>
                                             <td>
-                                                @if ($attr->is_multiple)
+                                                @if ($attr->is_active)
                                                     <label class="badge badge-success">بله</label>
                                                 @else
                                                     <label class="badge badge-danger">خیر</label>

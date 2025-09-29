@@ -65,17 +65,18 @@ Route::get('/testfilter', function () {
     $cars = QueryBuilder::for(Car::with(['attributeValues.attribute', 'attributeValues.attributeValue']))
         ->allowedFilters($filters)
         ->get();
+
     return CarResource::collection($cars);
 });
 Route::get('/attributes', function () {
     return Attribute::where('is_active', 1)
+        ->where('is_filter', 1)
         ->with('values')
         ->get()
         ->map(function ($attr) {
             $data = $attr->toArray();
 
             if ($attr->type === 'range') {
-                // $data['min'] = $attr->carValues()->min('value_number') ?? 0;
                 $data['min'] = 0;
                 $data['max'] = $attr->carValues()->max('value_number') ?? 100;
             }
