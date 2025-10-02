@@ -98,13 +98,7 @@
                         <h6 class="m-0 font-weight-bold text-primary">تصویر شاخص</h6>
                     </div>
                     <div class="card-body" id="thumbnail_container">
-                        <div class="input-group">
-                            <input type="text" id="thumbnail" name="thumbnail" class="form-control"
-                                placeholder="آدرس تصویر انتخاب‌شده">
-                            <button type="button" class="btn btn-outline-danger"
-                                onclick="openMediaManager('thumbnail', true)">انتخاب تصویر</button>
-                        </div>
-                        <img id="thumbnail_preview" style="max-width:200px; display:block; margin-top:10px;">
+                        <x-media-picker name="thumbnail" id="thumbnail" value="{{ old('thumbnail') }}" />
                     </div>
                 </div>
 
@@ -114,12 +108,7 @@
                         <h6 class="m-0 font-weight-bold text-primary">گالری تصاویر</h6>
                     </div>
                     <div class="card-body" id="gallery_container">
-                        <div class="input-group mb-2">
-                            <input type="hidden" id="gallery" name="gallery">
-                            <button type="button" class="btn btn-outline-danger"
-                                onclick="openMediaManager('gallery', true, true)">انتخاب تصاویر</button>
-                        </div>
-                        <div id="gallery_preview" class="d-flex flex-wrap gap-2"></div>
+                        <x-media-picker name="gallery" id="gallery" value="{{ old('gallery') }}" :multiple="true" />
                     </div>
                 </div>
 
@@ -189,7 +178,8 @@
                                                                                     <option value="نامشخص">نامشخص</option>
                                                                                     <option value="رنگ شده">رنگ شده
                                                                                     </option>
-                                                                                    <option value="تعویض و مشکل‌دار">تعویض و مشکل‌دار</option>
+                                                                                    <option value="تعویض و مشکل‌دار">تعویض
+                                                                                        و مشکل‌دار</option>
                                                                                     <option value="صافکاری بدون رنگ">
                                                                                         صافکاری
                                                                                         بدون

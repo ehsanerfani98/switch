@@ -52,7 +52,7 @@ function createFilterHtml(attr) {
     `;
 
     // افزودن محتوای خاص بر اساس نوع فیلتر
-    switch(attr.type) {
+    switch (attr.type) {
         case 'select':
             html += createSelectFilter(attr);
             break;
@@ -76,7 +76,7 @@ function createFilterHtml(attr) {
     return html;
 }
 
-// دریافت آیکون مناسب برای هر نوع فیلتر
+// دریافت آیکن مناسب برای هر نوع فیلتر
 function getFilterIcon(type) {
     const icons = {
         'select': '<i class="fas fa-filter text-primary ml-2"></i>',
@@ -192,20 +192,20 @@ function initializeRangeSliders() {
             }
         });
 
-        slider.noUiSlider.on('change', function() {
+        slider.noUiSlider.on('change', function () {
             const accordion = slider.closest('.accordion-filter');
             if (accordion) accordion.classList.add('active');
             applyFilters();
         });
 
         // افزودن افکت انیمیشن هنگام تغییر
-        slider.noUiSlider.on('start', function() {
+        slider.noUiSlider.on('start', function () {
             slider.querySelectorAll('.noUi-handle').forEach(handle => {
                 handle.style.transform = 'scale(1.2)';
             });
         });
 
-        slider.noUiSlider.on('end', function() {
+        slider.noUiSlider.on('end', function () {
             slider.querySelectorAll('.noUi-handle').forEach(handle => {
                 handle.style.transform = 'scale(1)';
             });
@@ -230,7 +230,7 @@ function setupEventListeners() {
     // رویداد تغییر برای فیلترها
     filtersForm.querySelectorAll('input, select').forEach(el => {
         if (!el.classList.contains('range-min-input') && !el.classList.contains('range-max-input')) {
-            el.addEventListener('change', function() {
+            el.addEventListener('change', function () {
                 const accordion = this.closest('.accordion-filter');
                 if (accordion) accordion.classList.add('active');
                 applyFilters();
@@ -437,15 +437,15 @@ function renderCars(cars) {
 
 // ایجاد کارت برای هر ماشین
 function createCarCard(car) {
-    const defaultImage = 'https://file.switch.ir/api/v1/webp/1200/672/80/f5f013e8-fda3-4cbf-9fcd-546b8d087b95.webp';
 
     return `
+    <a href="${car.url}">
         <div class="car-card bg-white rounded-lg overflow-hidden" data-car-id="${car.id}">
             <div class="car-image-container relative">
-                <img src="${car.image || defaultImage}"
+                <img src="${car.image}"
                      class="car-image w-full h-25 object-cover"
                      alt="${car.title}"
-                     onerror="this.src='${defaultImage}'">
+                     onerror="this.src='${car.image}'">
                 <div class="car-badge absolute top-3 right-3 bg-black text-white text-xs font-bold px-2 py-1 rounded-lg">امکان خرید قسطی</div>
             </div>
             <div class="car-card-body px-3 py-2">
@@ -466,6 +466,7 @@ function createCarCard(car) {
                </div>
             </div>
         </div>
+    </a>
     `;
 }
 
@@ -473,7 +474,7 @@ function createCarCard(car) {
 function setupCarCardEvents() {
     // دکمه مشاهده
     document.querySelectorAll('.btn-view').forEach(btn => {
-        btn.addEventListener('click', function() {
+        btn.addEventListener('click', function () {
             const carCard = this.closest('.car-card');
             const carId = carCard.dataset.carId;
             // هدایت به صفحه جزئیات ماشین
@@ -483,7 +484,7 @@ function setupCarCardEvents() {
 
     // دکمه مقایسه
     document.querySelectorAll('.btn-compare').forEach(btn => {
-        btn.addEventListener('click', function() {
+        btn.addEventListener('click', function () {
             const carCard = this.closest('.car-card');
             const carId = carCard.dataset.carId;
             // افزودن به لیست مقایسه
@@ -493,7 +494,7 @@ function setupCarCardEvents() {
 
     // دکمه خرید
     document.querySelectorAll('.btn-buy').forEach(btn => {
-        btn.addEventListener('click', function() {
+        btn.addEventListener('click', function () {
             const carCard = this.closest('.car-card');
             const carId = carCard.dataset.carId;
             // هدایت به صفحه خرید
@@ -572,7 +573,7 @@ function showNotification(message, type = 'info') {
     notification.className = `fixed top-4 right-4 px-6 py-3 rounded-lg shadow-lg text-white z-50 transform transition-transform duration-300 translate-x-full`;
 
     // تنظیم رنگ بر اساس نوع اعلان
-    switch(type) {
+    switch (type) {
         case 'success':
             notification.classList.add('bg-green-500');
             break;
@@ -606,7 +607,7 @@ function showNotification(message, type = 'info') {
 // تابع برای کاهش تعداد درخواست‌ها (debounce)
 function debounce(func, wait) {
     let timeout;
-    return function(...args) {
+    return function (...args) {
         const context = this;
         clearTimeout(timeout);
         timeout = setTimeout(() => func.apply(context, args), wait);

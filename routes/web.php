@@ -4,15 +4,18 @@ use App\Http\Controllers\AdvisorsController;
 use App\Http\Controllers\AttributeController;
 use App\Http\Controllers\AttributeValueController;
 use App\Http\Controllers\BannerController;
+use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CarController;
 use App\Http\Controllers\CarFileController;
 use App\Http\Controllers\CarFileItemController;
+use App\Http\Controllers\CarRequestController;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DiscountController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\MediaController;
+use App\Http\Controllers\ModelController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\OtpController;
 use App\Http\Controllers\PageController;
@@ -54,39 +57,6 @@ use App\Models\Attribute;
 */
 
 
-// Site Routes
-Route::get('/', [ControllersSiteController::class, 'home'])->name('home');
-Route::get('/cars', [ControllersSiteController::class, 'cars'])->name('cars');
-Route::get('/car/{slug}', [ControllersSiteController::class, 'car_single'])->name('car');
-Route::get('/testfilter', function () {
-    $filters = Attribute::where('is_active', 1)->pluck('slug')
-        ->map(fn($slug) => AllowedFilter::custom($slug, new CarFilter()))
-        ->toArray();
-    $cars = QueryBuilder::for(Car::with(['attributeValues.attribute', 'attributeValues.attributeValue']))
-        ->allowedFilters($filters)
-        ->get();
-
-    return CarResource::collection($cars);
-});
-Route::get('/attributes', function () {
-    return Attribute::where('is_active', 1)
-        ->where('is_filter', 1)
-        ->with('values')
-        ->get()
-        ->map(function ($attr) {
-            $data = $attr->toArray();
-
-            if ($attr->type === 'range') {
-                $data['min'] = 0;
-                $data['max'] = $attr->carValues()->max('value_number') ?? 100;
-            }
-
-            return $data;
-        });
-});
-
-
-
 Auth::routes();
 
 Route::get('/admin/login', function () {
@@ -98,6 +68,7 @@ Route::get('/admin/login', function () {
 
 // =========================================== Dashboard Route =========================================== //
 Route::middleware(['auth'])->group(function () {
+
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::resource('roles', RoleController::class);
     Route::resource('services', ServiceController::class);
@@ -113,7 +84,6 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('sliders', SliderController::class);
     Route::resource('banners', BannerController::class);
     Route::resource('discounts', DiscountController::class);
-    Route::resource('service-requests', ServiceRequestController::class);
 
     Route::get('/admin/advisors/chat', [AdvisorsController::class, 'chat'])->name('advisors.chat');
     Route::get('/admin/chat/start/{advisor}', [AdvisorsController::class, 'startConversationAdvisor'])->name('advisor.chat.start');
@@ -189,7 +159,16 @@ Route::middleware(['auth'])->group(function () {
 
     // صفحه‌ای که CKEditor آن را باز می‌کند
     Route::get('/media/manager/ckeditor', [MediaController::class, 'manager_ckeditor'])->name('media.manager.ckeditor');
+
+    Route::resource('brands', BrandController::class);
+    Route::resource('models', ModelController::class);
+    Route::resource('car/requests', CarRequestController::class);
+    Route::post('/car/request/save', [CarRequestController::class, 'save_sell_request'])->name('save.sell.request')->middleware('throttle:3,1440');
+
 });
+
+
+
 
 
 // =========================================== Site Route =========================================== //
@@ -198,11 +177,48 @@ Route::middleware(['auth', 'profile.complete', 'hasActiveSubscription'])->group(
     Route::get('user/child/service/{id}', [\App\Http\Controllers\Site\UserController::class, 'child_service'])->name('user.child.service');
 });
 
+Route::get('/', [ControllersSiteController::class, 'home'])->name('home');
+Route::get('/cars', [ControllersSiteController::class, 'cars'])->name('cars');
+Route::get('/car/{slug}', [ControllersSiteController::class, 'car_single'])->name('car');
+Route::get('/carsell', [ControllersSiteController::class, 'carsell'])->name('carsell');
+Route::get('/testfilter', function () {
+    $filters = Attribute::where('is_active', 1)->pluck('slug')
+        ->map(fn($slug) => AllowedFilter::custom($slug, new CarFilter()))
+        ->toArray();
+    $cars = QueryBuilder::for(Car::with(['attributeValues.attribute', 'attributeValues.attributeValue']))
+        ->allowedFilters($filters)
+        ->get();
+
+    return CarResource::collection($cars);
+});
+Route::get('/attributes', function () {
+    return Attribute::where('is_active', 1)
+        ->where('is_filter', 1)
+        ->with('values')
+        ->get()
+        ->map(function ($attr) {
+            $data = $attr->toArray();
+
+            if ($attr->type === 'range') {
+                $data['min'] = 0;
+                $data['max'] = $attr->carValues()->max('value_number') ?? 100;
+            }
+
+            return $data;
+        });
+});
+Route::get('/get-all-brands', [BrandController::class, 'getAllBrands'])->name('getAllBrands');
+Route::get('/get-by-brand/{brand_id}', [ModelController::class, 'getByBrand'])->name('getByBrand');
+
+
+
+
+
 
 // =========================================== Otp Route =========================================== //
-Route::post('/otp/send', [OtpController::class, 'send'])->middleware('throttle:5,1');
-Route::post('/otp/verify', [OtpController::class, 'verify']);
-Route::post('/otp/send-password', [OtpController::class, 'sendPassword']);
+Route::post('/otp/send', [OtpController::class, 'send'])->middleware('throttle:3,5');
+Route::post('/otp/verify', [OtpController::class, 'verify'])->middleware('throttle:3,5');
+Route::post('/otp/send-password', [OtpController::class, 'sendPassword'])->middleware('throttle:3,5');
 
 
 

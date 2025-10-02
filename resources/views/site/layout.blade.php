@@ -25,7 +25,7 @@
         content="سامانه خرید و فروش خودروهای نو و کارکرده خارجی، خرید و فروش خودرو بی دغدغه، بی ریسک و بی معطلی توسط الوماشین در تهران">
     <meta property="twitter:image"
         content="https://file.switch.ir/api/v1/webp/1728/528/80/0ab739b0-9e2a-4969-97c9-90f04b071b99.webp">
-    <!-- فاوآیکون -->
+    <!-- فاوآیکن -->
     <link rel="icon" type="image/png" sizes="32x32" href="https://img.icons8.com/color/48/car--v1.png">
     <!-- فونت‌ها -->
     <link rel="stylesheet" href="{{ asset('admin/assets/css/font.css') }}">

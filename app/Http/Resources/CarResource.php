@@ -43,8 +43,9 @@ class CarResource extends JsonResource
 
         return [
             'id'          => $this->id,
+            'image'       => $this->thumbnail ?? asset('images/notcarimage.jpg'),
             'title'       => $this->title,
-            'slug'        => $this->slug,
+            'url'        => route('car', $this->slug),
             'description' => $this->description,
             'status' => [
                 "statusIcon" => $statusIcon,

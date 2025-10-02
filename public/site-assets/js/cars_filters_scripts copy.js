@@ -76,7 +76,7 @@ function createFilterHtml(attr) {
     return html;
 }
 
-// دریافت آیکون مناسب برای هر نوع فیلتر
+// دریافت آیکن مناسب برای هر نوع فیلتر
 function getFilterIcon(type) {
     const icons = {
         'select': '<i class="fas fa-filter text-primary ml-2"></i>',
@@ -458,7 +458,7 @@ function createCarCard(car) {
                         </div>
                     `).join("")}
                 </div>
-               
+
             </div>
         </div>
     `;

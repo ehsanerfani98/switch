@@ -91,26 +91,23 @@
                         </div>
                         <div class="text-xl font-bold text-green-600">{{ $price }}</div>
                     </div>
-
-                    <div
-                        class="bg-green-50 border border-green-200 rounded-lg p-3 text-sm text-green-700 text-justify my-4">
-                        متاسفانه این خودرو فروخته شده است. در صورت تمایل به خرید یا فروش خودرویی با این مشخصات از
-                        دکمه‌های زیر استفاده نمایید.
-                    </div>
-
+                    @if ($car->status == 'sold')
+                        <div
+                            class="bg-green-50 border border-green-200 rounded-lg p-3 text-sm text-green-700 text-justify my-4">
+                            متاسفانه این خودرو فروخته شده است. در صورت تمایل به خرید یا فروش خودرویی با این مشخصات از
+                            دکمه‌های زیر استفاده نمایید.
+                        </div>
+                    @endif
                     <div class="flex flex-wrap gap-2 mt-5">
-                        <a href="#"
+                        <a id="openPopup" href="#"
                             class="flex-1 min-w-[120px] bg-primary text-white text-center py-2 px-3 rounded-md font-semibold hover:bg-blue-700 transition-colors">
                             درخواست خرید
                         </a>
-                        <a href="#"
-                            class="flex-1 min-w-[120px] bg-primary text-white text-center py-2 px-3 rounded-md font-semibold hover:bg-blue-700 transition-colors">
-                            درخواست فروش
-                        </a>
-                        <a href="#"
+
+                        {{-- <a href="#"
                             class="flex-1 min-w-[120px] border border-primary text-primary text-center py-2 px-3 rounded-md font-semibold hover:bg-primary hover:text-white transition-colors">
                             خرید اقساطی
-                        </a>
+                        </a> --}}
                     </div>
                 </div>
             </div>
@@ -333,6 +330,9 @@
                 </div>
             </div>
         </div>
+
+
+
 
     </div>
 @endsection

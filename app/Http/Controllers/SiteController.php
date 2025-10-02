@@ -58,4 +58,8 @@ class SiteController extends Controller
         return view('site.car_single', compact('car', 'carFiles', 'price'));
     }
 
+    public function carsell(){
+        return view('site.carsell');
+    }
+
 }

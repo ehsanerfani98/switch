@@ -46,6 +46,7 @@ class OtpController extends Controller
 
         if ($type === 'mobile') {
             $result = $this->otpService->send($input);
+
             return $result['success']
                 ? response()->json($result)
                 : response()->json($result, 500);

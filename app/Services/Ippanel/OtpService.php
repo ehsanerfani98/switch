@@ -151,6 +151,7 @@ class OtpService
         curl_close($curl);
 
         $responseBody = json_decode($response, true);
+
         return $responseBody;
     }
 }

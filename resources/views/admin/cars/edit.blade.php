@@ -101,18 +101,7 @@
                         <h6 class="m-0 font-weight-bold text-primary">تصویر شاخص</h6>
                     </div>
                     <div class="card-body" id="thumbnail_container">
-                        <div class="input-group">
-                            <input type="text" id="thumbnail" name="thumbnail" class="form-control"
-                                placeholder="آدرس تصویر انتخاب‌شده" value="{{ old('thumbnail', $car->thumbnail) }}">
-                            <button type="button" class="btn btn-outline-danger"
-                                onclick="openMediaManager('thumbnail', true)">انتخاب تصویر</button>
-                        </div>
-                        @if ($car->thumbnail)
-                            <img id="thumbnail_preview" src="{{ $car->thumbnail }}"
-                                style="max-width:200px; display:block; margin-top:10px;">
-                        @else
-                            <img id="thumbnail_preview" style="max-width:200px; display:block; margin-top:10px;">
-                        @endif
+                        <x-media-picker name="thumbnail" id="thumbnail" value="{{ old('thumbnail', $car->thumbnail) }}" />
                     </div>
                 </div>
 
@@ -122,7 +111,9 @@
                         <h6 class="m-0 font-weight-bold text-primary">گالری تصاویر</h6>
                     </div>
                     <div class="card-body" id="gallery_container">
-                        <div class="input-group mb-2">
+                        <x-media-picker name="gallery" id="gallery"
+                            value="{{ old('gallery', json_encode($car->gallery ?: [])) }}" :multiple="true" />
+                        {{-- <div class="input-group mb-2">
                             <input type="hidden" id="gallery" name="gallery"
                                 value="{{ old('gallery', json_encode($car->gallery ?: [])) }}">
                             <button type="button" class="btn btn-outline-danger"
@@ -137,7 +128,7 @@
                                         style="top:0; left:0;" onclick="removeGalleryImage(this)">×</button>
                                 </div>
                             @endforeach
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
 
@@ -272,73 +263,6 @@
             $('input[name="slug"]').val(standardizeSlug($(this).val()));
         });
 
-        /* ---------- حذف تصویر از گالری ---------- */
-        function removeGalleryImage(btn) {
-            btn.parentElement.remove();
-            const urls = Array.from(document.querySelectorAll('#gallery_preview img'))
-                .map(img => img.dataset.src);
-            document.getElementById('gallery').value = JSON.stringify(urls);
-        }
-
-        /* ---------- openMediaManager همان تابع قبلی ---------- */
-        function openMediaManager(inputId, preview = false, multiple = false) {
-            const w = 1000,
-                h = 600;
-            const left = (window.innerWidth - w) / 2;
-            const top = (window.innerHeight - h) / 2 + 80;
-            let url = "{{ route('media.manager') }}?input=" + inputId;
-            if (multiple) url += "&multiple=1";
-            window.open(url, "mediaManager_" + inputId, `scrollbars=yes,width=${w},height=${h},top=${top},left=${left}`);
-
-            function handleMessage(e) {
-                if (!e.data.input || e.data.input !== inputId) return;
-                window.removeEventListener('message', handleMessage);
-                const input = document.getElementById(inputId);
-                const container = document.getElementById(inputId + '_container');
-
-                /* تصویر شاخص */
-                if (!multiple && e.data.url) {
-                    input.value = e.data.url;
-                    let oldImg = container.querySelector('#' + inputId + '_preview');
-                    if (oldImg) oldImg.remove();
-                    const img = document.createElement('img');
-                    img.src = e.data.url;
-                    img.id = inputId + '_preview';
-                    img.style.maxWidth = '200px';
-                    img.style.display = 'block';
-                    img.style.marginTop = '10px';
-                    container.appendChild(img);
-                }
-
-                /* گالری */
-                if (multiple && e.data.urls && e.data.urls.length) {
-                    input.value = JSON.stringify(e.data.urls);
-                    e.data.urls.forEach(src => {
-                        if (container.querySelector(`img[data-src="${src}"]`)) return;
-                        const wrapper = document.createElement('div');
-                        wrapper.className = 'position-relative d-inline-block';
-                        const img = document.createElement('img');
-                        img.src = src;
-                        img.dataset.src = src;
-                        img.style.maxWidth = '100px';
-                        img.className = 'm-1';
-                        const del = document.createElement('button');
-                        del.type = 'button';
-                        del.className = 'btn btn-danger btn-sm position-absolute';
-                        del.style.top = 0;
-                        del.style.left = 0;
-                        del.innerHTML = '×';
-                        del.onclick = function() {
-                            removeGalleryImage(this);
-                        };
-                        wrapper.appendChild(img);
-                        wrapper.appendChild(del);
-                        container.appendChild(wrapper);
-                    });
-                }
-            }
-            window.addEventListener('message', handleMessage);
-        }
 
         /* ---------- CKEditor ---------- */
         CKEDITOR.replace('editor', {

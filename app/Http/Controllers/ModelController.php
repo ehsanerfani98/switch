@@ -1,0 +1,90 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Http\Controllers\Controller;
+use App\Models\Brand;
+use App\Models\CarModel;
+use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+
+class ModelController extends Controller
+{
+    public function index()
+    {
+        $carModels = CarModel::with('brand')->latest()->paginate(10);
+        return view('admin.car-models.index', compact('carModels'));
+    }
+
+    public function create()
+    {
+        $brands = Brand::all();
+        return view('admin.car-models.create', compact('brands'));
+    }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'brand_id' => 'required|exists:brands,id',
+            'years' => 'nullable|array',
+            'types' => 'nullable|array',
+            'colors' => 'nullable|array',
+        ]);
+
+        CarModel::create([
+            'title' => $request->title,
+            'slug' => Str::slug($request->title),
+            'brand_id' => $request->brand_id,
+            'years' => $request->years,
+            'types' => $request->types,
+            'colors' => $request->colors,
+        ]);
+
+        return redirect()->route('models.index')
+            ->with('success', 'مدل خودرو با موفقیت ایجاد شد.');
+    }
+
+    public function edit(CarModel $Model)
+    {
+        $brands = Brand::all();
+        return view('admin.car-models.edit', compact('Model', 'brands'));
+    }
+
+    public function update(Request $request, CarModel $carModel)
+    {
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'brand_id' => 'required|exists:brands,id',
+            'years' => 'nullable|array',
+            'types' => 'nullable|array',
+            'colors' => 'nullable|array',
+        ]);
+
+        $carModel->update([
+            'title' => $request->title,
+            'slug' => Str::slug($request->title),
+            'brand_id' => $request->brand_id,
+            'years' => $request->years,
+            'types' => $request->types,
+            'colors' => $request->colors,
+        ]);
+
+        return redirect()->route('models.index')
+            ->with('success', 'مدل خودرو با موفقیت ویرایش شد.');
+    }
+
+    public function destroy(CarModel $carModel)
+    {
+        $carModel->delete();
+
+        return redirect()->route('models.index')
+            ->with('success', 'مدل خودرو با موفقیت حذف شد.');
+    }
+
+    public function getByBrand($brand_id)
+    {
+        $models = CarModel::where('brand_id', $brand_id)->get(['id', 'title', 'slug', 'years', 'types', 'colors']);
+        return response()->json($models);
+    }
+}
