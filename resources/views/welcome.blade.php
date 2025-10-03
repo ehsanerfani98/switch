@@ -937,7 +937,7 @@
 
                 <div class="footer-column">
                     <h3>تماس با ما</h3>
-                    <p><i class="fas fa-map-marker-alt"></i> تهران، خیابان آزادی، پلاک ۱۲۳</p>
+                    <p><i class="fas fa-map-marker-alt"></i> قزوین، خیابان آزادی، پلاک ۱۲۳</p>
                     <p><i class="fas fa-phone"></i> ۰۲۱-۱۲۳۴۵۶۷۸</p>
                     <p><i class="fas fa-envelope"></i> info@novin-app.ir</p>
                 </div>

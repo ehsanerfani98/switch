@@ -24,13 +24,14 @@ class BrandController extends Controller
     {
         $request->validate([
             'title' => 'required|string|max:255|unique:brands,title',
+            'slug'  => 'required|unique:brands,slug',
             'icon' => 'nullable|string|max:255',
         ]);
 
         Brand::create([
             'title' => $request->title,
             'icon' => $request->icon,
-            'slug' => Str::slug($request->title),
+            'slug'  => standardizeSlug($request->slug),
         ]);
 
         return redirect()->route('brands.index')
@@ -46,18 +47,20 @@ class BrandController extends Controller
     {
         $request->validate([
             'title' => 'required|string|max:255|unique:brands,title,' . $brand->id,
-            'icon' => 'nullable|string|max:255',
+            'slug'  => 'required|unique:brands,slug,' . $brand->id,
+            'icon'  => 'nullable|string|max:255',
         ]);
 
         $brand->update([
             'title' => $request->title,
-            'icon' => $request->icon,
-            'slug' => Str::slug($request->title),
+            'icon'  => $request->icon,
+            'slug'  => standardizeSlug($request->slug),
         ]);
 
         return redirect()->route('brands.index')
             ->with('success', 'برند با موفقیت ویرایش شد.');
     }
+
 
     public function destroy(Brand $brand)
     {

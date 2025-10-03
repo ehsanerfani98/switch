@@ -113,22 +113,6 @@
                     <div class="card-body" id="gallery_container">
                         <x-media-picker name="gallery" id="gallery"
                             value="{{ old('gallery', json_encode($car->gallery ?: [])) }}" :multiple="true" />
-                        {{-- <div class="input-group mb-2">
-                            <input type="hidden" id="gallery" name="gallery"
-                                value="{{ old('gallery', json_encode($car->gallery ?: [])) }}">
-                            <button type="button" class="btn btn-outline-danger"
-                                onclick="openMediaManager('gallery', true, true)">انتخاب تصاویر</button>
-                        </div>
-                        <div id="gallery_preview" class="d-flex flex-wrap gap-2">
-                            @foreach ($car->gallery ?: [] as $img)
-                                <div class="position-relative d-inline-block">
-                                    <img src="{{ $img }}" data-src="{{ $img }}" style="max-width:100px;"
-                                        class="m-1">
-                                    <button type="button" class="btn btn-danger btn-sm position-absolute"
-                                        style="top:0; left:0;" onclick="removeGalleryImage(this)">×</button>
-                                </div>
-                            @endforeach
-                        </div> --}}
                     </div>
                 </div>
 

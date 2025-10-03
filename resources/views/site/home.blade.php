@@ -10,7 +10,7 @@
             <h1 class="hero-title text-4xl font-bold mb-5 text-center text-white">مسیر معاملات خودرو را شفاف، ساده، امن
                 و کوتاه کنید</h1>
             <p class="hero-subtitle text-xl text-white text-center max-w-2xl mx-auto mb-10">سامانه خرید و فروش خودروهای
-                نو و کارکرده خارجی، خرید و فروش خودرو بی دغدغه، بی ریسک و بی معطلی توسط الوماشین در تهران</p>
+                نو و کارکرده خارجی، خرید و فروش خودرو بی دغدغه، بی ریسک و بی معطلی توسط الوماشین در قزوین</p>
 
             <div class="search-container bg-white rounded-lg shadow-custom-light p-6 mb-10">
                 <form class="search-form flex mb-5 gap-2.5">

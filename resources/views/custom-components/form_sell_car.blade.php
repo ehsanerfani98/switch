@@ -242,7 +242,7 @@
         <div class="mt-8 pt-6 border-t border-gray-200">
             <div class="flex items-center text-gray-600 mb-4">
                 <i class="fas fa-map-marker-alt ml-2"></i>
-                <span class="text-sm">خدمات فروش خودرو فقط در تهران ارائه می‌شود.</span>
+                <span class="text-sm">خدمات فروش خودرو فقط در قزوین ارائه می‌شود.</span>
             </div>
             <div class="lg:hidden flex justify-center border-t border-gray-200 pt-4">
                 <a href="tel:02175346" class="flex items-center text-gray-700">
@@ -659,7 +659,7 @@
                 button.className =
                     "brandBtn border-2 border-gray-200 p-4 rounded-xl hover:border-blue-500 hover:bg-blue-50 transition-all duration-200 flex flex-col items-center justify-center gap-2";
                 button.innerHTML = `
-                    <i class="${brand.icon} text-2xl text-gray-600"></i>
+                    <img class="h-10" src="${brand.icon}">
                     <span class="font-medium">${brand.title}</span>
                 `;
                 button.onclick = () => {
@@ -800,14 +800,59 @@
                         bgColorClass = 'bg-gray-400';
                         textColorClass = 'text-gray-800';
                         break;
+                    case 'خاکستری':
+                        bgColorClass = 'bg-gray-500';
+                        textColorClass = 'text-gray-800';
+                        break;
                     case 'زرد':
                         bgColorClass = 'bg-yellow-400';
+                        textColorClass = 'text-gray-800';
+                        break;
+                    case 'نارنجی':
+                        bgColorClass = 'bg-orange-500';
+                        textColorClass = 'text-gray-800';
+                        break;
+                    case 'صورتی':
+                        bgColorClass = 'bg-pink-500';
+                        textColorClass = 'text-gray-800';
+                        break;
+                    case 'بنفش':
+                        bgColorClass = 'bg-purple-600';
+                        textColorClass = 'text-gray-800';
+                        break;
+                    case 'قهوه‌ای':
+                        bgColorClass = 'bg-brown-500';
+                        textColorClass = 'text-gray-800';
+                        break;
+                    case 'طلایی':
+                        bgColorClass = 'bg-yellow-600';
+                        textColorClass = 'text-gray-800';
+                        break;
+                    case 'نوک مدادی':
+                        bgColorClass = 'bg-gray-700';
+                        textColorClass = 'text-gray-800';
+                        break;
+                    case 'بژ':
+                        bgColorClass = 'bg-beige';
+                        textColorClass = 'text-gray-800';
+                        break;
+                    case 'فیروزه‌ای':
+                        bgColorClass = 'bg-teal-400';
+                        textColorClass = 'text-gray-800';
+                        break;
+                    case 'یاسی':
+                        bgColorClass = 'bg-lavender';
+                        textColorClass = 'text-gray-800';
+                        break;
+                    case 'زرشکی':
+                        bgColorClass = 'bg-maroon';
                         textColorClass = 'text-gray-800';
                         break;
                     default:
                         bgColorClass = 'bg-white';
                         textColorClass = 'text-gray-800';
                 }
+
 
                 button.innerHTML = `
                     <div class="w-8 h-8 rounded-full ${bgColorClass} border border-gray-300"></div>
@@ -890,11 +935,10 @@
                         if (xhr.status === 429) {
                             alert("تعداد درخواست‌های شما بیش از حد مجاز است. لطفاً بعداً مجدد تلاش کنید.");
                             setLoadingState(submitBtn, false, 'تایید و ثبت', true);
-                        }else if (xhr.status === 419) {
+                        } else if (xhr.status === 419) {
                             alert("توکن شما منقضی شده است لطفا مجدد لاگین کنید");
                             setLoadingState(submitBtn, false, 'تایید و ثبت', true);
-                        }
-                        else {
+                        } else {
                             if (xhr.responseJSON && xhr.responseJSON.message) {
                                 alert(xhr.responseJSON.message);
                             } else {

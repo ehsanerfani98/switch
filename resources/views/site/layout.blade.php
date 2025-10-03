@@ -4,25 +4,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>الوماشین؛ متخصص خرید و فروش خودروهای وارداتی و لوکس| تهران</title>
+    <title>الوماشین؛ متخصص خرید و فروش خودروهای وارداتی و لوکس| قزوین</title>
     <meta name="description"
-        content="سامانه خرید و فروش خودروهای نو و کارکرده خارجی، خرید و فروش خودرو بی دغدغه، بی ریسک و بی معطلی توسط الوماشین در تهران">
+        content="سامانه خرید و فروش خودروهای نو و کارکرده خارجی، خرید و فروش خودرو بی دغدغه، بی ریسک و بی معطلی توسط الوماشین در قزوین">
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://www.switch.ir/">
-    <meta property="og:title" content="الوماشین؛ متخصص خرید و فروش خودروهای وارداتی و لوکس| تهران">
+    <meta property="og:title" content="الوماشین؛ متخصص خرید و فروش خودروهای وارداتی و لوکس| قزوین">
     <meta property="og:description"
-        content="سامانه خرید و فروش خودروهای نو و کارکرده خارجی، خرید و فروش خودرو بی دغدغه، بی ریسک و بی معطلی توسط الوماشین در تهران">
+        content="سامانه خرید و فروش خودروهای نو و کارکرده خارجی، خرید و فروش خودرو بی دغدغه، بی ریسک و بی معطلی توسط الوماشین در قزوین">
     <meta property="og:image"
         content="https://file.switch.ir/api/v1/webp/1728/528/80/0ab739b0-9e2a-4969-97c9-90f04b071b99.webp">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="https://www.switch.ir/">
-    <meta property="twitter:title" content="الوماشین؛ متخصص خرید و فروش خودروهای وارداتی و لوکس| تهران">
+    <meta property="twitter:title" content="الوماشین؛ متخصص خرید و فروش خودروهای وارداتی و لوکس| قزوین">
     <meta property="twitter:description"
-        content="سامانه خرید و فروش خودروهای نو و کارکرده خارجی، خرید و فروش خودرو بی دغدغه، بی ریسک و بی معطلی توسط الوماشین در تهران">
+        content="سامانه خرید و فروش خودروهای نو و کارکرده خارجی، خرید و فروش خودرو بی دغدغه، بی ریسک و بی معطلی توسط الوماشین در قزوین">
     <meta property="twitter:image"
         content="https://file.switch.ir/api/v1/webp/1728/528/80/0ab739b0-9e2a-4969-97c9-90f04b071b99.webp">
     <!-- فاوآیکن -->
@@ -226,7 +226,7 @@
                     <h3 class="text-xl font-bold mb-5 text-white">تماس با ما</h3>
                     <div class="footer-contact flex items-center mb-3.5 text-white/80">
                         <i class="fas fa-map-marker-alt ml-2.5 text-lg"></i>
-                        <span>تهران، خیابان ولیعصر، نبش خیابان شهید فیاضی(فرشته)، پلاک ۱۵۲، ساختمان تجاری لئو مال، طبقه
+                        <span>قزوین، خیابان ولیعصر، نبش خیابان شهید فیاضی(فرشته)، پلاک ۱۵۲، ساختمان تجاری لئو مال، طبقه
                             ۴، واحد ۳</span>
                     </div>
                     <div class="footer-contact flex items-center mb-3.5 text-white/80">

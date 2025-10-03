@@ -42,8 +42,8 @@
                             <thead>
                                 <tr>
                                     <th>شناسه</th>
+                                    <th>تصویر</th>
                                     <th>عنوان</th>
-                                    <th>آیکن</th>
                                     <th>نامک</th>
                                     <th>تعداد مدل‌ها</th>
                                     <th>اقدامات</th>
@@ -53,14 +53,15 @@
                                 @foreach ($brands as $brand)
                                     <tr>
                                         <td>{{ $brand->id }}</td>
-                                        <td>{{ $brand->title }}</td>
                                         <td>
                                             @if ($brand->icon)
-                                                <i class="{{ $brand->icon }}"></i>
+                                                <img height="35" src="{{ $brand->icon }}" alt="">
                                             @else
                                                 -
                                             @endif
                                         </td>
+                                        <td>{{ $brand->title }}</td>
+
                                         <td>{{ $brand->slug }}</td>
                                         <td>
                                             <span class="badge badge-info">{{ $brand->car_models_count }}</span>
@@ -70,7 +71,8 @@
                                                 ویرایش
                                             </a>
 
-                                            <form method="POST" action="{{ route('brands.destroy', $brand->id) }}" style="display:inline-block"
+                                            <form method="POST" action="{{ route('brands.destroy', $brand->id) }}"
+                                                style="display:inline-block"
                                                 onsubmit="return confirm('آیا از حذف برند مطمئن هستید؟')">
                                                 @csrf
                                                 @method('DELETE')

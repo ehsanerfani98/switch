@@ -10,9 +10,9 @@ use Illuminate\Support\Str;
 
 class ModelController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $carModels = CarModel::with('brand')->latest()->paginate(10);
+        $carModels = CarModel::where('brand_id', $request->brand_id)->with('brand')->latest()->paginate(10);
         return view('admin.car-models.index', compact('carModels'));
     }
 
@@ -26,6 +26,7 @@ class ModelController extends Controller
     {
         $request->validate([
             'title' => 'required|string|max:255',
+            'slug'  => 'required|unique:car_models,slug',
             'brand_id' => 'required|exists:brands,id',
             'years' => 'nullable|array',
             'types' => 'nullable|array',
@@ -34,14 +35,14 @@ class ModelController extends Controller
 
         CarModel::create([
             'title' => $request->title,
-            'slug' => Str::slug($request->title),
+            'slug'  => standardizeSlug($request->slug),
             'brand_id' => $request->brand_id,
             'years' => $request->years,
             'types' => $request->types,
             'colors' => $request->colors,
         ]);
 
-        return redirect()->route('models.index')
+        return redirect()->route('models.index', ['brand_id' => $request->brand_id])
             ->with('success', 'مدل خودرو با موفقیت ایجاد شد.');
     }
 
@@ -51,26 +52,26 @@ class ModelController extends Controller
         return view('admin.car-models.edit', compact('Model', 'brands'));
     }
 
-    public function update(Request $request, CarModel $carModel)
+    public function update(Request $request, CarModel $Model)
     {
         $request->validate([
             'title' => 'required|string|max:255',
+            'slug'  => 'required|unique:brands,slug,' . $Model->id,
             'brand_id' => 'required|exists:brands,id',
             'years' => 'nullable|array',
             'types' => 'nullable|array',
             'colors' => 'nullable|array',
         ]);
 
-        $carModel->update([
+        $Model->update([
             'title' => $request->title,
-            'slug' => Str::slug($request->title),
+            'slug'  => standardizeSlug($request->slug),
             'brand_id' => $request->brand_id,
             'years' => $request->years,
             'types' => $request->types,
             'colors' => $request->colors,
         ]);
-
-        return redirect()->route('models.index')
+        return redirect()->route('models.index', ['brand_id' => $request->brand_id])
             ->with('success', 'مدل خودرو با موفقیت ویرایش شد.');
     }
 

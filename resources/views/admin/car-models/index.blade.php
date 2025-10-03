@@ -31,8 +31,8 @@
                     <a href="{{ route('models.create') }}" class="btn btn-sm text-white border-btn">
                         <span class="text">ایجاد مدل جدید</span>
                     </a>
-                    <a href="{{ route('brands.index') }}" class="btn btn-sm text-white border-btn">
-                        <span class="text">مدیریت برندها</span>
+                    <a href="{{ url()->previous() }}" class="btn btn-sm text-white border-btn">
+                        <span class="text">بازگشت</span>
                     </a>
                 </div>
             </div>

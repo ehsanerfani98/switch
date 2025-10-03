@@ -13,6 +13,21 @@ tailwind.config = {
                 'text-light': '#6b7280',
                 'text-lighter': '#9ca3af',
                 'border-color': '#e5e7eb',
+                beige: {
+                    DEFAULT: '#f5f5dc',
+                    light: '#f8f8e7',
+                    dark: '#e5e5b5',
+                },
+                lavender: {
+                    DEFAULT: '#E6E6FA',
+                    light: '#F3F3FD',
+                    dark: '#CFCFE8',
+                },
+                maroon: {
+                    DEFAULT: '#800000',
+                    dark: '#4B0000',
+                    light: '#A52A2A',
+                },
             },
             boxShadow: {
                 'custom': '0 1px 3px rgba(0, 0, 0, 0.1)',
