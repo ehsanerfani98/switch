@@ -199,6 +199,16 @@
                     </li>
                 @endcan
 
+                @can('brand-list')
+                    <li class="nav-item {{ request()->routeIs('brands.*') ? 'active' : '' }}">
+                        <a href="{{ route('brands.index') }}">
+                            <i class="ft-aperture"></i>
+                            <span class="menu-title" data-i18n="">مدیریت برندها</span>
+                        </a>
+                    </li>
+                @endcan
+
+
 
                 {{-- <li class="nav-item"><a href="#"><i class="ft-briefcase"></i><span class="menu-title"
                             data-i18n="">سفارشات من</span></a>

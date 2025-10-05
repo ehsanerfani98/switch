@@ -6,6 +6,7 @@ use App\Models\Car;
 use App\Models\Attribute;
 use App\Models\CarAttributeValue;
 use App\Models\CarFile;
+use App\Models\Brand;
 use App\Models\CarFileItem;
 use App\Models\CarFileItemValue;
 use Illuminate\Http\Request;
@@ -32,13 +33,12 @@ class CarController extends Controller
         $attributes = Attribute::with('values')->orderBy('sort_order')->get();
         $fileItems = CarFileItem::with('carFile')->get();
         $carFiles = CarFile::get();
-        return view('admin.cars.create', compact('attributes', 'fileItems', 'carFiles'));
+        $brands   = Brand::get();
+        return view('admin.cars.create', compact('attributes', 'fileItems', 'carFiles', 'brands'));
     }
 
     public function store(Request $request)
     {
-
-
 
         $request->validate([
             'title' => 'required|string',
@@ -57,6 +57,7 @@ class CarController extends Controller
                 'gallery' => $request->gallery ?? null,
                 'description' => $request->description ?? null,
                 'status' => $request->status,
+                'vip' => $request->vip,
             ]);
 
             // ذخیره ویژگی‌ها
@@ -118,9 +119,10 @@ class CarController extends Controller
     public function edit(Car $car)
     {
         $attributes = Attribute::with('values')->orderBy('sort_order')->get();
-        $carFiles   = CarFile::with('items')->get(); // <--- اضافه کنید
+        $carFiles   = CarFile::with('items')->get();
+        $brands   = Brand::get();
         $car->load('attributeValues.attribute', 'attributeValues.attributeValue', 'fileItemValues');
-        return view('admin.cars.edit', compact('car', 'attributes', 'carFiles'));
+        return view('admin.cars.edit', compact('car', 'attributes', 'carFiles', 'brands'));
     }
 
     public function update(Request $request, Car $car)
@@ -142,6 +144,7 @@ class CarController extends Controller
                 'gallery' => $request->gallery ?? null, // اضافه کردن فیلد gallery که در متد store وجود داشت
                 'description' => $request->description ?? null,
                 'status' => $request->status,
+                'vip' => $request->vip,
             ]);
 
             // حذف مقادیر قبلی ویژگی‌ها

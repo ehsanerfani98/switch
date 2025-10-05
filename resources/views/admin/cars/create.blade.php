@@ -78,6 +78,19 @@
             <div class="col-lg-4">
 
 
+                <!-- حالت ویژه -->
+                <div class="card shadow ">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h6 class="m-0 font-weight-bold text-primary">محصول ویژه</h6>
+                    </div>
+                    <div class="card-body">
+                        <select class="form-control" name="vip" id="vip">
+                            <option value="0">خیر</option>
+                            <option value="1">بله</option>
+                        </select>
+                    </div>
+                </div>
+
                 <!-- وضعیت ماشین -->
                 <div class="card shadow ">
                     <div class="card-header d-flex justify-content-between align-items-center">
@@ -88,6 +101,20 @@
                             <option value="inreview">در حال کارشناسی</option>
                             <option value="assessed">کارشناسی شده</option>
                             <option value="sold">فروخته شده</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- برندها -->
+                <div class="card shadow ">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h6 class="m-0 font-weight-bold text-primary">برند</h6>
+                    </div>
+                    <div class="card-body">
+                        <select class="form-control" name="brand_id" id="brand_id">
+                            @foreach ($brands as $brand)
+                                <option value="{{$brand->id}}">{{$brand->title}}</option>
+                            @endforeach
                         </select>
                     </div>
                 </div>

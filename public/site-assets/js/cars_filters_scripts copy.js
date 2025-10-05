@@ -387,7 +387,7 @@ function loadCars(params = "") {
         </div>
     `;
 
-    axios.get(`/testfilter?${params}`)
+    axios.get(`/filter?${params}`)
         .then(res => {
             const cars = res.data.data;
             renderCars(cars);

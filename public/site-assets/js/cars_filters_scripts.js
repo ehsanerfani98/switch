@@ -10,23 +10,34 @@ let attributesData = [];
 
 // بارگذاری فیلترها از سرور
 function loadFilters() {
-    axios.get('/attributes')
-        .then(res => {
-            attributesData = res.data;
-            renderFilters(res.data);
-            setupEventListeners();
-            applyUrlParams();
-        })
-        .catch(error => {
-            console.error('خطا در بارگذاری فیلترها:', error);
-            resultsCount.textContent = "خطا در بارگذاری فیلترها";
-        });
+    // درخواست همزمان برای attributes و brands
+    Promise.all([
+        axios.get('/attributes'),
+        axios.get('/get-all-brands') // اضافه کردن درخواست برای برندها
+    ])
+    .then(([attributesRes, brandsRes]) => {
+        attributesData = attributesRes.data;
+        renderFilters(attributesRes.data, brandsRes.data);
+        setupEventListeners();
+        applyUrlParams();
+    })
+    .catch(error => {
+        console.error('خطا در بارگذاری فیلترها:', error);
+        resultsCount.textContent = "خطا در بارگذاری فیلترها";
+    });
 }
 
 // رندر کردن فیلترها در صفحه
-function renderFilters(attributes) {
+function renderFilters(attributes, brands = []) {
     filtersForm.innerHTML = '';
 
+    // اضافه کردن فیلتر برند در ابتدا
+    if (brands.length > 0) {
+        const brandFilterHtml = createBrandFilterHtml(brands);
+        filtersForm.innerHTML += brandFilterHtml;
+    }
+
+    // رندر فیلترهای عادی
     attributes.forEach(attr => {
         const filterHtml = createFilterHtml(attr);
         filtersForm.innerHTML += filterHtml;
@@ -387,7 +398,7 @@ function loadCars(params = "") {
         </div>
     `;
 
-    axios.get(`/testfilter?${params}`)
+    axios.get(`/filter?${params}`)
         .then(res => {
             const cars = res.data.data;
             renderCars(cars);

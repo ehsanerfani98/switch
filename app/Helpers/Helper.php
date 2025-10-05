@@ -9,11 +9,13 @@ use App\Models\Setting;
 use App\Models\Slider;
 use App\Models\Useddiscount;
 use App\Models\User;
+use App\Models\Car;
 use App\Models\UserSubscriptionUsage;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use App\Http\Resources\CarResource;
 
 // if (!function_exists('getRoles')) {
 //     function getRoles()
@@ -577,3 +579,37 @@ function getUnreadCount($fromUserId, $toUserId)
     {
         return Str::limit(strip_tags($text), $limit, $end);
     }
+
+
+    // دریافت ماشین‌های VIP
+    // $vipCars = getCars('vip', null, 4);
+    // دریافت ماشین‌های مشابه
+    // $relativeCars = getCars('relative', 'پراید');
+    // دریافت جدیدترین ماشین‌ها
+    // $newCars = getCars('new');
+    // استفاده با تعداد مشخص
+    // $latestCars = getCars('new', null, 5);
+function getCars($type, $brandId = null, $limit = 10)
+{
+    $query = Car::with(['brand', 'attributeValues.attribute']);
+
+    switch ($type) {
+        case 'relative':
+            if ($brandId) {
+                $query->where('brand_id', $brandId);
+            }
+            break;
+
+        case 'vip':
+            $query->where('vip', true);
+            break;
+
+        case 'new':
+            $query->orderBy('created_at', 'desc');
+            break;
+    }
+
+    $cars = $query->take($limit)->get();
+
+    return CarResource::collection($cars)->resolve();
+}

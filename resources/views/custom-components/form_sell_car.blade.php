@@ -926,7 +926,7 @@
 
                         setTimeout(() => {
                             successMessage.classList.add("translate-x-full");
-                            // window.location.reload();
+                            window.location.reload();
                         }, 3000);
 
                         console.log("Success:", response);

@@ -28,12 +28,14 @@
             <div class="px-2 d-flex align-items-center justify-content-between">
                 <h5 class="text-bold-700 my-2 text-white">لیست مدل‌های خودرو</h5>
                 <div>
-                    <a href="{{ route('models.create') }}" class="btn btn-sm text-white border-btn">
-                        <span class="text">ایجاد مدل جدید</span>
-                    </a>
-                    <a href="{{ url()->previous() }}" class="btn btn-sm text-white border-btn">
-                        <span class="text">بازگشت</span>
-                    </a>
+                    @can('car-model-create')
+                        <a href="{{ route('models.create') }}" class="btn btn-sm text-white border-btn">
+                            <span class="text">ایجاد مدل جدید</span>
+                        </a>
+                    @endcan
+                        <a href="{{ url()->previous() }}" class="btn btn-sm text-white border-btn">
+                            <span class="text">بازگشت</span>
+                        </a>
                 </div>
             </div>
 
@@ -85,21 +87,24 @@
                                             @endif
                                         </td>
                                         <td>
-                                            <a href="{{ route('models.edit', $carModel->id) }}"
-                                                class="btn btn-primary btn-sm mb-1">
-                                                ویرایش
-                                            </a>
-
-                                            <form method="POST"
-                                                action="{{ route('models.destroy', $carModel->id) }}" style="display:inline-block"
-                                                onsubmit="return confirm('آیا از حذف مدل خودرو مطمئن هستید؟')">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit"
-                                                    class="btn btn-danger btn-sm mb-1 w-100">
-                                                    حذف
-                                                </button>
-                                            </form>
+                                            @can('car-model-edit')
+                                                <a href="{{ route('models.edit', $carModel->id) }}"
+                                                    class="btn btn-primary btn-sm mb-1">
+                                                    ویرایش
+                                                </a>
+                                            @endcan
+                                            @can('car-model-delete')
+                                                <form method="POST"
+                                                    action="{{ route('models.destroy', $carModel->id) }}" style="display:inline-block"
+                                                    onsubmit="return confirm('آیا از حذف مدل خودرو مطمئن هستید؟')">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit"
+                                                        class="btn btn-danger btn-sm mb-1 w-100">
+                                                        حذف
+                                                    </button>
+                                                </form>
+                                            @endcan
                                         </td>
                                     </tr>
                                 @endforeach

@@ -72,8 +72,7 @@
                         <p class="budget-card-desc text-sm text-text-light mb-3.5">پژو 207، رنو تندر پلاس، ایران خودرو
                             تارا</p>
                         <div class="budget-card-footer flex items-center justify-between">
-                            <span
-                                class="budget-card-count flex items-center bg-accent px-2.5 py-1 rounded-full text-sm">
+                            <span class="budget-card-count flex items-center bg-accent px-2.5 py-1 rounded-full text-sm">
                                 <i class="fas fa-car ml-1.5 text-secondary"></i>
                                 4 خودرو
                             </span>
@@ -93,8 +92,7 @@
                         <p class="budget-card-desc text-sm text-text-light mb-3.5">هیوندای آزرا، فونیکس FX، جک S5،
                             ایران خودرو تارا</p>
                         <div class="budget-card-footer flex items-center justify-between">
-                            <span
-                                class="budget-card-count flex items-center bg-accent px-2.5 py-1 rounded-full text-sm">
+                            <span class="budget-card-count flex items-center bg-accent px-2.5 py-1 rounded-full text-sm">
                                 <i class="fas fa-car ml-1.5 text-secondary"></i>
                                 19 خودرو
                             </span>
@@ -114,8 +112,7 @@
                         <p class="budget-card-desc text-sm text-text-light mb-3.5">تویوتا آریون، فونیکس تیگو 7 پرو،
                             میتسوبیشی اوتلندر</p>
                         <div class="budget-card-footer flex items-center justify-between">
-                            <span
-                                class="budget-card-count flex items-center bg-accent px-2.5 py-1 rounded-full text-sm">
+                            <span class="budget-card-count flex items-center bg-accent px-2.5 py-1 rounded-full text-sm">
                                 <i class="fas fa-car ml-1.5 text-secondary"></i>
                                 18 خودرو
                             </span>
@@ -135,8 +132,7 @@
                         <p class="budget-card-desc text-sm text-text-light mb-3.5">تویوتا راوفور، تویوتا کمری هیبرید،
                             تویوتا پرادو</p>
                         <div class="budget-card-footer flex items-center justify-between">
-                            <span
-                                class="budget-card-count flex items-center bg-accent px-2.5 py-1 rounded-full text-sm">
+                            <span class="budget-card-count flex items-center bg-accent px-2.5 py-1 rounded-full text-sm">
                                 <i class="fas fa-car ml-1.5 text-secondary"></i>
                                 14 خودرو
                             </span>
@@ -269,90 +265,53 @@
             </div>
 
             <div class="special-slider -mx-2.5">
-                <div
-                    class="special-card mx-2.5 bg-white/5 rounded-lg overflow-hidden transition-transform hover:-translate-y-1 hover:shadow-xl">
-                    <div class="special-card-img h-44 relative">
-                        <img src="https://file.switch.ir/api/v1/webp/1200/672/80/59e85de3-6818-40f2-921b-e0fc4319f3f4.webp"
-                            alt="پژو 207" class="w-full h-full object-cover">
-                        <span
-                            class="special-badge absolute top-2.5 right-2.5 bg-secondary text-white px-2.5 py-1 rounded-full text-xs font-semibold">کارشناسی
-                            شده</span>
-                    </div>
-                    <div class="special-card-content p-5">
-                        <h3 class="special-card-title text-lg font-bold mb-2.5 text-white">پژو 207 - 1401</h3>
-                        <div class="special-card-info flex items-center mb-3.5 text-sm text-white/80">
-                            <span class="ml-3"><i class="fas fa-tachometer-alt ml-1.5"></i> 46,359 کیلومتر</span>
-                            <span><i class="fas fa-cogs ml-1.5"></i> دنده ای</span>
-                        </div>
-                        <div class="special-card-footer flex items-center justify-between">
-                            <span class="special-price text-lg font-bold text-white">توافقی</span>
-                        </div>
-                    </div>
-                </div>
+                @foreach (getCars('vip', null, 4) as $car)
+                    @php
+                        $statusColor = '#999';
+                        $statusLabel = 'نامشخص';
 
-                <div
-                    class="special-card mx-2.5 bg-white/5 rounded-lg overflow-hidden transition-transform hover:-translate-y-1 hover:shadow-xl">
-                    <div class="special-card-img h-44 relative">
-                        <img src="https://file.switch.ir/api/v1/webp/1200/672/80/7bf2f814-5390-459e-9774-0a096fdc5232.webp"
-                            alt="هیوندای i20" class="w-full h-full object-cover">
-                        <span
-                            class="special-badge absolute top-2.5 right-2.5 bg-secondary text-white px-2.5 py-1 rounded-full text-xs font-semibold">کارشناسی
-                            شده</span>
-                    </div>
-                    <div class="special-card-content p-5">
-                        <h3 class="special-card-title text-lg font-bold mb-2.5 text-white">هیوندای i20 (مونتاژ) - 1397
-                        </h3>
-                        <div class="special-card-info flex items-center mb-3.5 text-sm text-white/80">
-                            <span class="ml-3"><i class="fas fa-tachometer-alt ml-1.5"></i> 70,201 کیلومتر</span>
-                            <span><i class="fas fa-cogs ml-1.5"></i> اتومات</span>
-                        </div>
-                        <div class="special-card-footer flex items-center justify-between">
-                            <span class="special-price text-lg font-bold text-white">توافقی</span>
-                        </div>
-                    </div>
-                </div>
+                        switch ($car['status']['statusLabel']) {
+                            case 'کارشناسی شده':
+                                $bgColor = 'bg-secondary';
+                                break;
 
-                <div
-                    class="special-card mx-2.5 bg-white/5 rounded-lg overflow-hidden transition-transform hover:-translate-y-1 hover:shadow-xl">
-                    <div class="special-card-img h-44 relative">
-                        <img src="https://file.switch.ir/api/v1/webp/1200/672/80/7b5ee96b-53c0-42f6-9959-b57cc311c4f6.webp"
-                            alt="بنز کلاس E" class="w-full h-full object-cover">
-                        <span
-                            class="special-badge absolute top-2.5 right-2.5 bg-secondary text-white px-2.5 py-1 rounded-full text-xs font-semibold">کارشناسی
-                            شده</span>
-                    </div>
-                    <div class="special-card-content p-5">
-                        <h3 class="special-card-title text-lg font-bold mb-2.5 text-white">بنز کلاس E - 2011</h3>
-                        <div class="special-card-info flex items-center mb-3.5 text-sm text-white/80">
-                            <span class="ml-3"><i class="fas fa-tachometer-alt ml-1.5"></i> 158,669 کیلومتر</span>
-                            <span><i class="fas fa-cogs ml-1.5"></i> اتومات</span>
-                        </div>
-                        <div class="special-card-footer flex items-center justify-between">
-                            <span class="special-price text-lg font-bold text-white">توافقی</span>
-                        </div>
-                    </div>
-                </div>
+                            case 'در حال کارشناسی':
+                                $bgColor = 'bg-orange-400';
+                                break;
 
-                <div
-                    class="special-card mx-2.5 bg-white/5 rounded-lg overflow-hidden transition-transform hover:-translate-y-1 hover:shadow-xl">
-                    <div class="special-card-img h-44 relative">
-                        <img src="https://file.switch.ir/api/v1/webp/1200/672/80/b47a8df2-3689-4293-81bc-9add56360dde.webp"
-                            alt="هیوندای سانتافه" class="w-full h-full object-cover">
-                        <span
-                            class="special-badge absolute top-2.5 right-2.5 bg-secondary text-white px-2.5 py-1 rounded-full text-xs font-semibold">کارشناسی
-                            شده</span>
-                    </div>
-                    <div class="special-card-content p-5">
-                        <h3 class="special-card-title text-lg font-bold mb-2.5 text-white">هیوندای سانتافه - 2017</h3>
-                        <div class="special-card-info flex items-center mb-3.5 text-sm text-white/80">
-                            <span class="ml-3"><i class="fas fa-tachometer-alt ml-1.5"></i> 109,163 کیلومتر</span>
-                            <span><i class="fas fa-cogs ml-1.5"></i> اتومات</span>
+                            case 'فروخته شد':
+                                $bgColor = 'bg-red-500';
+                                break;
+                        }
+                    @endphp
+
+                    <a href="{{ $car['url'] }}">
+                        <div
+                            class="special-card mx-2.5 bg-white/5 rounded-lg overflow-hidden transition-transform hover:-translate-y-1 hover:shadow-xl">
+                            <div class="special-card-img h-44 relative">
+                                <img src="{{ $car['image'] }}" alt="پژو 207" class="w-full h-full object-cover">
+                                <span
+                                    class="special-badge absolute top-2.5 right-2.5 px-2.5 py-1 {{ $bgColor }} text-white rounded-full text-xs font-semibold">{{ $car['status']['statusLabel'] }}</span>
+                            </div>
+                            <div class="special-card-content p-5">
+                                <h3 class="special-card-title text-lg font-bold mb-2.5 text-white">{{ $car['title'] }} -
+                                    {{ $car['year'] }}</h3>
+                                <div class="special-card-info flex items-center mb-3.5 text-sm text-white/80">
+                                    <span class="ml-3"><i class="fas fa-tachometer-alt ml-1.5"></i>
+                                        {{ $car['kilometer'] }} کیلومتر</span>
+                                    <span><i class="fas fa-cogs ml-1.5"></i> {{ $car['gearbox'] }}</span>
+                                </div>
+                                <div class="special-card-footer flex items-center justify-between">
+                                    <span class="special-price text-lg font-bold text-white">{{ $car['price'] }}
+                                        تومان</span>
+                                </div>
+                            </div>
                         </div>
-                        <div class="special-card-footer flex items-center justify-between">
-                            <span class="special-price text-lg font-bold text-white">توافقی</span>
-                        </div>
-                    </div>
-                </div>
+                    </a>
+                @endforeach
+
+
+
             </div>
         </div>
     </section>
@@ -370,121 +329,42 @@
             </div>
 
             <div class="new-slider -mx-2.5">
-                <div
-                    class="car-card mx-2.5 bg-white rounded-lg overflow-hidden shadow-custom transition-transform hover:-translate-y-1 hover:shadow-lg">
-                    <div class="car-card-img h-44 relative">
-                        <img src="https://file.switch.ir/api/v1/webp/1200/672/80/4e40e0ff-adfa-4921-ba26-0dc83a866ced.webp"
-                            alt="میتسوبیشی اوتلندر" class="w-full h-full object-cover">
-                        <span
-                            class="car-badge absolute top-2.5 right-2.5 bg-black/70 text-white px-2.5 py-1 rounded-full text-xs font-semibold">امکان
-                            خرید قسطی</span>
-                    </div>
-                    <div class="car-card-content p-5">
-                        <h3 class="car-card-title text-lg font-bold mb-2.5">میتسوبیشی اوتلندر - 2023</h3>
-                        <div class="car-card-info flex flex-wrap gap-2.5 mb-3.5 text-sm text-text-light">
-                            <span class="flex items-center">کارکرده</span>
-                            <span class="flex items-center">18 کیلومتر</span>
-                            <span class="flex items-center">اتومات</span>
-                            <span class="flex items-center">سفید</span>
-                        </div>
-                        <div class="car-card-features flex items-center mb-3.5 text-sm text-secondary">
-                            <i class="fas fa-check-circle ml-1.5"></i>
-                            کارشناسی شده
-                        </div>
-                        <div class="car-card-footer flex items-center justify-between">
-                            <div>
-                                <span class="car-price text-lg font-bold text-text-dark">توافقی</span>
-                                <div class="car-installment text-sm text-text-light">قسطی: 245,136,400 تومان</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
-                <div
-                    class="car-card mx-2.5 bg-white rounded-lg overflow-hidden shadow-custom transition-transform hover:-translate-y-1 hover:shadow-lg">
-                    <div class="car-card-img h-44 relative">
-                        <img src="https://file.switch.ir/api/v1/webp/1200/672/80/0b3c618c-2a43-4827-b2bc-7d180b26119e.webp"
-                            alt="پژو 207" class="w-full h-full object-cover">
-                        <span
-                            class="car-badge absolute top-2.5 right-2.5 bg-black/70 text-white px-2.5 py-1 rounded-full text-xs font-semibold">امکان
-                            خرید قسطی</span>
-                    </div>
-                    <div class="car-card-content p-5">
-                        <h3 class="car-card-title text-lg font-bold mb-2.5">پژو 207 - 1400</h3>
-                        <div class="car-card-info flex flex-wrap gap-2.5 mb-3.5 text-sm text-text-light">
-                            <span class="flex items-center">کارکرده</span>
-                            <span class="flex items-center">30,713 کیلومتر</span>
-                            <span class="flex items-center">اتومات</span>
-                            <span class="flex items-center">سفید</span>
-                        </div>
-                        <div class="car-card-features flex items-center mb-3.5 text-sm text-secondary">
-                            <i class="fas fa-check-circle ml-1.5"></i>
-                            کارشناسی شده
-                        </div>
-                        <div class="car-card-footer flex items-center justify-between">
-                            <div>
-                                <span class="car-price text-lg font-bold text-text-dark">920,000,000 تومان</span>
-                                <div class="car-installment text-sm text-text-light">قسطی: 56,381,400 تومان</div>
+                @foreach (getCars('new', null, 4) as $car)
+                    <a href="{{ $car['url'] }}">
+                        <div
+                            class="car-card mx-2.5 bg-white rounded-lg overflow-hidden shadow-custom transition-transform hover:-translate-y-1 hover:shadow-lg">
+                            <div class="car-card-img h-44 relative">
+                                <img src="{{ $car['image'] }}" class="w-full h-full object-cover"
+                                    alt="{{ $car['title'] }}">
+                                <div
+                                    class="car-badge absolute top-2.5 right-2.5 bg-black/70 text-white px-2.5 py-1 rounded-full text-xs font-semibold">
+                                    امکان خرید قسطی</div>
                             </div>
-                        </div>
-                    </div>
-                </div>
+                            <div class="car-card-content p-5">
+                                <h3 class="car-card-title text-lg font-bold mb-2.5">{{ $car['title'] }}</h3>
+                                <div class="car-card-info flex flex-wrap gap-2.5 mb-3.5 text-sm text-text-light">
+                                    <span class="flex items-center">{{ $car['kilometer'] }} کیلومتر</span>
+                                    <span class="flex items-center">{{ $car['gearbox'] }}</span>
+                                </div>
+                                <div class="car-card-features flex items-center mb-3.5 text-sm"
+                                    style="color: {{ $car['status']['statusColor'] }};">
+                                    <i class="{{ $car['status']['statusIcon'] }} ml-1.5"></i>
+                                    {{ $car['status']['statusLabel'] }}
+                                </div>
+                                <div class="car-card-footer flex items-center justify-between">
+                                    <div>
+                                        <span class="car-price text-lg font-bold text-text-dark">{{ $car['price'] }}
+                                            تومان</span>
+                                        {{-- <div class="car-installment text-sm text-text-light">قسطی: 245,136,400 تومان</div> --}}
+                                    </div>
+                                </div>
 
-                <div
-                    class="car-card mx-2.5 bg-white rounded-lg overflow-hidden shadow-custom transition-transform hover:-translate-y-1 hover:shadow-lg">
-                    <div class="car-card-img h-44 relative">
-                        <img src="https://file.switch.ir/api/v1/webp/1200/672/80/c0ad23fc-2322-4778-864b-283ba282f7b3.webp"
-                            alt="بنز کلاس E" class="w-full h-full object-cover">
-                    </div>
-                    <div class="car-card-content p-5">
-                        <h3 class="car-card-title text-lg font-bold mb-2.5">بنز کلاس E - 2006</h3>
-                        <div class="car-card-info flex flex-wrap gap-2.5 mb-3.5 text-sm text-text-light">
-                            <span class="flex items-center">کارکرده</span>
-                            <span class="flex items-center">209,217 کیلومتر</span>
-                            <span class="flex items-center">اتومات</span>
-                            <span class="flex items-center">سفید صدفی</span>
-                        </div>
-                        <div class="car-card-features flex items-center mb-3.5 text-sm text-secondary">
-                            <i class="fas fa-check-circle ml-1.5"></i>
-                            کارشناسی شده
-                        </div>
-                        <div class="car-card-footer flex items-center justify-between">
-                            <div>
-                                <span class="car-price text-lg font-bold text-text-dark">2,000,000,000 تومان</span>
                             </div>
                         </div>
-                    </div>
-                </div>
+                    </a>
+                @endforeach
 
-                <div
-                    class="car-card mx-2.5 bg-white rounded-lg overflow-hidden shadow-custom transition-transform hover:-translate-y-1 hover:shadow-lg">
-                    <div class="car-card-img h-44 relative">
-                        <img src="https://file.switch.ir/api/v1/webp/1200/672/80/2ec5f801-bc12-4096-9677-9f95f4033a71.webp"
-                            alt="هایما S7" class="w-full h-full object-cover">
-                        <span
-                            class="car-badge absolute top-2.5 right-2.5 bg-black/70 text-white px-2.5 py-1 rounded-full text-xs font-semibold">امکان
-                            خرید قسطی</span>
-                    </div>
-                    <div class="car-card-content p-5">
-                        <h3 class="car-card-title text-lg font-bold mb-2.5">هایما S7 توربو - 1402</h3>
-                        <div class="car-card-info flex flex-wrap gap-2.5 mb-3.5 text-sm text-text-light">
-                            <span class="flex items-center">کارکرده</span>
-                            <span class="flex items-center">60,049 کیلومتر</span>
-                            <span class="flex items-center">اتومات</span>
-                            <span class="flex items-center">مشکی</span>
-                        </div>
-                        <div class="car-card-features flex items-center mb-3.5 text-sm text-secondary">
-                            <i class="fas fa-check-circle ml-1.5"></i>
-                            کارشناسی شده
-                        </div>
-                        <div class="car-card-footer flex items-center justify-between">
-                            <div>
-                                <span class="car-price text-lg font-bold text-text-dark">1,840,000,000 تومان</span>
-                                <div class="car-installment text-sm text-text-light">قسطی: 112,762,800 تومان</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     </section>

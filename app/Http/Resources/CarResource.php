@@ -53,12 +53,11 @@ class CarResource extends JsonResource
                 "statusColor" => $statusColor,
                 "statusLabel" => $statusLabel
             ],
-
-
             // فیلدهای مستقیم بر اساس scopeValueOf
             'kilometer'   => $this->attributeValues()->valueOf('kilometer'),
             'gearbox'     => $this->attributeValues()->valueOf('gearbox'),
             'price'       => $this->attributeValues()->valueOf('price'),
+            'year'       => $this->attributeValues()->valueOf('year'),
 
             // همچنان attributes کامل هم برای انعطاف
             'attributes' => $this->attributeValues

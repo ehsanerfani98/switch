@@ -162,12 +162,11 @@ Route::middleware(['auth'])->group(function () {
 
     Route::resource('brands', BrandController::class);
     Route::resource('models', ModelController::class);
-    Route::resource('car/requests', CarRequestController::class);
-    Route::post('/car/request/save', [CarRequestController::class, 'save_sell_request'])->name('save.sell.request')->middleware('throttle:3,1440');
+    Route::resource('car-requests', CarRequestController::class);
+    Route::post('/car-requests/save/sell', [CarRequestController::class, 'save_sell_request'])->name('save.sell.request')->middleware('throttle:3,1440');
+    Route::post('/car-requests/save/buy', [CarRequestController::class, 'save_buy_request'])->name('save.buy.request')->middleware('throttle:3,1440');
 
 });
-
-
 
 
 
@@ -181,11 +180,23 @@ Route::get('/', [ControllersSiteController::class, 'home'])->name('home');
 Route::get('/cars', [ControllersSiteController::class, 'cars'])->name('cars');
 Route::get('/car/{slug}', [ControllersSiteController::class, 'car_single'])->name('car');
 Route::get('/carsell', [ControllersSiteController::class, 'carsell'])->name('carsell');
-Route::get('/testfilter', function () {
-    $filters = Attribute::where('is_active', 1)->pluck('slug')
+Route::get('/filter', function () {
+    // فیلترهای عادی (Attribute-based)
+    $attributeFilters = Attribute::where('is_active', 1)->pluck('slug')
         ->map(fn($slug) => AllowedFilter::custom($slug, new CarFilter()))
         ->toArray();
-    $cars = QueryBuilder::for(Car::with(['attributeValues.attribute', 'attributeValues.attributeValue']))
+
+    // فیلتر برند
+    $brandFilter = AllowedFilter::custom('brand', new BrandFilter());
+
+    // ترکیب همه فیلترها
+    $filters = array_merge($attributeFilters, [$brandFilter]);
+
+    $cars = QueryBuilder::for(Car::with([
+            'attributeValues.attribute',
+            'attributeValues.attributeValue',
+            'brand' // اضافه کردن رابطه برند
+        ]))
         ->allowedFilters($filters)
         ->get();
 
@@ -319,10 +330,11 @@ Route::post('/otp/send-password', [OtpController::class, 'sendPassword'])->middl
 Route::get('/create-permissions', function () {
 
     $permisions = [
-        'media-list' => 'مدیریت کتابخانه',
-        'media-create' => 'بارگذاری فایل',
-        'media-edit' => 'ویرایش فایل',
-        'media-delete' => 'حذف فایل',
+        // 'car-request-list' => 'مدیریت درخواست ها',
+        // 'car-request-create' => 'ایجاد درخواست ',
+        // 'car-request-edit' => 'ویرایش درخواست',
+        // 'car-request-delete' => 'حذف درخواست',
+        'car-request-view' => 'مشاهده جزئیات',
     ];
 
     foreach ($permisions as $name => $title) {

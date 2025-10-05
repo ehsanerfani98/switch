@@ -13,12 +13,14 @@ return new class extends Migration
     {
         Schema::create('cars', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('brand_id')->nullable()->constrained()->onDelete('set null');
             $table->string('thumbnail')->nullable();
             $table->json('gallery')->nullable();
             $table->string('title');
             $table->string('slug')->unique();
             $table->text('description')->nullable();
             $table->enum('status' , ['inreview', 'assessed', 'sold'])->default('inreview');
+            $table->boolean('vip')->default(0);
             $table->timestamps();
         });
     }

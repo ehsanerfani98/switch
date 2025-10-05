@@ -27,11 +27,15 @@
         <div class="col-12">
             <div class="px-2 d-flex align-items-center justify-content-between">
                 <h5 class="text-bold-700 my-2 text-white">لیست برندها</h5>
+
                 <div>
+                    @can('brand-create')
                     <a href="{{ route('brands.create') }}" class="btn btn-sm text-white border-btn">
                         <span class="text">ایجاد برند جدید</span>
                     </a>
+                    @endcan
                 </div>
+
             </div>
 
             <div class="card">
@@ -67,24 +71,28 @@
                                             <span class="badge badge-info">{{ $brand->car_models_count }}</span>
                                         </td>
                                         <td>
-                                            <a href="{{ route('brands.edit', $brand->id) }}" class="btn btn-primary btn-sm">
-                                                ویرایش
-                                            </a>
-
-                                            <form method="POST" action="{{ route('brands.destroy', $brand->id) }}"
-                                                style="display:inline-block"
-                                                onsubmit="return confirm('آیا از حذف برند مطمئن هستید؟')">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-danger btn-sm">
-                                                    حذف
-                                                </button>
-                                            </form>
-
-                                            <a href="{{ route('models.index', ['brand_id' => $brand->id]) }}"
-                                                class="btn btn-info btn-sm">
-                                                مشاهده مدل‌ها
-                                            </a>
+                                            @can('brand-edit')
+                                                <a href="{{ route('brands.edit', $brand->id) }}" class="btn btn-primary btn-sm">
+                                                    ویرایش
+                                                </a>
+                                            @endcan
+                                            @can('brand-delete')
+                                                <form method="POST" action="{{ route('brands.destroy', $brand->id) }}"
+                                                    style="display:inline-block"
+                                                    onsubmit="return confirm('آیا از حذف برند مطمئن هستید؟')">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-danger btn-sm">
+                                                        حذف
+                                                    </button>
+                                                </form>
+                                            @endcan
+                                            @can('car-model-list')
+                                                <a href="{{ route('models.index', ['brand_id' => $brand->id]) }}"
+                                                    class="btn btn-info btn-sm">
+                                                    مشاهده مدل‌ها
+                                                </a>
+                                            @endcan
                                         </td>
                                     </tr>
                                 @endforeach

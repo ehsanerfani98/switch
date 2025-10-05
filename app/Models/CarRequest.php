@@ -14,6 +14,7 @@ class CarRequest extends Model
         'type',
         'car_id',
         'data',
+        'status',
     ];
 
     protected $casts = [

@@ -10,6 +10,14 @@ use Illuminate\Support\Str;
 
 class ModelController extends Controller
 {
+    function __construct()
+    {
+        $this->middleware('permission:car-model-list', ['only' => ['index', 'show']]);
+        $this->middleware('permission:car-model-create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:car-model-edit', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:car-model-delete', ['only' => ['destroy']]);
+    }
+
     public function index(Request $request)
     {
         $carModels = CarModel::where('brand_id', $request->brand_id)->with('brand')->latest()->paginate(10);

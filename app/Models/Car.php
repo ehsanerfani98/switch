@@ -12,13 +12,20 @@ class Car extends Model
         'thumbnail',
         'gallery',
         'description',
-        'status'
+        'status',
+        'vip',
+        'brand_id',
     ];
 
     protected $casts = [
         'gallery' => "json",
     ];
 
+    public function brand()
+    {
+        return $this->belongsTo(Brand::class);
+    }
+    
     public function attributeValues()
     {
         return $this->hasMany(CarAttributeValue::class);
@@ -57,5 +64,6 @@ class Car extends Model
     {
         return $this->valueOf('price');
     }
+
 
 }
