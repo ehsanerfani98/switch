@@ -35,6 +35,7 @@ use App\Http\Controllers\WalletController;
 use App\Models\Car;
 use App\Models\Permission;
 use App\QueryBuilder\Filters\CarFilter;
+use App\QueryBuilder\Filters\BrandFilter;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;

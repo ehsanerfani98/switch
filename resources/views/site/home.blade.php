@@ -151,103 +151,14 @@
                 در نمایشگاه آنلاین خودرو</p>
 
             <div class="brands-slider -mx-2.5">
-                <div
-                    class="brand-card mx-2.5 rounded-lg shadow-custom !flex flex-col items-center justify-center p-5 w-36 h-36 transition-all hover:shadow-lg bg-gradient-to-b from-white to-gray-100 border border-gray-300">
-                    <img src="https://file.switch.ir/api/v1/3a9c5588-35cd-445a-97fd-d26cc4fb72d5.webp" alt="هیوندای"
-                        class="w-14 h-14 object-contain mb-2.5">
-                    <h3 class="text-base font-bold text-center">هیوندای</h3>
-                </div>
-
-                <div
-                    class="brand-card mx-2.5 rounded-lg shadow-custom !flex flex-col items-center justify-center p-5 w-36 h-36 transition-all hover:shadow-lg bg-gradient-to-b from-white to-gray-100 border border-gray-300">
-                    <img src="https://file.switch.ir/api/v1/df32b2b7-351c-402e-9b33-ff4866668192.webp" alt="پژو"
-                        class="w-14 h-14 object-contain mb-2.5">
-                    <h3 class="text-base font-bold text-center">پژو</h3>
-                </div>
-
-                <div
-                    class="brand-card mx-2.5 rounded-lg shadow-custom !flex flex-col items-center justify-center p-5 w-36 h-36 transition-all hover:shadow-lg bg-gradient-to-b from-white to-gray-100 border border-gray-300">
-                    <img src="https://file.switch.ir/api/v1/64d33573-6a83-4a64-95fc-dbdd05f58bee.webp" alt="کیا"
-                        class="w-14 h-14 object-contain mb-2.5">
-                    <h3 class="text-base font-bold text-center">کیا</h3>
-                </div>
-
-                <div
-                    class="brand-card mx-2.5 rounded-lg shadow-custom !flex flex-col items-center justify-center p-5 w-36 h-36 transition-all hover:shadow-lg bg-gradient-to-b from-white to-gray-100 border border-gray-300">
-                    <img src="https://file.switch.ir/api/v1/f623244b-04a5-411b-a76b-43c1b64f2abd.webp" alt="تویوتا"
-                        class="w-14 h-14 object-contain mb-2.5">
-                    <h3 class="text-base font-bold text-center">تویوتا</h3>
-                </div>
-
-                <div
-                    class="brand-card mx-2.5 rounded-lg shadow-custom !flex flex-col items-center justify-center p-5 w-36 h-36 transition-all hover:shadow-lg bg-gradient-to-b from-white to-gray-100 border border-gray-300">
-                    <img src="https://file.switch.ir/api/v1/146218b8-1e68-4f2d-8afb-2bd506d95537.webp" alt="بنز"
-                        class="w-14 h-14 object-contain mb-2.5">
-                    <h3 class="text-base font-bold text-center">بنز</h3>
-                </div>
-
-                <div
-                    class="brand-card mx-2.5 rounded-lg shadow-custom !flex flex-col items-center justify-center p-5 w-36 h-36 transition-all hover:shadow-lg bg-gradient-to-b from-white to-gray-100 border border-gray-300">
-                    <img src="https://file.switch.ir/api/v1/254220ee-e9c7-4905-9d47-87bf3e39b3c8.webp" alt="لکسوس"
-                        class="w-14 h-14 object-contain mb-2.5">
-                    <h3 class="text-base font-bold text-center">لکسوس</h3>
-                </div>
-
-                <div
-                    class="brand-card mx-2.5 rounded-lg shadow-custom !flex flex-col items-center justify-center p-5 w-36 h-36 transition-all hover:shadow-lg bg-gradient-to-b from-white to-gray-100 border border-gray-300">
-                    <img src="https://file.switch.ir/api/v1/831048b2-b68f-454f-988c-dbfec5d95db8.webp" alt="ب ام و"
-                        class="w-14 h-14 object-contain mb-2.5">
-                    <h3 class="text-base font-bold text-center">ب ام و</h3>
-                </div>
-
-                <div
-                    class="brand-card mx-2.5 rounded-lg shadow-custom !flex flex-col items-center justify-center p-5 w-36 h-36 transition-all hover:shadow-lg bg-gradient-to-b from-white to-gray-100 border border-gray-300">
-                    <img src="https://file.switch.ir/api/v1/0887cf8e-e607-48e8-8253-d3c0b90e4029.webp" alt="چری"
-                        class="w-14 h-14 object-contain mb-2.5">
-                    <h3 class="text-base font-bold text-center">چری</h3>
-                </div>
-
-                <div
-                    class="brand-card mx-2.5 rounded-lg shadow-custom !flex flex-col items-center justify-center p-5 w-36 h-36 transition-all hover:shadow-lg bg-gradient-to-b from-white to-gray-100 border border-gray-300">
-                    <img src="https://file.switch.ir/api/v1/84a8a1fb-83ef-42ba-b55b-190d6f66d358.webp" alt="ام وی ام"
-                        class="w-14 h-14 object-contain mb-2.5">
-                    <h3 class="text-base font-bold text-center">ام وی ام</h3>
-                </div>
-
-                <div
-                    class="brand-card mx-2.5 rounded-lg shadow-custom !flex flex-col items-center justify-center p-5 w-36 h-36 transition-all hover:shadow-lg bg-gradient-to-b from-white to-gray-100 border border-gray-300">
-                    <img src="https://file.switch.ir/api/v1/e6af11ef-a882-49e1-87d7-0945e1a8c1d3.webp" alt="لیفان"
-                        class="w-14 h-14 object-contain mb-2.5">
-                    <h3 class="text-base font-bold text-center">لیفان</h3>
-                </div>
-
-                <div
-                    class="brand-card mx-2.5 rounded-lg shadow-custom !flex flex-col items-center justify-center p-5 w-36 h-36 transition-all hover:shadow-lg bg-gradient-to-b from-white to-gray-100 border border-gray-300">
-                    <img src="https://file.switch.ir/api/v1/8964e20c-ba50-4c99-9ea7-74c6e9885dd4.webp" alt="جک"
-                        class="w-14 h-14 object-contain mb-2.5">
-                    <h3 class="text-base font-bold text-center">جک</h3>
-                </div>
-
-                <div
-                    class="brand-card mx-2.5 rounded-lg shadow-custom !flex flex-col items-center justify-center p-5 w-36 h-36 transition-all hover:shadow-lg bg-gradient-to-b from-white to-gray-100 border border-gray-300">
-                    <img src="https://file.switch.ir/api/v1/71abda21-8e33-4f51-951b-7c3132c5b80b.webp" alt="فونیکس"
-                        class="w-14 h-14 object-contain mb-2.5">
-                    <h3 class="text-base font-bold text-center">فونیکس</h3>
-                </div>
-
-                <div
-                    class="brand-card mx-2.5 rounded-lg shadow-custom !flex flex-col items-center justify-center p-5 w-36 h-36 transition-all hover:shadow-lg bg-gradient-to-b from-white to-gray-100 border border-gray-300">
-                    <img src="https://file.switch.ir/api/v1/ac85a367-72a2-4d4f-806b-67cb154501d8.webp" alt="هایما"
-                        class="w-14 h-14 object-contain mb-2.5">
-                    <h3 class="text-base font-bold text-center">هایما</h3>
-                </div>
-
-                <div
-                    class="brand-card mx-2.5 rounded-lg shadow-custom !flex flex-col items-center justify-center p-5 w-36 h-36 transition-all hover:shadow-lg bg-gradient-to-b from-white to-gray-100 border border-gray-300">
-                    <img src="https://file.switch.ir/api/v1/bee3cd92-3ccb-4b03-b001-a53054ec663f.webp" alt="رنو"
-                        class="w-14 h-14 object-contain mb-2.5">
-                    <h3 class="text-base font-bold text-center">رنو</h3>
-                </div>
+                @foreach (getBrands() as $brand)
+                    <a href="{{ $brand->url }}"
+                        class="brand-card mx-2.5 rounded-lg shadow-custom !flex flex-col items-center justify-center p-5 w-36 h-36 transition-all hover:shadow-lg bg-gradient-to-b from-white to-gray-100 border border-gray-300">
+                        <img src="{{ $brand->icon }}" alt="{{ $brand->title }}"
+                            class="w-14 h-14 object-contain mb-2.5">
+                        <h3 class="text-base font-bold text-center">{{ $brand->title }}</h3>
+                    </a>
+                @endforeach
             </div>
         </div>
     </section>

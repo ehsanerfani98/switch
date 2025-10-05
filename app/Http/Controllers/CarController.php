@@ -58,6 +58,7 @@ class CarController extends Controller
                 'description' => $request->description ?? null,
                 'status' => $request->status,
                 'vip' => $request->vip,
+                'brand_id' => $request->brand_id,
             ]);
 
             // ذخیره ویژگی‌ها
@@ -145,6 +146,7 @@ class CarController extends Controller
                 'description' => $request->description ?? null,
                 'status' => $request->status,
                 'vip' => $request->vip,
+                'brand_id' => $request->brand_id,
             ]);
 
             // حذف مقادیر قبلی ویژگی‌ها

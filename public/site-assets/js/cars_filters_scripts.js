@@ -48,37 +48,39 @@ function renderFilters(attributes, brands = []) {
 }
 
 // ایجاد HTML برای هر فیلتر
-function createFilterHtml(attr) {
+function createBrandFilterHtml(brands) {
     let html = `
         <div class="accordion-filter border-b border-gray-200 py-4">
             <div class="accordion-header flex justify-between items-center cursor-pointer">
                 <div class="accordion-title flex items-center font-medium text-gray-800">
-                    ${getFilterIcon(attr.type)}
-                    ${attr.label}
+                    <i class="fas fa-car text-primary ml-2"></i>
+                    برند خودرو
                 </div>
                 <i class="fas fa-chevron-down accordion-icon text-gray-500 transition-transform"></i>
             </div>
             <div class="accordion-content mt-3">
                 <div class="accordion-content-inner">
+                    <div class="filter-options space-y-2 max-h-60 overflow-y-auto">
     `;
 
-    // افزودن محتوای خاص بر اساس نوع فیلتر
-    switch (attr.type) {
-        case 'select':
-            html += createSelectFilter(attr);
-            break;
-        case 'number':
-            html += createNumberFilter(attr);
-            break;
-        case 'range':
-            html += createRangeFilter(attr);
-            break;
-        case 'boolean':
-            html += createBooleanFilter(attr);
-            break;
-    }
+    brands.forEach(brand => {
+        html += `
+            <div class="flex items-center">
+                <input class="form-checkbox h-4 w-4 text-primary rounded focus:ring-primary border-gray-300"
+                       type="checkbox"
+                       value="${brand.slug}"
+                       id="brand-${brand.slug}"
+                       name="filter[brand][]">
+                <label class="mr-2 text-sm text-gray-700 flex items-center" for="brand-${brand.slug}">
+                    ${brand.icon ? `<i class="${brand.icon} ml-2"></i>` : ''}
+                    ${brand.title}
+                </label>
+            </div>
+        `;
+    });
 
     html += `
+                    </div>
                 </div>
             </div>
         </div>
@@ -149,6 +151,46 @@ function createRangeFilter(attr) {
 }
 
 // ایجاد فیلتر بولین (سوییچ)
+function createFilterHtml(attr) {
+    let html = `
+        <div class="accordion-filter border-b border-gray-200 py-4">
+            <div class="accordion-header flex justify-between items-center cursor-pointer">
+                <div class="accordion-title flex items-center font-medium text-gray-800">
+                    ${getFilterIcon(attr.type)}
+                    ${attr.label}
+                </div>
+                <i class="fas fa-chevron-down accordion-icon text-gray-500 transition-transform"></i>
+            </div>
+            <div class="accordion-content mt-3">
+                <div class="accordion-content-inner">
+    `;
+
+    // افزودن محتوای خاص بر اساس نوع فیلتر
+    switch (attr.type) {
+        case 'select':
+            html += createSelectFilter(attr);
+            break;
+        case 'number':
+            html += createNumberFilter(attr);
+            break;
+        case 'range':
+            html += createRangeFilter(attr);
+            break;
+        case 'boolean':
+            html += createBooleanFilter(attr);
+            break;
+    }
+
+    html += `
+                </div>
+            </div>
+        </div>
+    `;
+
+    return html;
+}
+
+// ایجاد HTML برای فیلتر برند
 function createBooleanFilter(attr) {
     return `
         <div class="switch-container">
@@ -188,7 +230,7 @@ function initializeRangeSliders() {
             },
             step: attr.step || 1000000,
             direction: 'rtl',
-            tooltips: false // غیرفعال کردن توولتیپ پیش‌فرض
+            tooltips: false
         });
 
         slider.noUiSlider.on('update', (values, handle) => {
@@ -196,17 +238,22 @@ function initializeRangeSliders() {
 
             if (handle === 0) {
                 minDisplay.textContent = formatNumber(value);
-                minInput.value = value;
+                if (minInput) minInput.value = value;
             } else {
                 maxDisplay.textContent = formatNumber(value);
-                maxInput.value = value;
+                if (maxInput) maxInput.value = value;
             }
         });
 
         slider.noUiSlider.on('change', function () {
             const accordion = slider.closest('.accordion-filter');
             if (accordion) accordion.classList.add('active');
-            applyFilters();
+
+            // فقط اگر مقدار تغییر کرده باشد فیلتر اعمال شود
+            const currentValues = getCurrentRangeValues(slug);
+            if (currentValues.min !== minVal || currentValues.max !== maxVal) {
+                applyFilters();
+            }
         });
 
         // افزودن افکت انیمیشن هنگام تغییر
@@ -261,7 +308,7 @@ function applyUrlParams() {
     const urlParams = new URLSearchParams(window.location.search);
 
     if (urlParams.toString()) {
-        // اعمال مقادیر به فیلترها
+        // اعمال مقادیر فقط به فیلترهای موجود در URL
         for (let [key, value] of urlParams.entries()) {
             const inputs = filtersForm.querySelectorAll(`[name="${key}"]`);
             if (inputs.length) {
@@ -275,7 +322,7 @@ function applyUrlParams() {
             }
         }
 
-        // اعمال مقادیر به اسلایدرها
+        // اعمال مقادیر به اسلایدرها فقط اگر در URL موجود باشند
         document.querySelectorAll('.range-slider').forEach(slider => {
             const slug = slider.id.replace('-slider', '');
             const minParam = urlParams.get(`filter[${slug}][]`);
@@ -366,18 +413,40 @@ function applyFilters() {
     const formData = new FormData(filtersForm);
     const params = new URLSearchParams();
 
-    // افزودن پارامترهای فرم
+    // افزودن پارامترهای فرم فقط اگر مقدار داشته باشند
     formData.forEach((value, key) => {
-        // برای اسلایدرها، فقط اگر مقدار داشته باشند اضافه کن
-        if (!key.includes('range') || value !== '') {
-            params.append(key, value);
+        // حذف مقادیر خالی و پیش‌فرض
+        if (value !== '' && value !== null && value !== undefined) {
+            // برای فیلترهای range، فقط اگر مقدار متفاوت از پیش‌فرض باشد اضافه کن
+            if (key.includes('filter[') && key.includes('][]')) {
+                const slug = key.match(/filter\[(.*?)\]/)[1];
+                const attr = attributesData.find(a => a.slug === slug);
+
+                if (attr && attr.type === 'range') {
+                    // برای range فیلترها، بررسی کن که آیا مقدار تغییر کرده یا نه
+                    const currentValues = getCurrentRangeValues(slug);
+                    const defaultMin = parseFloat(attr.min) || 0;
+                    const defaultMax = parseFloat(attr.max) || 100;
+
+                    // فقط اگر مقدار با پیش‌فرض متفاوت باشد اضافه کن
+                    if (currentValues.min !== defaultMin || currentValues.max !== defaultMax) {
+                        params.append(key, value);
+                    }
+                } else {
+                    params.append(key, value);
+                }
+            } else {
+                params.append(key, value);
+            }
         }
     });
 
-    // افزودن پارامتر جستجو
-    if (searchInput.value) params.append('q', searchInput.value);
+    // افزودن پارامتر جستجو فقط اگر مقدار داشته باشد
+    if (searchInput.value.trim()) {
+        params.append('q', searchInput.value.trim());
+    }
 
-    // به‌روزرسانی URL
+    // به‌روزرسانی URL فقط اگر پارامتری وجود داشته باشد
     if (params.toString()) {
         history.replaceState(null, '', '?' + params.toString());
     } else {
@@ -386,6 +455,27 @@ function applyFilters() {
 
     // بارگذاری ماشین‌ها با پارامترهای جدید
     loadCars(params.toString());
+}
+
+// تابع کمکی برای دریافت مقادیر فعلی range
+function getCurrentRangeValues(slug) {
+    const slider = document.getElementById(`${slug}-slider`);
+    if (slider && slider.noUiSlider) {
+        const values = slider.noUiSlider.get();
+        return {
+            min: Math.round(parseFloat(values[0])),
+            max: Math.round(parseFloat(values[1]))
+        };
+    }
+
+    // اگر اسلایدر پیدا نشد، از inputهای hidden استفاده کن
+    const minInput = document.querySelector(`input[name="filter[${slug}][]"].range-min-input`);
+    const maxInput = document.querySelector(`input[name="filter[${slug}][]"].range-max-input`);
+
+    return {
+        min: minInput ? parseFloat(minInput.value) || 0 : 0,
+        max: maxInput ? parseFloat(maxInput.value) || 100 : 100
+    };
 }
 
 // بارگذاری لیست ماشین‌ها
@@ -516,6 +606,7 @@ function setupCarCardEvents() {
 
 // پاک کردن همه فیلترها
 function clearAllFilters() {
+    // غیرفعال کردن event listener موقتاً برای جلوگیری از درخواست‌های متعدد
     filtersForm.querySelectorAll('input').forEach(input => {
         if (input.type === 'checkbox' || input.type === 'radio') {
             input.checked = false;
@@ -524,6 +615,7 @@ function clearAllFilters() {
         }
     });
 
+    // بازنشانی اسلایدرها به مقادیر پیش‌فرض
     document.querySelectorAll('.range-slider').forEach(slider => {
         if (!slider.noUiSlider) return;
 
@@ -531,8 +623,8 @@ function clearAllFilters() {
         const attr = attributesData.find(a => a.slug === slug);
         if (!attr) return;
 
-        const minVal = attr.min || 0;
-        const maxVal = attr.max || 100;
+        const minVal = parseFloat(attr.min) || 0;
+        const maxVal = parseFloat(attr.max) || 100;
         slider.noUiSlider.set([minVal, maxVal]);
 
         // به‌روزرسانی مقادیر نمایشی
@@ -542,7 +634,10 @@ function clearAllFilters() {
         if (maxDisplay) maxDisplay.textContent = formatNumber(maxVal);
     });
 
+    // پاک کردن جستجو
     searchInput.value = '';
+
+    // به‌روزرسانی URL بدون پارامتر
     history.replaceState(null, '', window.location.pathname);
 
     // بستن همه آکاردئون‌ها پس از پاک کردن فیلترها
@@ -554,6 +649,7 @@ function clearAllFilters() {
     const firstAccordion = document.querySelector('.accordion-filter');
     if (firstAccordion) firstAccordion.classList.add('active');
 
+    // بارگذاری مجدد ماشین‌ها بدون فیلتر
     loadCars();
 }
 

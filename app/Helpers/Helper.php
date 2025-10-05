@@ -5,6 +5,7 @@ use App\Models\Conversation;
 use App\Models\Discount;
 use App\Models\Message;
 use App\Models\Payment;
+use App\Models\Brand;
 use App\Models\Setting;
 use App\Models\Slider;
 use App\Models\Useddiscount;
@@ -612,4 +613,16 @@ function getCars($type, $brandId = null, $limit = 10)
     $cars = $query->take($limit)->get();
 
     return CarResource::collection($cars)->resolve();
+}
+
+
+function getBrands(){
+    $brands = Brand::get();
+
+    $brands->map(function ($brand) {
+        $brand->url = url('/cars?filter[brand][]=' . $brand->slug);
+        return $brand;
+    });
+
+    return $brands;
 }
