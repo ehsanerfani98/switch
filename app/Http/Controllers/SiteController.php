@@ -25,6 +25,8 @@ class SiteController extends Controller
             ->with([
                 'attributeValues.attribute',    // attribute relation لازم است
                 'attributeValues.attributeValue',
+                'brand',
+                'car_model',
             ])
             ->firstOrFail();
 
@@ -40,9 +42,15 @@ class SiteController extends Controller
 
         // جایگزین کردن relation با مجموعه فیلتر شده (تا در Blade مستقیم استفاده بشه)
         $car->setRelation('attributeValues', $visibleAttrs);
-
         // دریافت مقدار به صورت تک
-        $price = $car->attributeValues()->valueOf('price');
+
+        $info_cars = [
+            'price' => $car->attributeValues()->valueOf('price'),
+            'year' => $car->attributeValues()->valueOf('year'),
+            'color' => $car->attributeValues()->valueOf('color'),
+            'kilometer' => $car->attributeValues()->valueOf('kilometer'),
+            'gearbox' => $car->attributeValues()->valueOf('gearbox')
+        ];
 
         // پرونده‌ها به همراه آیتم‌ها و مقادیر مربوط به این ماشین
         $carFiles = CarFile::with([
@@ -53,13 +61,15 @@ class SiteController extends Controller
         ])->get();
 
 
-
-
-        return view('site.car_single', compact('car', 'carFiles', 'price'));
+        return view('site.car_single', compact('car', 'carFiles', 'info_cars'));
     }
 
     public function carsell(){
         return view('site.carsell');
+    }
+
+    public function carbuy(){
+        return view('site.carbuy');
     }
 
 }

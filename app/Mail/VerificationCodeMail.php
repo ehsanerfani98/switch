@@ -20,7 +20,7 @@ class VerificationCodeMail extends Mailable
 
     public function build()
     {
-        return $this->subject('(سامانه الوماشین) کد تایید شما')
+        return $this->subject('(سامانه اسپاسان) کد تایید شما')
                     ->view('emails.verification-code');
     }
 }

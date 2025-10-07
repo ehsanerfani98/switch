@@ -4,25 +4,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>الوماشین؛ متخصص خرید و فروش خودروهای وارداتی و لوکس| قزوین</title>
+    <title>اسپاسان؛ متخصص خرید و فروش خودروهای وارداتی و لوکس| قزوین</title>
     <meta name="description"
-        content="سامانه خرید و فروش خودروهای نو و کارکرده خارجی، خرید و فروش خودرو بی دغدغه، بی ریسک و بی معطلی توسط الوماشین در قزوین">
+        content="سامانه خرید و فروش خودروهای نو و کارکرده خارجی، خرید و فروش خودرو بی دغدغه، بی ریسک و بی معطلی توسط اسپاسان در قزوین">
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://www.switch.ir/">
-    <meta property="og:title" content="الوماشین؛ متخصص خرید و فروش خودروهای وارداتی و لوکس| قزوین">
+    <meta property="og:title" content="اسپاسان؛ متخصص خرید و فروش خودروهای وارداتی و لوکس| قزوین">
     <meta property="og:description"
-        content="سامانه خرید و فروش خودروهای نو و کارکرده خارجی، خرید و فروش خودرو بی دغدغه، بی ریسک و بی معطلی توسط الوماشین در قزوین">
+        content="سامانه خرید و فروش خودروهای نو و کارکرده خارجی، خرید و فروش خودرو بی دغدغه، بی ریسک و بی معطلی توسط اسپاسان در قزوین">
     <meta property="og:image"
         content="https://file.switch.ir/api/v1/webp/1728/528/80/0ab739b0-9e2a-4969-97c9-90f04b071b99.webp">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="https://www.switch.ir/">
-    <meta property="twitter:title" content="الوماشین؛ متخصص خرید و فروش خودروهای وارداتی و لوکس| قزوین">
+    <meta property="twitter:title" content="اسپاسان؛ متخصص خرید و فروش خودروهای وارداتی و لوکس| قزوین">
     <meta property="twitter:description"
-        content="سامانه خرید و فروش خودروهای نو و کارکرده خارجی، خرید و فروش خودرو بی دغدغه، بی ریسک و بی معطلی توسط الوماشین در قزوین">
+        content="سامانه خرید و فروش خودروهای نو و کارکرده خارجی، خرید و فروش خودرو بی دغدغه، بی ریسک و بی معطلی توسط اسپاسان در قزوین">
     <meta property="twitter:image"
         content="https://file.switch.ir/api/v1/webp/1728/528/80/0ab739b0-9e2a-4969-97c9-90f04b071b99.webp">
     <!-- فاوآیکن -->
@@ -45,7 +45,7 @@
     {
       "@context": "https://schema.org",
       "@type": "WebSite",
-      "name": "الوماشین",
+      "name": "اسپاسان",
       "url": "https://www.switch.ir/"
     }
   </script>
@@ -59,8 +59,8 @@
     <header class="bg-white shadow-custom sticky top-0 z-50">
         <div class="container mx-auto px-3.5 py-4 flex justify-between items-center">
             <div class="logo flex items-center">
-                <img src="https://img.icons8.com/color/48/car--v1.png" alt="الوماشین" class="h-10 ml-2.5">
-                <span class="text-2xl font-extrabold text-primary">الوماشین</span>
+                <img src="https://img.icons8.com/color/48/car--v1.png" alt="اسپاسان" class="h-10 ml-2.5">
+                <span class="text-2xl font-extrabold text-primary">اسپاسان</span>
             </div>
 
             <nav class="hidden md:block">
@@ -108,8 +108,8 @@
         class="mobile-menu fixed top-0 -right-80 w-80 h-full bg-white shadow-lg z-50 transition-right duration-300 overflow-y-auto p-5">
         <div class="mobile-menu-header flex justify-between items-center mb-7 pb-3.5 border-b border-border-color">
             <div class="mobile-menu-logo flex items-center">
-                <img src="https://img.icons8.com/color/48/car--v1.png" alt="الوماشین" class="h-7 ml-2.5">
-                <span class="text-xl font-extrabold text-primary">الوماشین</span>
+                <img src="https://img.icons8.com/color/48/car--v1.png" alt="اسپاسان" class="h-7 ml-2.5">
+                <span class="text-xl font-extrabold text-primary">اسپاسان</span>
             </div>
             <button class="close-menu-btn bg-transparent border-none text-text-medium text-2xl cursor-pointer">
                 <i class="fas fa-times"></i>
@@ -154,8 +154,8 @@
             <div class="footer-container grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-7 mb-10">
                 <div class="footer-col">
                     <div class="footer-logo flex items-center mb-5">
-                        <img src="https://img.icons8.com/color/48/car--v1.png" alt="الوماشین" class="h-10 ml-2.5">
-                        <span class="text-2xl font-extrabold text-white">الوماشین</span>
+                        <img src="https://img.icons8.com/color/48/car--v1.png" alt="اسپاسان" class="h-10 ml-2.5">
+                        <span class="text-2xl font-extrabold text-white">اسپاسان</span>
                     </div>
                     <p class="mb-5">مسیر معاملات خود را شفاف، ساده، امن و کوتاه کنید.</p>
 
@@ -203,7 +203,7 @@
                 </div>
 
                 <div class="footer-col">
-                    <h3 class="text-xl font-bold mb-5 text-white">خدمات الوماشین</h3>
+                    <h3 class="text-xl font-bold mb-5 text-white">خدمات اسپاسان</h3>
                     <ul class="list-none">
                         <li class="mb-2.5"><a href="#"
                                 class="text-white/80 transition-all hover:text-white hover:pr-1">نمایشگاه خودرو</a>
@@ -260,7 +260,7 @@
             </div>
 
             <div class="footer-bottom border-t border-white/10 pt-5 text-center text-sm text-white/60">
-                <p>© 2023 الوماشین. تمامی حقوق این وبسایت متعلق به شرکت پارسا موتور سامان می‌باشد.</p>
+                <p>© 2023 اسپاسان. تمامی حقوق این وبسایت متعلق به شرکت اسپاسان می‌باشد.</p>
             </div>
         </div>
     </footer>

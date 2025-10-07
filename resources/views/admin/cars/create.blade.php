@@ -92,7 +92,7 @@
                 </div>
 
                 <!-- وضعیت ماشین -->
-                <div class="card shadow ">
+                <div class="card shadow">
                     <div class="card-header d-flex justify-content-between align-items-center">
                         <h6 class="m-0 font-weight-bold text-primary">وضعیت ماشین</h6>
                     </div>
@@ -106,15 +106,39 @@
                 </div>
 
                 <!-- برندها -->
-                <div class="card shadow ">
+                <div class="card shadow">
                     <div class="card-header d-flex justify-content-between align-items-center">
                         <h6 class="m-0 font-weight-bold text-primary">برند</h6>
                     </div>
                     <div class="card-body">
-                        <select class="form-control" name="brand_id" id="brand_id">
+                        <select name="brand_id" id="brand_id" class="form-control" required>
+                            <option value="">انتخاب برند</option>
                             @foreach ($brands as $brand)
-                                <option value="{{$brand->id}}">{{$brand->title}}</option>
+                                <option value="{{ $brand->id }}"
+                                    {{ old('brand_id') == $brand->id || (isset($car) && $car->brand_id == $brand->id) ? 'selected' : '' }}>
+                                    {{ $brand->title }}
+                                </option>
                             @endforeach
+                        </select>
+                    </div>
+                </div>
+
+                <!-- مدل ها -->
+                <div class="card shadow">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h6 class="m-0 font-weight-bold text-primary">مدل</h6>
+                    </div>
+                    <div class="card-body">
+                        <select name="car_model_id" id="car_model_id" class="form-control" required>
+                            <option value="">ابتدا برند را انتخاب کنید</option>
+                            @if (isset($models) && count($models) > 0)
+                                @foreach ($models as $model)
+                                    <option value="{{ $model->id }}"
+                                        {{ old('car_model_id') == $model->id || (isset($car) && $car->car_model_id == $model->id) ? 'selected' : '' }}>
+                                        {{ $model->title }}
+                                    </option>
+                                @endforeach
+                            @endif
                         </select>
                     </div>
                 </div>
@@ -337,8 +361,6 @@
             window.addEventListener('message', handleMessage);
         }
 
-
-
         // مقداردهی اولیه CKEditor
         CKEDITOR.replace('editor', {
             filebrowserImageBrowseUrl: '{{ route('media.manager.ckeditor') }}',
@@ -545,6 +567,36 @@
                 });
             });
 
+            // مدیریت تغییر برند
+            $('#brand_id').change(function() {
+                var brandId = $(this).val();
+                var $modelSelect = $('#car_model_id');
+
+                if (brandId) {
+                    // نمایش loading
+                    $modelSelect.html('<option value="">در حال بارگذاری...</option>');
+
+                    // درخواست AJAX برای دریافت مدل‌ها
+                    $.ajax({
+                        url: '{{ route('brands.models', ':brand') }}'.replace(':brand', brandId),
+                        type: 'GET',
+                        success: function(data) {
+                            $modelSelect.html('<option value="">انتخاب مدل</option>');
+                            $.each(data, function(key, model) {
+                                $modelSelect.append(
+                                    '<option value="' + model.id + '">' + model
+                                    .title + '</option>'
+                                );
+                            });
+                        },
+                        error: function() {
+                            $modelSelect.html('<option value="">خطا در بارگذاری</option>');
+                        }
+                    });
+                } else {
+                    $modelSelect.html('<option value="">ابتدا برند را انتخاب کنید</option>');
+                }
+            });
         });
 
 

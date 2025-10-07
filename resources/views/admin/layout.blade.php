@@ -160,7 +160,6 @@
                     </li>
                 @endcan
 
-
                 @can('media-list')
                     <li class="nav-item {{ request()->routeIs('media.*') ? 'active' : '' }}">
                         <a href="{{ route('media.index') }}">
@@ -170,6 +169,14 @@
                     </li>
                 @endcan
 
+                @can('car-request-list')
+                    <li class="nav-item {{ request()->routeIs('car-requests.*') ? 'active' : '' }}">
+                        <a href="{{ route('car-requests.index') }}">
+                            <i class="ft-folder"></i>
+                            <span class="menu-title" data-i18n="">مدیریت درخواست ها</span>
+                        </a>
+                    </li>
+                @endcan
 
                 @can('car-list')
                     <li class="nav-item {{ request()->routeIs('cars.*') ? 'active' : '' }}">

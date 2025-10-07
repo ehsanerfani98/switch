@@ -150,7 +150,7 @@ function createRangeFilter(attr) {
     `;
 }
 
-// ایجاد فیلتر بولین (سوییچ)
+// ایجاد فیلتر بولین (اسپاسان)
 function createFilterHtml(attr) {
     let html = `
         <div class="accordion-filter border-b border-gray-200 py-4">

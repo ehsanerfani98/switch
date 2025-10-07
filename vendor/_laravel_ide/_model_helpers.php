@@ -1567,26 +1567,34 @@ namespace App\Models {
      *
      * @property \Illuminate\Support\Carbon|null $updated_at
      * @property \Illuminate\Support\Carbon|null $created_at
+     * @property bool $vip
      * @property mixed $status
      * @property string|null $description
      * @property string $slug
      * @property string $title
      * @property string|null $thumbnail
+     * @property int|null $car_model_id
+     * @property int|null $brand_id
      * @property int $id
      * @property-read mixed $gallery
      * @property-read mixed $gearbox
      * @property-read mixed $kilo_meter
      * @property-read mixed $price
+     * @property-read \App\Models\Brand $brand
+     * @property-read \App\Models\CarModel $car_model
      * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\CarAttributeValue> $attributeValues
      * @property-read int|null $attributeValues_count
      * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\CarFileItemValue> $fileItemValues
      * @property-read int|null $fileItemValues_count
      * @method static \Illuminate\Database\Eloquent\Builder<Car>|Car whereId($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<Car>|Car whereBrandId($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<Car>|Car whereCarModelId($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Car>|Car whereThumbnail($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Car>|Car whereTitle($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Car>|Car whereSlug($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Car>|Car whereDescription($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Car>|Car whereStatus($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<Car>|Car whereVip($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Car>|Car whereCreatedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Car>|Car whereUpdatedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Car>|Car newModelQuery()
@@ -3138,6 +3146,8 @@ namespace App\Models {
      * @property string $title
      * @property int $id
      * @property-read \App\Models\Brand $brand
+     * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Car> $cars
+     * @property-read int|null $cars_count
      * @method static \Illuminate\Database\Eloquent\Builder<CarModel>|CarModel whereId($value)
      * @method static \Illuminate\Database\Eloquent\Builder<CarModel>|CarModel whereTitle($value)
      * @method static \Illuminate\Database\Eloquent\Builder<CarModel>|CarModel whereSlug($value)
@@ -3444,6 +3454,7 @@ namespace App\Models {
      *
      * @property \Illuminate\Support\Carbon|null $updated_at
      * @property \Illuminate\Support\Carbon|null $created_at
+     * @property mixed $status
      * @property array|null $data
      * @property int|null $car_id
      * @property mixed $type
@@ -3456,6 +3467,7 @@ namespace App\Models {
      * @method static \Illuminate\Database\Eloquent\Builder<CarRequest>|CarRequest whereType($value)
      * @method static \Illuminate\Database\Eloquent\Builder<CarRequest>|CarRequest whereCarId($value)
      * @method static \Illuminate\Database\Eloquent\Builder<CarRequest>|CarRequest whereData($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<CarRequest>|CarRequest whereStatus($value)
      * @method static \Illuminate\Database\Eloquent\Builder<CarRequest>|CarRequest whereCreatedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder<CarRequest>|CarRequest whereUpdatedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder<CarRequest>|CarRequest newModelQuery()

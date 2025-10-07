@@ -85,7 +85,7 @@ class CarRequestController extends Controller
         $data = $request->except('_token');
         $car_request = new CarRequest();
         $car_request->user_id = Auth::id();
-        $car_request->type = 'sell';
+        $car_request->type = $request->request_type;
         $car_request->data = $data;
         $car_request->save();
     }
@@ -96,7 +96,7 @@ class CarRequestController extends Controller
         $car_request = new CarRequest();
         $car_request->user_id = Auth::id();
         $car_request->car_id = $request->car_id;
-        $car_request->type = 'buy';
+        $car_request->type = $request->request_type;
         $car_request->save();
     }
 }

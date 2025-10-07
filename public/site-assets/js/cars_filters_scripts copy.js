@@ -137,7 +137,7 @@ function createRangeFilter(attr) {
     `;
 }
 
-// ایجاد فیلتر بولین (سوییچ)
+// ایجاد فیلتر بولین (اسپاسان)
 function createBooleanFilter(attr) {
     return `
         <div class="switch-container">

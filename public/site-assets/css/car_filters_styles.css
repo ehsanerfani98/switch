@@ -124,7 +124,7 @@ body{
             margin-left: 15px;
         }
 
-        /* استایل‌های سوییچ بولین */
+        /* استایل‌های اسپاسان بولین */
         .switch-container {
             display: flex;
             align-items: center;
@@ -247,7 +247,7 @@ body{
 }
 
 .card-card-amount{
-    font-size: 14px !important; 
+    font-size: 14px !important;
     font-weight: bold;
 }
 

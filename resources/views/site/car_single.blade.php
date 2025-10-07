@@ -119,17 +119,17 @@
                         }
                     @endphp
 
-                    <div class="inline-flex items-center bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-semibold mb-3"
+                    <div class="inline-flex items-center bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm mb-3"
                         style="color: {{ $statusColor }}; background-color: {{ $bgColor }}">
                         <i class="{{ $statusIcon }} ml-1"></i>
                         {{ $statusLabel }}
                     </div>
 
-                    <div class="flex flex-wrap gap-2 my-4">
+                    <div class="flex flex-wrap gap-5 my-4">
                         @foreach ($car->attributeValues as $attrVal)
-                            <div class="flex items-center bg-gray-50 text-gray-700 px-3 py-1 rounded-md text-sm">
+                            <div class="flex items-center bg-gray-50 text-gray-700 px-3 py-2 rounded-md text-sm">
                                 @if ($attrVal->attribute && $attrVal->attribute->icon)
-                                    <i class="{{ $attrVal->attribute->icon }} ml-1 text-gray-400"></i>
+                                    <i class="{{ $attrVal->attribute->icon }} ml-2 text-gray-400"></i>
                                 @endif
                                 {{ $attrVal->attribute->label }}
 
@@ -146,7 +146,7 @@
                             <i class="fas fa-money-bill-wave ml-1"></i>
                             قیمت
                         </div>
-                        <div class="text-xl font-bold text-green-600">{{ $price }}</div>
+                        <div class="text-xl font-black text-green-600">{{ $info_cars['price'] }} <span class="text-black text-sm">تومان</span></div>
                     </div>
                     @if ($car->status == 'sold')
                         <div
@@ -156,10 +156,23 @@
                         </div>
                     @endif
                     <div class="flex flex-wrap gap-2 mt-5">
-                        <button id="openPopup"
-                            class="flex-1 min-w-[120px] bg-primary text-white text-center py-2 px-3 rounded-md font-semibold hover:bg-blue-700 transition-colors">
-                            درخواست خرید
-                        </button>
+                        @if ($car->status == 'sold')
+                            <a href="{{ route('carsell', ['brand' => optional($car->brand)->title, 'brand_id' => optional($car->brand)->id, 'model' => optional($car->car_model)->title ?? 'نامشخص', 'model_id' => optional($car->car_model)->id ?? 0, 'year' => $info_cars['year'] ?? '', 'color' => $info_cars['color'] ?? '', 'kilometer' => $info_cars['kilometer'] ?? '', 'type' => $info_cars['gearbox'] ?? '']) }}"
+                                class="flex-1 min-w-[120px] bg-primary text-white text-center py-2 px-3 rounded-md font-semibold hover:bg-blue-700 transition-colors">
+                                درخواست فروش
+                            </a>
+                            <a href="{{ route('carbuy', ['brand' => optional($car->brand)->title, 'brand_id' => optional($car->brand)->id, 'model' => optional($car->car_model)->title ?? 'نامشخص', 'model_id' => optional($car->car_model)->id ?? 0, 'year' => $info_cars['year'] ?? '']) }}"
+                                class="flex-1 min-w-[120px] bg-primary text-white text-center py-2 px-3 rounded-md font-semibold hover:bg-blue-700 transition-colors">
+                                درخواست خرید
+                            </a>
+                        @else
+                            <button id="openPopup"
+                                class="flex w-full items-center justify-center bg-primary text-white text-center py-2 px-3 rounded-md font-semibold hover:bg-blue-700 transition-colors">
+                                خرید نقدی
+                            </button>
+                        @endif
+
+
 
                         {{-- <a href="#"
                             class="flex-1 min-w-[120px] border border-primary text-primary text-center py-2 px-3 rounded-md font-semibold hover:bg-primary hover:text-white transition-colors">
@@ -387,11 +400,14 @@
                 </div>
             </div>
         </div>
+    </div>
 
+    @include('custom-components.buy_help')
 
+    <div class="container mx-auto p-4">
 
-        <!-- بخش جدیدترین آگهی‌ها -->
-        <div class="mx-auto px-3.5">
+        <!-- بخش خودروهای مشابه -->
+        <div class="container mt-8 md:mt-5">
             <div class="section-header flex justify-between items-center mb-7">
                 <div>
                     <h2 class="section-title text-3xl font-bold mb-2.5">خودروهای مشابه</h2>
@@ -437,7 +453,14 @@
         </div>
 
 
+        @include('custom-components.suport_contact')
+
+        @include('custom-components.faq_single')
+
     </div>
+
+
+
 
     <!-- پاپ آپ احراز هویت -->
     <div id="authPopup" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50 p-4">
@@ -648,7 +671,7 @@
                 } else if (button.id === 'verifyCodeBtn') {
                     button.innerHTML = '<i class="fas fa-check-circle"></i><span class="font-bold">تایید و ادامه</span>';
                 } else if (button.id === 'openPopup') {
-                    button.innerHTML = 'درخواست خرید';
+                    button.innerHTML = 'خرید نقدی';
                 }
             }
         }
@@ -813,6 +836,7 @@
                     type: "POST",
                     data: {
                         car_id: CAR_ID,
+                        request_type: 'buy',
                         _token: CSRF_TOKEN
                     },
                     success: function(response) {

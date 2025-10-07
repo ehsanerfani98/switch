@@ -18,7 +18,7 @@ class PasswordMail extends Mailable
 
     public function build()
     {
-        return $this->subject('(سامانه الوماشین) رمز عبور شما')
+        return $this->subject('(سامانه اسپاسان) رمز عبور شما')
                     ->view('emails.password');
     }
 }

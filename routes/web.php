@@ -147,6 +147,8 @@ Route::middleware(['auth'])->group(function () {
 
 
     Route::resource('/admin/cars', CarController::class);
+    Route::get('brands/{brand}/models', [CarController::class, 'getModelsByBrand'])->name('brands.models');
+    
     Route::resource('/admin/attributes', AttributeController::class);
     Route::resource('/admin/attribute-values', AttributeValueController::class);
     Route::resource('/admin/car-files', CarFileController::class);
@@ -181,6 +183,7 @@ Route::get('/', [ControllersSiteController::class, 'home'])->name('home');
 Route::get('/cars', [ControllersSiteController::class, 'cars'])->name('cars');
 Route::get('/car/{slug}', [ControllersSiteController::class, 'car_single'])->name('car');
 Route::get('/carsell', [ControllersSiteController::class, 'carsell'])->name('carsell');
+Route::get('/carbuy', [ControllersSiteController::class, 'carbuy'])->name('carbuy');
 Route::get('/filter', function () {
     // فیلترهای عادی (Attribute-based)
     $attributeFilters = Attribute::where('is_active', 1)->pluck('slug')

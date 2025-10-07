@@ -15,6 +15,7 @@ class Car extends Model
         'status',
         'vip',
         'brand_id',
+        'car_model_id',
     ];
 
     protected $casts = [
@@ -26,6 +27,11 @@ class Car extends Model
         return $this->belongsTo(Brand::class);
     }
     
+    public function car_model()
+    {
+        return $this->belongsTo(CarModel::class);
+    }
+
     public function attributeValues()
     {
         return $this->hasMany(CarAttributeValue::class);

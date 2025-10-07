@@ -10,7 +10,7 @@
             <h1 class="hero-title text-4xl font-bold mb-5 text-center text-white">مسیر معاملات خودرو را شفاف، ساده، امن
                 و کوتاه کنید</h1>
             <p class="hero-subtitle text-xl text-white text-center max-w-2xl mx-auto mb-10">سامانه خرید و فروش خودروهای
-                نو و کارکرده خارجی، خرید و فروش خودرو بی دغدغه، بی ریسک و بی معطلی توسط الوماشین در قزوین</p>
+                نو و کارکرده خارجی، خرید و فروش خودرو بی دغدغه، بی ریسک و بی معطلی توسط اسپاسان در قزوین</p>
 
             <div class="search-container bg-white rounded-lg shadow-custom-light p-6 mb-10">
                 <form class="search-form flex mb-5 gap-2.5">
@@ -280,10 +280,10 @@
         </div>
     </section>
 
-    <!-- بخش چرا الوماشین -->
+    <!-- بخش چرا اسپاسان -->
     <section class="section bg-accent py-12">
         <div class="container mx-auto px-3.5">
-            <h2 class="section-title text-3xl font-bold mb-2.5 text-center">چرا الوماشین؟</h2>
+            <h2 class="section-title text-3xl font-bold mb-2.5 text-center">چرا اسپاسان؟</h2>
             <p class="section-subtitle text-lg text-text-light text-center max-w-2xl mx-auto mb-10">سریع، شفاف و مطمئن
             </p>
 
@@ -348,10 +348,10 @@
     <!-- بخش تجربه‌ها -->
     <section class="section bg-gradient-to-br from-primary to-blue-800 text-white py-12 relative overflow-hidden">
         <div class="container mx-auto px-3.5 relative z-10">
-            <h2 class="section-title text-3xl font-bold mb-2.5 text-white text-center">تجربه های استفاده از الوماشین
+            <h2 class="section-title text-3xl font-bold mb-2.5 text-white text-center">تجربه های استفاده از اسپاسان
             </h2>
             <p class="section-subtitle text-lg text-white/80 text-center max-w-2xl mx-auto mb-10">خریداران و فروشندگان
-                الوماشین از تجربه معامله در الوماشین می گویند.</p>
+                اسپاسان از تجربه معامله در اسپاسان می گویند.</p>
 
             <div class="experience-container grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
                 <div class="experience-video rounded-lg overflow-hidden shadow-xl">
@@ -371,9 +371,9 @@
                     <div class="experience-quote bg-white rounded-lg p-7 relative z-10">
                         <h3 class="text-2xl font-bold mb-3.5 text-text-dark">شفافیت در معامله حق شماست و ما به این حق
                             احترام می‌ذاریم.</h3>
-                        <p class="text-base text-text-light mb-0">تجربه خرید و فروش خودرو با الوماشین، فقط یه معامله
+                        <p class="text-base text-text-light mb-0">تجربه خرید و فروش خودرو با اسپاسان، فقط یه معامله
                             نیست، یه همراهیِ مطمئنه! اینو مشتری عزیزمون می‌گه که از رفتار صمیمی و محترمانه پرسنل
-                            الوماشین، عمل به تمام وعده‌ها، انجام تمام مراحل خرید و فروش و شفافیت کامل معامله خیلی راضی
+                            اسپاسان، عمل به تمام وعده‌ها، انجام تمام مراحل خرید و فروش و شفافیت کامل معامله خیلی راضی
                             بود.</p>
                     </div>
                 </div>
@@ -386,14 +386,14 @@
         <div class="container mx-auto px-3.5">
             <div class="about-container grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
                 <div class="about-content">
-                    <h2 class="text-3xl font-bold mb-5">درباره الوماشین</h2>
-                    <p class="text-base leading-9 mb-5">مشکلات و دردسرهای خرید و فروش خودرو، ایده الوماشین را خلق کرد.
+                    <h2 class="text-3xl font-bold mb-5">درباره اسپاسان</h2>
+                    <p class="text-base leading-9 mb-5">مشکلات و دردسرهای خرید و فروش خودرو، ایده اسپاسان را خلق کرد.
                         به همین سادگی! شکل گیری این ایده تیمی از افراد حرفه ای، متخصص، خوش فکر و با سابقه را در کنار
-                        یکدیگر جمع کرد تا با این الوماشین طلایی کاستی ها و پیچیدگی های معاملات خودرو از خرید و فروش
+                        یکدیگر جمع کرد تا با این اسپاسان طلایی کاستی ها و پیچیدگی های معاملات خودرو از خرید و فروش
                         گرفته تا معاوضه و خدمات برای همیشه رفع شود و با کاهش دردسرهای خرید و فروش خودرو یک تجربه شیرین
                         به مشتریان هدیه شود.</p>
-                    <p class="text-base leading-9 mb-5">الوماشین مسیر معاملات خودرو را شفاف، ساده، امن و کوتاه می‌کند.
-                        حالا ما با این الوماشین کارآمد، برای مسائلی که دغدغه شماست چاره اندیشی کرده ایم. البته شما هم می
+                    <p class="text-base leading-9 mb-5">اسپاسان مسیر معاملات خودرو را شفاف، ساده، امن و کوتاه می‌کند.
+                        حالا ما با این اسپاسان کارآمد، برای مسائلی که دغدغه شماست چاره اندیشی کرده ایم. البته شما هم می
                         توانید برای ایجاد تحولات بزرگتر ما را در این مسیر همراهی کنید . با افتخار پذیرای خواسته‌های شما
                         هستیم.</p>
 
@@ -401,12 +401,12 @@
                         class="stats-container flex justify-between mt-10 bg-white rounded-lg p-7 shadow-custom flex-col md:flex-row">
                         <div class="stat-item text-center px-3.5 relative md:border-l md:border-border-color">
                             <div class="stat-number text-3xl font-bold text-primary mb-1.5">4,699</div>
-                            <div class="stat-label text-sm text-text-light">خودرو موجود در نمایشگاه الوماشین</div>
+                            <div class="stat-label text-sm text-text-light">خودرو موجود در نمایشگاه اسپاسان</div>
                         </div>
 
                         <div class="stat-item text-center px-3.5 relative md:border-l md:border-border-color">
                             <div class="stat-number text-3xl font-bold text-primary mb-1.5">127,328</div>
-                            <div class="stat-label text-sm text-text-light">درخواست های خرید و فروش ثبت شده در الوماشین
+                            <div class="stat-label text-sm text-text-light">درخواست های خرید و فروش ثبت شده در اسپاسان
                             </div>
                         </div>
 

@@ -87,36 +87,26 @@
         <div class="mb-6">
             <div class="flex justify-between mb-2">
                 <span class="text-xs font-medium text-blue-600">مرحله <span id="currentStepNumber">1</span>
-                    از 6</span>
-                <span class="text-xs font-medium text-gray-500">فروش خودرو</span>
+                    از 4</span>
+                <span class="text-xs font-medium text-gray-500">خرید خودرو</span>
             </div>
             <div class="w-full bg-gray-200 rounded-full h-2">
-                <div id="progressBar" class="bg-blue-600 h-2 rounded-full transition-all duration-300"
-                    style="width: 16.66%"></div>
+                <div id="progressBar" class="bg-blue-600 h-2 rounded-full transition-all duration-300" style="width: 25%">
+                </div>
             </div>
         </div>
 
         <!-- تیتر فرم -->
         <div class="mb-6">
-            <h2 class="text-xl font-bold text-gray-800">به بهترین قیمت بفروشید...</h2>
-            <p class="text-gray-700 mt-2">مشخصات خودرو خود را وارد کنید.</p>
+            <h2 class="text-xl font-bold text-gray-800">به قیمت مناسب بخرید ...</h2>
+            <p class="text-gray-700 mt-2">جهت ثبت درخواست خرید، برند و مدل خودرو مورد نظرتان را وارد کنید تا بهترین
+                پیشنهاد را به شما بدهیم.</p>
         </div>
 
         <!-- مراحل فرم -->
         <div id="formSteps">
             <!-- مرحله ۱: برند -->
             <div class="step" data-step="1">
-                <h2 class="text-lg font-bold mb-4 text-gray-800 flex items-center gap-2">
-                    <i class="fas fa-gauge text-blue-600"></i>
-                    کارکرد (کیلومتر)
-                </h2>
-                <div class="mb-5">
-                    <input type="text" placeholder="کیلومتر" id="kilometer"
-                        class="w-full px-4 py-2 rounded-lg border border-gray-300
-                           focus:outline-none focus:ring-1 focus:ring-blue-500
-                           focus:border-blue-500 transition-colors duration-200
-                           bg-white text-gray-900" />
-                </div>
                 <h2 class="text-lg font-bold mb-4 text-gray-800 flex items-center gap-2">
                     <i class="fas fa-car text-blue-600"></i>
                     انتخاب برند
@@ -160,48 +150,14 @@
                 </button>
             </div>
 
-            <!-- مرحله ۴: تیپ -->
+            <!-- مرحله ۴: پیش‌نمایش -->
             <div class="step hidden" data-step="4">
-                <h2 class="text-lg font-bold mb-4 text-gray-800 flex items-center gap-2">
-                    <i class="fas fa-cogs text-blue-600"></i>
-                    تیپ خودرو
-                </h2>
-                <div id="typeList" class="grid grid-cols-2 gap-4">
-                    <!-- تیپ‌ها از طریق API پر می‌شوند -->
-                </div>
-                <button class="prev mt-6 flex items-center gap-2 text-gray-600 hover:text-gray-800 transition-colors">
-                    <i class="fas fa-arrow-right"></i>
-                    <span>بازگشت</span>
-                </button>
-            </div>
-
-            <!-- مرحله ۵: رنگ -->
-            <div class="step hidden" data-step="5">
-                <h2 class="text-lg font-bold mb-4 text-gray-800 flex items-center gap-2">
-                    <i class="fas fa-palette text-blue-600"></i>
-                    انتخاب رنگ
-                </h2>
-                <div id="colorList" class="grid grid-cols-3 gap-4">
-                    <!-- رنگ‌ها از طریق API پر می‌شوند -->
-                </div>
-                <button class="prev mt-6 flex items-center gap-2 text-gray-600 hover:text-gray-800 transition-colors">
-                    <i class="fas fa-arrow-right"></i>
-                    <span>بازگشت</span>
-                </button>
-            </div>
-
-            <!-- مرحله ۶: پیش‌نمایش -->
-            <div class="step hidden" data-step="6">
                 <h2 class="text-lg font-bold mb-4 text-gray-800 flex items-center gap-2">
                     <i class="fas fa-check-circle text-blue-600"></i>
                     پیش‌نمایش اطلاعات <a href="#" class="text-primary text-sm" id="edit-info">ویرایش</a>
                 </h2>
                 <div class="bg-gray-50 rounded-xl p-5 mb-6">
                     <ul id="preview" class="space-y-3 text-gray-700">
-                        <li class="flex justify-between items-center pb-2 border-b border-gray-200">
-                            <span class="font-medium">کیلومتر:</span>
-                            <span id="previewKilometer" class="font-bold">-</span>
-                        </li>
                         <li class="flex justify-between items-center pb-2 border-b border-gray-200">
                             <span class="font-medium">برند:</span>
                             <span id="previewBrand" class="font-bold">-</span>
@@ -210,17 +166,9 @@
                             <span class="font-medium">مدل:</span>
                             <span id="previewModel" class="font-bold">-</span>
                         </li>
-                        <li class="flex justify-between items-center pb-2 border-b border-gray-200">
+                        <li class="flex justify-between items-center">
                             <span class="font-medium">سال تولید:</span>
                             <span id="previewYear" class="font-bold">-</span>
-                        </li>
-                        <li class="flex justify-between items-center pb-2 border-b border-gray-200">
-                            <span class="font-medium">تیپ:</span>
-                            <span id="previewType" class="font-bold">-</span>
-                        </li>
-                        <li class="flex justify-between items-center">
-                            <span class="font-medium">رنگ:</span>
-                            <span id="previewColor" class="font-bold">-</span>
                         </li>
                     </ul>
                 </div>
@@ -362,7 +310,6 @@
         const phoneDisplay = document.getElementById("phoneDisplay");
         const phoneError = document.getElementById("phoneError");
         const codeError = document.getElementById("codeError");
-        const kilometer = document.getElementById("kilometer");
         const editinfo = document.getElementById("edit-info");
 
         let currentStep = 1;
@@ -393,12 +340,46 @@
 
         // بارگذاری اطلاعات فرم از localStorage
         function loadFormData() {
+            // ابتدا کوئری استرینگ‌های URL را بررسی می‌کنیم
+            const urlParams = new URLSearchParams(window.location.search);
+
+            if (urlParams.has('brand') && urlParams.has('brand_id') &&
+                urlParams.has('model') && urlParams.has('model_id') &&
+                urlParams.has('year')) {
+
+                // اطلاعات از کوئری استرینگ استخراج می‌شوند
+                data.brand = urlParams.get('brand');
+                data.brand_id = urlParams.get('brand_id');
+                data.model = urlParams.get('model');
+                data.model_id = urlParams.get('model_id');
+                data.year = urlParams.get('year');
+
+                // ذخیره در localStorage
+                localStorage.setItem("brand", data.brand);
+                localStorage.setItem("brand_id", data.brand_id);
+                localStorage.setItem("model", data.model);
+                localStorage.setItem("model_id", data.model_id);
+                localStorage.setItem("year", data.year);
+
+                // کیلومتر را اگر وجود دارد ذخیره کن
+                if (urlParams.has('kilometer')) {
+                    data.kilometer = urlParams.get('kilometer');
+                    localStorage.setItem("kilometer", data.kilometer);
+                }
+
+                saveFormData();
+                previewData();
+                showStep(4); // مستقیماً به مرحله ۴ برو
+                return;
+            }
+
+            // اگر کوئری استرینگ وجود نداشت، از localStorage بخوان
             const savedData = localStorage.getItem('formData');
             if (savedData) {
                 Object.assign(data, JSON.parse(savedData));
-                if (Object.keys(data).length >= 5) {
+                if (Object.keys(data).length >= 3) {
                     previewData();
-                    showStep(6);
+                    showStep(4);
                 }
             }
         }
@@ -427,7 +408,7 @@
             document.querySelector(`.step[data-step="${n}"]`).classList.remove("hidden");
             currentStep = n;
 
-            const progressPercentage = (n / 6) * 100;
+            const progressPercentage = (n / 4) * 100;
             progressBar.style.width = `${progressPercentage}%`;
             currentStepNumber.textContent = n;
         }
@@ -672,7 +653,6 @@
                     data.brand_id = brand.id;
                     localStorage.setItem("brand", data.brand);
                     localStorage.setItem("brand_id", data.brand_id);
-                    localStorage.setItem("kilometer", kilometer.value);
                     saveFormData();
                     loadModels(brand.id);
                 };
@@ -740,150 +720,19 @@
                     data.year = year;
                     localStorage.setItem("year", year);
                     saveFormData();
-                    renderTypes(data.model_data.types);
+                    // بعد از انتخاب سال، مستقیماً به مرحله پیش‌نمایش برو
+                    previewData();
                     showStep(4);
                 };
                 yearList.appendChild(button);
             });
         }
 
-        // نمایش تیپ‌ها
-        function renderTypes(types) {
-            const typeList = document.getElementById("typeList");
-            typeList.innerHTML = "";
-
-            types.forEach(type => {
-                const button = document.createElement("button");
-                button.className =
-                    "typeBtn border-2 border-gray-200 p-4 rounded-xl hover:border-blue-500 hover:bg-blue-50 transition-all duration-200 flex flex-col items-center justify-center gap-2";
-                button.innerHTML = `
-                    <i class="fas fa-sliders-h text-2xl text-gray-600"></i>
-                    <span class="font-medium">${type}</span>
-                `;
-                button.onclick = () => {
-                    data.type = type;
-                    localStorage.setItem("type", type);
-                    saveFormData();
-                    renderColors(data.model_data.colors);
-                    showStep(5);
-                };
-                typeList.appendChild(button);
-            });
-        }
-
-        // نمایش رنگ‌ها
-        function renderColors(colors) {
-            const colorList = document.getElementById("colorList");
-            colorList.innerHTML = "";
-
-            colors.forEach(color => {
-                const button = document.createElement("button");
-                button.className =
-                    "colorBtn border-2 border-gray-200 p-4 rounded-xl hover:border-blue-500 hover:bg-blue-50 transition-all duration-200 flex flex-col items-center justify-center gap-2";
-
-                let bgColorClass = 'bg-white';
-                let textColorClass = 'text-gray-800';
-
-                switch (color) {
-                    case 'سفید':
-                        bgColorClass = 'bg-white';
-                        textColorClass = 'text-gray-800';
-                        break;
-                    case 'مشکی':
-                        bgColorClass = 'bg-black';
-                        textColorClass = 'text-gray-800';
-                        break;
-                    case 'قرمز':
-                        bgColorClass = 'bg-red-600';
-                        textColorClass = 'text-gray-800';
-                        break;
-                    case 'آبی':
-                        bgColorClass = 'bg-blue-600';
-                        textColorClass = 'text-gray-800';
-                        break;
-                    case 'نقره‌ای':
-                        bgColorClass = 'bg-gray-400';
-                        textColorClass = 'text-gray-800';
-                        break;
-                    case 'خاکستری':
-                        bgColorClass = 'bg-gray-500';
-                        textColorClass = 'text-gray-800';
-                        break;
-                    case 'زرد':
-                        bgColorClass = 'bg-yellow-400';
-                        textColorClass = 'text-gray-800';
-                        break;
-                    case 'نارنجی':
-                        bgColorClass = 'bg-orange-500';
-                        textColorClass = 'text-gray-800';
-                        break;
-                    case 'صورتی':
-                        bgColorClass = 'bg-pink-500';
-                        textColorClass = 'text-gray-800';
-                        break;
-                    case 'بنفش':
-                        bgColorClass = 'bg-purple-600';
-                        textColorClass = 'text-gray-800';
-                        break;
-                    case 'قهوه‌ای':
-                        bgColorClass = 'bg-brown-500';
-                        textColorClass = 'text-gray-800';
-                        break;
-                    case 'طلایی':
-                        bgColorClass = 'bg-yellow-600';
-                        textColorClass = 'text-gray-800';
-                        break;
-                    case 'نوک مدادی':
-                        bgColorClass = 'bg-gray-700';
-                        textColorClass = 'text-gray-800';
-                        break;
-                    case 'بژ':
-                        bgColorClass = 'bg-beige';
-                        textColorClass = 'text-gray-800';
-                        break;
-                    case 'فیروزه‌ای':
-                        bgColorClass = 'bg-teal-400';
-                        textColorClass = 'text-gray-800';
-                        break;
-                    case 'یاسی':
-                        bgColorClass = 'bg-lavender';
-                        textColorClass = 'text-gray-800';
-                        break;
-                    case 'زرشکی':
-                        bgColorClass = 'bg-maroon';
-                        textColorClass = 'text-gray-800';
-                        break;
-                    default:
-                        bgColorClass = 'bg-white';
-                        textColorClass = 'text-gray-800';
-                }
-
-
-                button.innerHTML = `
-                    <div class="w-8 h-8 rounded-full ${bgColorClass} border border-gray-300"></div>
-                    <span class="font-medium ${textColorClass}">${color}</span>
-                `;
-                button.onclick = () => {
-                    data.color = color;
-                    localStorage.setItem("color", color);
-                    saveFormData();
-                    previewData();
-                    showStep(6);
-                };
-                colorList.appendChild(button);
-            });
-        }
-
-
         // پیش‌نمایش
         function previewData() {
-            document.getElementById("previewKilometer").textContent = data.kilometer || localStorage.getItem('kilometer') ||
-                '-';
-            document.getElementById("previewBrand").textContent = data.brand || localStorage.getItem('brand') || '-';
-            document.getElementById("previewModel").textContent = data.model || localStorage.getItem('model') || '-';
-            document.getElementById("previewYear").textContent = data.year || localStorage.getItem('year') || '-';
-            document.getElementById("previewType").textContent = data.type || localStorage.getItem('type') || '-';
-            document.getElementById("previewColor").textContent = data.color || localStorage.getItem('color') || '-';
+            document.getElementById("previewBrand").textContent = data.brand || '-';
+            document.getElementById("previewModel").textContent = data.model || '-';
+            document.getElementById("previewYear").textContent = data.year || '-';
         }
 
         // ارسال اطلاعات به سرور
@@ -894,9 +743,7 @@
             setLoadingState(submitBtn, true, 'در حال ثبت اطلاعات...', true);
 
             try {
-
-
-                //ajax
+                // ارسال اطلاعات با مقادیر خالی برای تیپ و رنگ
                 $.ajax({
                     url: "{{ route('save.sell.request') }}",
                     type: "POST",
@@ -904,10 +751,10 @@
                         brand: localStorage.getItem('brand'),
                         model: localStorage.getItem('model'),
                         year: localStorage.getItem('year'),
-                        type: localStorage.getItem('type'),
-                        color: localStorage.getItem('color'),
-                        kilometer: localStorage.getItem('kilometer'),
-                        request_type: 'sell',
+                        type: '', // ارسال خالی
+                        color: '', // ارسال خالی
+                        kilometer: '', // ارسال خالی
+                        request_type: 'buy',
                         _token: CSRF_TOKEN
                     },
                     success: function(response) {
@@ -918,9 +765,6 @@
                         localStorage.removeItem('model');
                         localStorage.removeItem('model_id');
                         localStorage.removeItem('year');
-                        localStorage.removeItem('type');
-                        localStorage.removeItem('color');
-                        localStorage.removeItem('kilometer');
                         localStorage.removeItem('userPhone');
 
                         // نمایش پیام موفقیت
@@ -982,48 +826,7 @@
         // بارگذاری اطلاعات هنگام لود صفحه
         window.addEventListener('DOMContentLoaded', () => {
             loadBrands();
-
-            // استخراج پارامترهای URL
-            const urlParams = new URLSearchParams(window.location.search);
-
-            // اگر پارامترهای لازم در URL وجود داشت
-            if (urlParams.has('brand') && urlParams.has('model') && urlParams.has('year')) {
-                // پر کردن داده‌ها از پارامترهای URL
-                data.brand = urlParams.get('brand');
-                data.brand_id = urlParams.get('brand_id');
-                data.model = urlParams.get('model');
-                data.model_id = urlParams.get('model_id');
-                data.year = urlParams.get('year');
-                data.type = urlParams.get('type');
-                data.color = urlParams.get('color');
-                data.kilometer = urlParams.get('kilometer');
-
-                // ذخیره در localStorage
-                localStorage.setItem("brand", data.brand);
-                localStorage.setItem("brand_id", data.brand_id);
-                localStorage.setItem("model", data.model);
-                localStorage.setItem("model_id", data.model_id);
-                localStorage.setItem("year", data.year);
-                localStorage.setItem("type", data.type);
-                localStorage.setItem("color", data.color);
-                localStorage.setItem("kilometer", data.kilometer);
-
-                // پر کردن فیلد کیلومتر
-                if (data.kilometer) {
-                    document.getElementById('kilometer').value = data.kilometer;
-                }
-
-                // نمایش داده‌ها در پیش‌نمایش
-                previewData();
-
-                // پرش مستقیم به مرحله آخر (پیش‌نمایش)
-                setTimeout(() => {
-                    showStep(6);
-                }, 50); // کمی تأخیر برای اطمینان از بارگذاری کامل داده‌ها
-            } else {
-                // اگر پارامترهای لازم وجود نداشت، از داده‌های ذخیره شده در localStorage استفاده کن
-                loadFormData();
-            }
+            loadFormData();
         });
 
         // مدیریت ارسال فرم با Enter

@@ -33,8 +33,10 @@ class CarController extends Controller
         $attributes = Attribute::with('values')->orderBy('sort_order')->get();
         $fileItems = CarFileItem::with('carFile')->get();
         $carFiles = CarFile::get();
-        $brands   = Brand::get();
-        return view('admin.cars.create', compact('attributes', 'fileItems', 'carFiles', 'brands'));
+        $brands = Brand::get();
+        $models = [];
+
+        return view('admin.cars.create', compact('attributes', 'fileItems', 'carFiles', 'brands', 'models'));
     }
 
     public function store(Request $request)
@@ -46,6 +48,8 @@ class CarController extends Controller
             'thumbnail' => 'nullable|string',
             'gallery'     => 'nullable|string',
             'description' => 'nullable|string',
+            'brand_id' => 'required|exists:brands,id',
+            'car_model_id' => 'required|exists:car_models,id',
         ]);
 
         DB::transaction(function () use ($request) {
@@ -59,6 +63,7 @@ class CarController extends Controller
                 'status' => $request->status,
                 'vip' => $request->vip,
                 'brand_id' => $request->brand_id,
+                'car_model_id' => $request->car_model_id,
             ]);
 
             // ذخیره ویژگی‌ها
@@ -120,10 +125,13 @@ class CarController extends Controller
     public function edit(Car $car)
     {
         $attributes = Attribute::with('values')->orderBy('sort_order')->get();
-        $carFiles   = CarFile::with('items')->get();
-        $brands   = Brand::get();
+        $carFiles = CarFile::with('items')->get();
+        $brands = Brand::get();
+
+        $models = $car->brand ? $car->brand->carModels : [];
+
         $car->load('attributeValues.attribute', 'attributeValues.attributeValue', 'fileItemValues');
-        return view('admin.cars.edit', compact('car', 'attributes', 'carFiles', 'brands'));
+        return view('admin.cars.edit', compact('car', 'attributes', 'carFiles', 'brands', 'models'));
     }
 
     public function update(Request $request, Car $car)
@@ -134,6 +142,8 @@ class CarController extends Controller
             'thumbnail' => 'nullable|string',
             'gallery'     => 'nullable|string',
             'description' => 'nullable|string',
+            'brand_id' => 'required|exists:brands,id',
+            'car_model_id' => 'required|exists:car_models,id',
         ]);
 
         DB::transaction(function () use ($request, $car) {
@@ -142,11 +152,12 @@ class CarController extends Controller
                 'title' => $request->title,
                 'slug'  => standardizeSlug($request->slug), // استفاده از تابع standardizeSlug مانند متد store
                 'thumbnail' => $request->thumbnail ?? null,
-                'gallery' => $request->gallery ?? null, // اضافه کردن فیلد gallery که در متد store وجود داشت
+                'gallery' => str_replace('&quot;', '"', $request->gallery) ?? null, // اضافه کردن فیلد gallery که در متد store وجود داشت
                 'description' => $request->description ?? null,
                 'status' => $request->status,
                 'vip' => $request->vip,
                 'brand_id' => $request->brand_id,
+                'car_model_id' => $request->car_model_id,
             ]);
 
             // حذف مقادیر قبلی ویژگی‌ها
@@ -219,9 +230,14 @@ class CarController extends Controller
             $car->fileItemValues()->delete();
 
             $car->delete();
-
         });
 
         return redirect()->route('cars.index')->with('success', 'ماشین با موفقیت حذف شد');
+    }
+
+    public function getModelsByBrand(Brand $brand)
+    {
+        $models = $brand->carModels;
+        return response()->json($models);
     }
 }
