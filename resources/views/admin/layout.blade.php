@@ -106,7 +106,7 @@
                                         پیامهای من</a>
                                     <div class="dropdown-divider"></div> --}}
                                     <a class="dropdown-item" href="#" data-toggle="modal"
-                                    data-target="#logoutModal"><i class="ft-power"></i>
+                                        data-target="#logoutModal"><i class="ft-power"></i>
                                         خروج</a>
                                 </div>
                             </div>
@@ -216,6 +216,32 @@
                 @endcan
 
 
+                @can('page-list')
+                    <li class="nav-item {{ request()->routeIs('pages.*') ? 'active' : '' }}">
+                        <a href="{{ route('pages.index') }}">
+                            <i class="ft-file-text"></i>
+                            <span>مدیریت صفحات</span>
+                        </a>
+                    </li>
+                @endcan
+
+                @can('slider-list')
+                    <li class="nav-item {{ request()->routeIs('sliders.*') ? 'active' : '' }}">
+                        <a href="{{ route('sliders.index') }}">
+                            <i class="ft-layers"></i>
+                            <span>مدیریت اسلایدر</span>
+                        </a>
+                    </li>
+                @endcan
+
+                @can('banner-list')
+                    <li class="nav-item {{ request()->routeIs('banners.*') ? 'active' : '' }}">
+                        <a href="{{ route('banners.index') }}">
+                            <i class="ft-image"></i>
+                            <span>مدیریت بنر</span>
+                        </a>
+                    </li>
+                @endcan
 
                 {{-- <li class="nav-item"><a href="#"><i class="ft-briefcase"></i><span class="menu-title"
                             data-i18n="">سفارشات من</span></a>

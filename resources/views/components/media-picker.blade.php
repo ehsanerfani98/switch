@@ -39,7 +39,7 @@
         {{-- حالت تک تصویری --}}
         <div class="input-group">
             <input type="text" id="{{ $id }}" name="{{ $name }}" class="form-control"
-                value="{{ $value }}" placeholder="آدرس تصویر انتخاب‌شده">
+                value="{{ $value }}" placeholder="آدرس تصویر انتخاب‌ شده">
             <button type="button" class="btn btn-outline-danger"
                 onclick="openMediaManager('{{ $id }}', true, false)">انتخاب تصویر</button>
         </div>

@@ -300,7 +300,7 @@ if (!function_exists('getSliders')) {
     function getSliders()
     {
         return Slider::where('is_active', true)
-            ->orderBy('order')
+            ->orderBy('order', 'desc')
             ->get();
     }
 }
@@ -309,7 +309,7 @@ if (!function_exists('getBanners')) {
     function getBanners()
     {
         return Banner::where('is_active', true)
-            ->orderBy('order')
+            ->orderBy('order', 'asc')
             ->get();
     }
 }
@@ -564,32 +564,32 @@ function getUnreadCount($fromUserId, $toUserId)
 }
 
 
-    function standardizeSlug(string $str): string
-    {
-        $str = trim($str);
-        // هر کاراکتر غیر از حروف، اعداد، فضا و - را حذف کن
-        $str = preg_replace('/[^\p{L}\p{N}\s\-]+/u', '', $str);
-        // فضاها و خط تیره‌های پیاپی را به یک - تبدیل کن
-        $str = preg_replace('/[\s\-]+/u', '-', $str);
-        // - اضافی ابتدا/انتها را بردار
-        return trim($str, '-');
-    }
+function standardizeSlug(string $str): string
+{
+    $str = trim($str);
+    // هر کاراکتر غیر از حروف، اعداد، فضا و - را حذف کن
+    $str = preg_replace('/[^\p{L}\p{N}\s\-]+/u', '', $str);
+    // فضاها و خط تیره‌های پیاپی را به یک - تبدیل کن
+    $str = preg_replace('/[\s\-]+/u', '-', $str);
+    // - اضافی ابتدا/انتها را بردار
+    return trim($str, '-');
+}
 
 
-    function text_limit($text, $limit = 100, $end = '...')
-    {
-        return Str::limit(strip_tags($text), $limit, $end);
-    }
+function text_limit($text, $limit = 100, $end = '...')
+{
+    return Str::limit(strip_tags($text), $limit, $end);
+}
 
 
-    // دریافت ماشین‌های VIP
-    // $vipCars = getCars('vip', null, 4);
-    // دریافت ماشین‌های مشابه
-    // $relativeCars = getCars('relative', 'پراید');
-    // دریافت جدیدترین ماشین‌ها
-    // $newCars = getCars('new');
-    // استفاده با تعداد مشخص
-    // $latestCars = getCars('new', null, 5);
+// دریافت ماشین‌های VIP
+// $vipCars = getCars('vip', null, 4);
+// دریافت ماشین‌های مشابه
+// $relativeCars = getCars('relative', 'پراید');
+// دریافت جدیدترین ماشین‌ها
+// $newCars = getCars('new');
+// استفاده با تعداد مشخص
+// $latestCars = getCars('new', null, 5);
 function getCars($type, $brandId = null, $limit = 10)
 {
     $query = Car::with(['brand', 'attributeValues.attribute']);
@@ -616,7 +616,8 @@ function getCars($type, $brandId = null, $limit = 10)
 }
 
 
-function getBrands(){
+function getBrands()
+{
     $brands = Brand::get();
 
     $brands->map(function ($brand) {

@@ -945,22 +945,6 @@ namespace App\Models {
     /**
      * App\Models\Banner
      *
-     * @property \Illuminate\Support\Carbon|null $updated_at
-     * @property \Illuminate\Support\Carbon|null $created_at
-     * @property bool $is_active
-     * @property int $order
-     * @property string|null $link
-     * @property string $image
-     * @property string|null $title
-     * @property int $id
-     * @method static \Illuminate\Database\Eloquent\Builder<Banner>|Banner whereId($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<Banner>|Banner whereTitle($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<Banner>|Banner whereImage($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<Banner>|Banner whereLink($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<Banner>|Banner whereOrder($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<Banner>|Banner whereIsActive($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<Banner>|Banner whereCreatedAt($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<Banner>|Banner whereUpdatedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Banner>|Banner newModelQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<Banner>|Banner newQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<Banner>|Banner query()

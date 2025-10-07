@@ -22,17 +22,12 @@ class BannerController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'title' => 'nullable|string|max:255',
+            'title' => 'nullable|string',
             'link' => 'nullable|url',
             'order' => 'nullable|integer',
-            'image' => 'required|image|max:2048',
+            'thumbnail' => 'required|max:2048',
+            'cover' => 'required|max:2048',
         ]);
-
-        $file = $request->file('image');
-        $filename = time() . '_' . $file->getClientOriginalName();
-        $destinationPath = public_path('uploads/banners');
-        $file->move($destinationPath, $filename);
-        $validated['image'] = 'uploads/banners/' . $filename;
 
         $validated['is_active'] = $request->has('is_active');
 
@@ -52,16 +47,9 @@ class BannerController extends Controller
             'title' => 'nullable|string|max:255',
             'link' => 'nullable|url',
             'order' => 'nullable|integer',
-            'image' => 'nullable|image|max:2048',
+            'thumbnail' => 'nullable|max:2048',
+            'cover' => 'nullable|max:2048',
         ]);
-
-        if ($request->hasFile('image')) {
-            $file = $request->file('image');
-            $filename = time() . '_' . $file->getClientOriginalName();
-            $destinationPath = public_path('uploads/banners');
-            $file->move($destinationPath, $filename);
-            $validated['image'] = 'uploads/banners/' . $filename;
-        }
 
         $validated['is_active'] = $request->has('is_active');
         $Banner->update($validated);
@@ -71,11 +59,6 @@ class BannerController extends Controller
 
     public function destroy(Banner $banner)
     {
-        $imagePath = public_path($banner->image);
-        if (file_exists($imagePath)) {
-            @unlink($imagePath);
-        }
-
         $banner->delete();
         return redirect()->route('banners.index')->with('success', 'بنر حذف شد.');
     }

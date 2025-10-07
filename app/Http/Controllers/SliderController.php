@@ -25,17 +25,8 @@ class SliderController extends Controller
             'title' => 'nullable|string|max:255',
             'link' => 'nullable|url',
             'order' => 'nullable|integer',
-            'image' => 'required|image|max:2048',
+            'image' => 'required|max:2048',
         ]);
-
-        // ذخیره فایل در مسیر public/uploads/sliders
-        if ($request->hasFile('image')) {
-            $file = $request->file('image');
-            $filename = time() . '_' . $file->getClientOriginalName();
-            $destinationPath = public_path('uploads/sliders');
-            $file->move($destinationPath, $filename);
-            $validated['image'] = 'uploads/sliders/' . $filename;
-        }
 
         $validated['is_active'] = $request->has('is_active');
 
@@ -55,16 +46,8 @@ class SliderController extends Controller
             'title' => 'nullable|string|max:255',
             'link' => 'nullable|url',
             'order' => 'nullable|integer',
-            'image' => 'nullable|image|max:2048',
+            'image' => 'nullable|max:2048',
         ]);
-
-        if ($request->hasFile('image')) {
-            $file = $request->file('image');
-            $filename = time() . '_' . $file->getClientOriginalName();
-            $destinationPath = public_path('uploads/sliders');
-            $file->move($destinationPath, $filename);
-            $validated['image'] = 'uploads/sliders/' . $filename;
-        }
 
         $validated['is_active'] = $request->has('is_active');
         $slider->update($validated);
@@ -74,11 +57,6 @@ class SliderController extends Controller
 
     public function destroy(Slider $slider)
     {
-        $imagePath = public_path($slider->image);
-        if (file_exists($imagePath)) {
-            @unlink($imagePath);
-        }
-
         $slider->delete();
         return redirect()->route('sliders.index')->with('success', 'اسلاید حذف شد.');
     }

@@ -1,92 +1,120 @@
 @extends('admin.layout')
-@section('name', 'ویرایش بنر')
-@section('actions')
-    <a href="{{ route('banners.index') }}" class="btn btn-primary btn-sm btn-icon-split">
-        <span class="text-white-50">
-            <i class="fas fa-arrow-right"></i>
-        </span>
-        <span class="text">برگشت</span>
-    </a>
-@endsection
+@section('title', 'ویرایش بنر')
 
 @section('content')
 
     @if ($errors->any())
-        <div class="alert alert-danger">
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
+        @foreach ($errors->all() as $error)
+            <script>
+                notifier.alert('{{ $error }}', {
+                    labels: {
+                        alert: 'خطا'
+                    },
+                })
+            </script>
+        @endforeach
     @endif
 
     <form method="POST" action="{{ route('banners.update', $banner->id) }}" enctype="multipart/form-data">
         @csrf
         @method('PUT')
-        <div class="card shadow mb-4">
-            <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">جزئیات بنر</h6>
-            </div>
-            <div class="card-body">
-                <div class="mb-3">
-                    <label class="form-label">عنوان</label>
-                    <input type="text" class="form-control" name="title" value="{{ old('title', $banner->title) }}">
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">لینک</label>
-                    <input type="url" class="form-control" name="link" value="{{ old('link', $banner->link) }}">
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">ترتیب</label>
-                    <input type="number" class="form-control" name="order" value="{{ old('order', $banner->order) }}">
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">تصویر فعلی</label><br>
-                    <img src="{{ asset($banner->image) }}" width="150">
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">تغییر تصویر (در صورت نیاز)</label>
-                    <input type="file" class="form-control" name="image">
-                </div>
-                <div class="form-check mb-3">
-                    <input type="checkbox" class="form-check-input" id="is_active" name="is_active"
-                        {{ old('is_active', $banner->is_active) ? 'checked' : '' }}>
-                    <label class="form-check-label mr-4" for="is_active">فعال باشد</label>
-                </div>
-
-                <div class="col-xs-12 col-sm-12 col-md-12 text-right px-0">
-                    <button ype="submit" class="btn btn-success btn-sm btn-icon-split">
-                        <span class="text-white-50">
-                            <svg fill="#ffffff" height="16px" width="16px" version="1.1" id="Layer_1"
-                                xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-                                viewBox="0 0 64 64" enable-background="new 0 0 64 64" xml:space="preserve" stroke="#ffffff">
-                                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
-                                <g id="SVGRepo_iconCarrier">
-                                    <g id="Floppy-disk">
-                                        <path
-                                            d="M35.2673988,6.0411h-7.9999981v10h7.9999981V6.0411z M33.3697014,14.1434002h-4.2046013V7.9387999h4.2046013V14.1434002z">
-                                        </path>
-                                        <path
-                                            d="M41,47.0410995H21c-0.5527992,0-1,0.4472008-1,1c0,0.5527,0.4472008,1,1,1h20c0.5527,0,1-0.4473,1-1 C42,47.4883003,41.5527,47.0410995,41,47.0410995z">
-                                        </path>
-                                        <path
-                                            d="M41,39.0410995H21c-0.5527992,0-1,0.4472008-1,1c0,0.5527,0.4472008,1,1,1h20c0.5527,0,1-0.4473,1-1 C42,39.4883003,41.5527,39.0410995,41,39.0410995z">
-                                        </path>
-                                        <path d="M12,56.0410995h38v-26H12V56.0410995z M14,32.0410995h34v22H14V32.0410995z">
-                                        </path>
-                                        <path
-                                            d="M49.3811989,0.0411L49.3610992,0H7C4.7908001,0,3,1.7909,3,4v56c0,2.2092018,1.7908001,4,4,4h50 c2.2090988,0,4-1.7907982,4-4V11.6962996L49.3811989,0.0411z M39.9604988,2.0804999v17.9211006H14.0394001V2.0804999H39.9604988z M59,60c0,1.1027985-0.8972015,2-2,2H7c-1.1027999,0-2-0.8972015-2-2V4c0-1.1027999,0.8972001-2,2-2h5v20.0410995h30V2h6.5099983 L59,12.5228996V60z">
-                                        </path>
-                                    </g>
-                                </g>
-                            </svg>
-                        </span>
-                        <span class="text">ذخیره</span>
-                    </button>
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12">
+                <div class="card shadow">
+                    <div class="card-header">
+                        <h6 class="m-0 font-weight-bold text-primary">اطلاعات بنر</h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-12 col-md-6">
+                                <div class="form-group">
+                                    <label for="title">عنوان بنر</label>
+                                    <textarea name="title" class="form-control" id="editor">{{ old('title', $banner->title) }}</textarea>
+                                </div>
+                                <div class="form-group">
+                                    <div class="form-check">
+                                        <input type="checkbox" value="1" class="form-check-input" id="is_active"
+                                            name="is_active" {{ old('is_active', $banner->is_active) ? 'checked' : '' }}>
+                                        <label class="form-check-label" for="is_active">بنر فعال باشد</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-6">
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-12 col-md-12">
+                                        <div class="form-group">
+                                            <label for="link">لینک</label>
+                                            <input type="url" name="link" id="link" placeholder="لینک"
+                                                class="form-control" value="{{ old('link', $banner->link) }}">
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-12 col-md-12">
+                                        <div class="form-group">
+                                            <label for="order">ترتیب نمایش</label>
+                                            <input type="number" name="order" id="order" placeholder="ترتیب"
+                                                class="form-control" value="{{ old('order', $banner->order) }}" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-12 col-md-12">
+                                        <div class="form-group">
+                                            <label for="thumbnail">تصویر اصلی</label>
+                                            <x-media-picker name="thumbnail" id="thumbnail"
+                                                value="{{ old('thumbnail', $banner->thumbnail) }}" />
+                                            @if ($banner->thumbnail)
+                                                <small class="form-text text-muted">
+                                                    تصویر فعلی:
+                                                    <a href="{{ asset($banner->thumbnail) }}" target="_blank"
+                                                        class="mr-2">مشاهده
+                                                        تصویر</a>
+                                                </small>
+                                            @endif
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-12 col-md-12">
+                                        <div class="form-group">
+                                            <label for="cover">تصویر پوشاننده</label>
+                                            <x-media-picker name="cover" id="cover"
+                                                value="{{ old('cover', $banner->cover) }}" />
+                                            @if ($banner->cover)
+                                                <small class="form-text text-muted">
+                                                    تصویر فعلی:
+                                                    <a href="{{ asset($banner->cover) }}" target="_blank"
+                                                        class="mr-2">مشاهده
+                                                        تصویر</a>
+                                                </small>
+                                            @endif
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-xs-12 col-sm-12 col-md-12 text-left">
+                                <button type="submit" class="btn btn-success btn-sm">
+                                    ذخیره
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </form>
 @endsection
+
+
+@push('script')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ckeditor/4.17.1/ckeditor.js"
+        integrity="sha512-VXEKi5eNc7ECuyIueuledlqeUWiJ7hcxBe9fnsCiVzeZ0XwJxAPemnq01/LBIBnp3i0szhvKNd9Us7fqNPsRmQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        CKEDITOR.replace('editor', {
+            height: 200,
+            language: 'fa',
+            contentsLangDirection: 'rtl',
+            toolbar: 'Full',
+            extraPlugins: 'colorbutton',
+            colorButton_enableMore: true
+        });
+    </script>
+@endpush

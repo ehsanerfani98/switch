@@ -40,15 +40,6 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="{{ asset('site-assets/js/tailwind.js') }}"></script>
     <link rel="stylesheet" href="{{ asset('site-assets/css/tailwind.css') }}">
-    <!-- اسکریپت‌های ضروری -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "WebSite",
-      "name": "اسپاسان",
-      "url": "https://www.switch.ir/"
-    }
-  </script>
     <link rel="stylesheet" href="{{ asset('site-assets/css/style.css') }}">
     @stack('styles')
 </head>
