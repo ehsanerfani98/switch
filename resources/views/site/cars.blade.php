@@ -12,7 +12,7 @@
             <div class="flex flex-col md:flex-row justify-between items-center gap-4">
                 <div class="flex items-center">
                     <i class="fas fa-car text-2xl text-primary ml-3"></i>
-                    <h1 class="text-2xl font-bold text-gray-900">خرید، فروش خودرو های کارشناسی شده در قزوین</h1>
+                    <h1 class="text-xl font-bold text-gray-900">خرید، فروش خودرو های کارشناسی شده در قزوین</h1>
                 </div>
                 <div class="relative w-full md:w-80">
                     <i class="fas fa-search absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
@@ -28,7 +28,7 @@
             <aside class="w-full lg:w-1/4">
                 <div class="bg-white rounded-lg  p-5 sticky top-4">
                     <div class="flex justify-between items-center mb-4 pb-3 border-b border-gray-200">
-                        <h2 class="text-lg font-bold text-gray-900">فیلترها</h2>
+                        <h3 class="text-gray-900">فیلترها</h3>
                         <button class="clear-filters text-sm text-primary hover:text-blue-700 transition-colors"
                             id="clearFilters">پاک کردن همه</button>
                     </div>

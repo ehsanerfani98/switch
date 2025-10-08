@@ -10,8 +10,14 @@ class SiteController extends Controller
 {
     public function home()
     {
-        // return view('car_deatils');
-        return view('site.home');
+        $popularSearches = [
+            'کیا سراتو',
+            'سانتافه',
+            'سراتو مونتاژ',
+            'هیوندای توسان',
+            'کیا اسپورتیج'
+        ];
+        return view('site.home', compact('popularSearches'));
     }
     public function cars()
     {

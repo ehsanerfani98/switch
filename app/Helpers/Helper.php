@@ -17,6 +17,11 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use App\Http\Resources\CarResource;
+use App\Models\Attribute;
+use App\QueryBuilder\Filters\BrandFilter;
+use App\QueryBuilder\Filters\CarFilter;
+use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\QueryBuilder;
 
 // if (!function_exists('getRoles')) {
 //     function getRoles()
@@ -311,6 +316,43 @@ if (!function_exists('getBanners')) {
         return Banner::where('is_active', true)
             ->orderBy('order', 'asc')
             ->get();
+    }
+}
+
+if (!function_exists('getKeywordCar')) {
+    function getKeywordCar()
+    {
+        return Car::where('keyword', true)->get();
+    }
+}
+
+if (!function_exists('getCountCars')) {
+    function getCountCars($url)
+    {
+        try {
+            $parsedUrl = parse_url($url);
+            if (!isset($parsedUrl['query'])) {
+                return 0;
+            }
+
+            $queryString = $parsedUrl['query'];
+            parse_str($queryString, $filters);
+
+            $attributeFilters = Attribute::where('is_active', 1)->pluck('slug')
+                ->map(fn($slug) => AllowedFilter::custom($slug, new CarFilter()))
+                ->toArray();
+
+            $brandFilter = AllowedFilter::custom('brand', new BrandFilter());
+            $allowedFilters = array_merge($attributeFilters, [$brandFilter]);
+
+            $query = QueryBuilder::for(Car::class, request()->merge($filters))
+                ->allowedFilters($allowedFilters);
+
+            return $query->count();
+        } catch (Exception $e) {
+            // لاگ خطا یا return 0
+            return 0;
+        }
     }
 }
 

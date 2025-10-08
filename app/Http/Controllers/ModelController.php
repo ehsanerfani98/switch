@@ -96,4 +96,10 @@ class ModelController extends Controller
         $models = CarModel::where('brand_id', $brand_id)->get(['id', 'title', 'slug', 'years', 'types', 'colors']);
         return response()->json($models);
     }
+
+    public function getAllCarModels()
+    {
+        $models = CarModel::all(['id', 'title', 'slug']);
+        return response()->json($models);
+    }
 }

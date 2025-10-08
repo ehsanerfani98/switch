@@ -13,13 +13,18 @@ function loadFilters() {
     // درخواست همزمان برای attributes و brands
     Promise.all([
         axios.get('/attributes'),
-        axios.get('/get-all-brands') // اضافه کردن درخواست برای برندها
+        axios.get('/get-all-brands'),
+        axios.get('/get-all-car-models')
     ])
-    .then(([attributesRes, brandsRes]) => {
+    .then(([attributesRes, brandsRes, carmodelsRes]) => {
         attributesData = attributesRes.data;
-        renderFilters(attributesRes.data, brandsRes.data);
+        renderFilters(attributesRes.data, brandsRes.data, carmodelsRes.data);
         setupEventListeners();
-        applyUrlParams();
+
+        // اطمینان از اجرای applyUrlParams پس از مقداردهی اولیه
+        requestAnimationFrame(() => {
+            applyUrlParams();
+        });
     })
     .catch(error => {
         console.error('خطا در بارگذاری فیلترها:', error);
@@ -28,13 +33,19 @@ function loadFilters() {
 }
 
 // رندر کردن فیلترها در صفحه
-function renderFilters(attributes, brands = []) {
+function renderFilters(attributes, brands = [], carmodels = []) {
     filtersForm.innerHTML = '';
 
-    // اضافه کردن فیلتر برند در ابتدا
+    // اضافه کردن فیلتر برند
     if (brands.length > 0) {
         const brandFilterHtml = createBrandFilterHtml(brands);
         filtersForm.innerHTML += brandFilterHtml;
+    }
+
+    // اضافه کردن فیلتر مدل
+    if (carmodels.length > 0) {
+        const carmodelFilterHtml = createCarModelFilterHtml(carmodels);
+        filtersForm.innerHTML += carmodelFilterHtml;
     }
 
     // رندر فیلترهای عادی
@@ -44,7 +55,7 @@ function renderFilters(attributes, brands = []) {
     });
 
     // راه‌اندازی اسلایدرها پس از رندر کردن فیلترها
-    setTimeout(initializeRangeSliders, 100);
+    requestAnimationFrame(initializeRangeSliders);
 }
 
 // ایجاد HTML برای هر فیلتر
@@ -72,8 +83,49 @@ function createBrandFilterHtml(brands) {
                        id="brand-${brand.slug}"
                        name="filter[brand][]">
                 <label class="mr-2 text-sm text-gray-700 flex items-center" for="brand-${brand.slug}">
-                    ${brand.icon ? `<i class="${brand.icon} ml-2"></i>` : ''}
+                    ${brand.icon ? `<img class="ml-2" width="18" height="18" src="${brand.icon}">` : ''}
                     ${brand.title}
+                </label>
+            </div>
+        `;
+    });
+
+    html += `
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+
+    return html;
+}
+
+// ایجاد HTML برای هر فیلتر
+function createCarModelFilterHtml(carmodels) {
+    let html = `
+        <div class="accordion-filter border-b border-gray-200 py-4">
+            <div class="accordion-header flex justify-between items-center cursor-pointer">
+                <div class="accordion-title flex items-center font-medium text-gray-800">
+                    <i class="fas fa-car text-primary ml-2"></i>
+                    مدل خودرو
+                </div>
+                <i class="fas fa-chevron-down accordion-icon text-gray-500 transition-transform"></i>
+            </div>
+            <div class="accordion-content mt-3">
+                <div class="accordion-content-inner">
+                    <div class="filter-options space-y-2 max-h-60 overflow-y-auto">
+    `;
+
+    carmodels.forEach(carmodel => {
+        html += `
+            <div class="flex items-center">
+                <input class="form-checkbox h-4 w-4 text-primary rounded focus:ring-primary border-gray-300"
+                       type="checkbox"
+                       value="${carmodel.slug}"
+                       id="car_model-${carmodel.slug}"
+                       name="filter[car_model][]">
+                <label class="mr-2 text-sm text-gray-700 flex items-center" for="car_model-${carmodel.slug}">
+                    ${carmodel.title}
                 </label>
             </div>
         `;
@@ -150,8 +202,14 @@ function createRangeFilter(attr) {
     `;
 }
 
-// ایجاد فیلتر بولین (اسپاسان)
+// ایجاد فیلتر (اسپاسان)
 function createFilterHtml(attr) {
+
+    let px = '';
+    if(attr.type == 'range'){
+        px = 'px-4';
+    }
+
     let html = `
         <div class="accordion-filter border-b border-gray-200 py-4">
             <div class="accordion-header flex justify-between items-center cursor-pointer">
@@ -161,7 +219,7 @@ function createFilterHtml(attr) {
                 </div>
                 <i class="fas fa-chevron-down accordion-icon text-gray-500 transition-transform"></i>
             </div>
-            <div class="accordion-content mt-3">
+            <div class="accordion-content mt-3 ${px}">
                 <div class="accordion-content-inner">
     `;
 
@@ -220,6 +278,8 @@ function initializeRangeSliders() {
         // تنظیم مقادیر اولیه
         minDisplay.textContent = formatNumber(minVal);
         maxDisplay.textContent = formatNumber(maxVal);
+        if (minInput) minInput.value = minVal;
+        if (maxInput) maxInput.value = maxVal;
 
         noUiSlider.create(slider, {
             start: [minVal, maxVal],
@@ -310,34 +370,51 @@ function applyUrlParams() {
     if (urlParams.toString()) {
         // اعمال مقادیر فقط به فیلترهای موجود در URL
         for (let [key, value] of urlParams.entries()) {
-            const inputs = filtersForm.querySelectorAll(`[name="${key}"]`);
-            if (inputs.length) {
-                inputs.forEach(input => {
-                    if ((input.type === "checkbox" || input.type === "radio") && input.value === value) {
-                        input.checked = true;
-                    } else if (input.type !== "checkbox" && input.type !== "radio") {
-                        input.value = value;
-                    }
-                });
+            // اگر پارامتر title باشد، آن را در input جستجو قرار بده
+            if (key === 'filter[title][]') {
+                searchInput.value = value;
+            } else {
+                const inputs = filtersForm.querySelectorAll(`[name="${key}"]`);
+                if (inputs.length) {
+                    inputs.forEach(input => {
+                        if ((input.type === "checkbox" || input.type === "radio") && input.value === value) {
+                            input.checked = true;
+                        } else if (input.type !== "checkbox" && input.type !== "radio") {
+                            input.value = value;
+                        }
+                    });
+                }
             }
         }
 
-        // اعمال مقادیر به اسلایدرها فقط اگر در URL موجود باشند
+        // اعمال مقادیر به اسلایدرها
         document.querySelectorAll('.range-slider').forEach(slider => {
             const slug = slider.id.replace('-slider', '');
-            const minParam = urlParams.get(`filter[${slug}][]`);
-            const maxParam = urlParams.getAll(`filter[${slug}][]`)[1];
+            const rangeParams = urlParams.getAll(`filter[${slug}][]`);
 
-            if (minParam && maxParam && slider.noUiSlider) {
+            if (rangeParams.length >= 2 && slider.noUiSlider) {
+                const minParam = rangeParams[0];
+                const maxParam = rangeParams[1];
+
                 slider.noUiSlider.set([minParam, maxParam]);
+
+                const minInput = document.querySelector(`input[name="filter[${slug}][]"].range-min-input`);
+                const maxInput = document.querySelector(`input[name="filter[${slug}][]"].range-max-input`);
+                const minDisplay = document.getElementById(`${slug}-min-value`);
+                const maxDisplay = document.getElementById(`${slug}-max-value`);
+
+                if (minInput) minInput.value = minParam;
+                if (maxInput) maxInput.value = maxParam;
+                if (minDisplay) minDisplay.textContent = formatNumber(minParam);
+                if (maxDisplay) maxDisplay.textContent = formatNumber(maxParam);
             }
         });
 
         // باز کردن آکاردئون‌های فعال
         openActiveAccordions();
 
-        // اعمال فیلترها با پارامترهای URL
-        applyFilters();
+        // بارگذاری ماشین‌ها با پارامترهای URL
+        loadCars(urlParams.toString());
     } else {
         // باز کردن آکاردئون اول در حالت عادی
         const firstAccordion = document.querySelector('.accordion-filter');
@@ -409,26 +486,22 @@ function openActiveAccordions() {
 }
 
 // اعمال فیلترها و بارگذاری ماشین‌ها
-function applyFilters() {
+function applyFilters(updateUrl = true) {
     const formData = new FormData(filtersForm);
     const params = new URLSearchParams();
 
     // افزودن پارامترهای فرم فقط اگر مقدار داشته باشند
     formData.forEach((value, key) => {
-        // حذف مقادیر خالی و پیش‌فرض
         if (value !== '' && value !== null && value !== undefined) {
-            // برای فیلترهای range، فقط اگر مقدار متفاوت از پیش‌فرض باشد اضافه کن
             if (key.includes('filter[') && key.includes('][]')) {
                 const slug = key.match(/filter\[(.*?)\]/)[1];
                 const attr = attributesData.find(a => a.slug === slug);
 
                 if (attr && attr.type === 'range') {
-                    // برای range فیلترها، بررسی کن که آیا مقدار تغییر کرده یا نه
                     const currentValues = getCurrentRangeValues(slug);
                     const defaultMin = parseFloat(attr.min) || 0;
                     const defaultMax = parseFloat(attr.max) || 100;
 
-                    // فقط اگر مقدار با پیش‌فرض متفاوت باشد اضافه کن
                     if (currentValues.min !== defaultMin || currentValues.max !== defaultMax) {
                         params.append(key, value);
                     }
@@ -441,16 +514,29 @@ function applyFilters() {
         }
     });
 
-    // افزودن پارامتر جستجو فقط اگر مقدار داشته باشد
+    // افزودن پارامتر جستجو به عنوان فیلتر title
     if (searchInput.value.trim()) {
-        params.append('q', searchInput.value.trim());
+        params.append('filter[title][]', searchInput.value.trim());
     }
 
-    // به‌روزرسانی URL فقط اگر پارامتری وجود داشته باشد
-    if (params.toString()) {
-        history.replaceState(null, '', '?' + params.toString());
-    } else {
-        history.replaceState(null, '', window.location.pathname);
+    // اعمال پارامترهای URL برای فیلتر title
+    const urlParams = new URLSearchParams(window.location.search);
+    const titleParams = urlParams.getAll('filter[title][]');
+
+    // اگر در URL پارامتر title وجود دارد اما در جستجو نیست، آن را اضافه کن
+    titleParams.forEach(title => {
+        if (title && !searchInput.value.trim()) {
+            params.append('filter[title][]', title);
+        }
+    });
+
+    // به‌روزرسانی URL
+    if (updateUrl) {
+        if (params.toString()) {
+            history.replaceState(null, '', '?' + params.toString());
+        } else {
+            history.replaceState(null, '', window.location.pathname);
+        }
     }
 
     // بارگذاری ماشین‌ها با پارامترهای جدید
@@ -487,6 +573,8 @@ function loadCars(params = "") {
             <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
         </div>
     `;
+
+
 
     axios.get(`/filter?${params}`)
         .then(res => {
@@ -556,7 +644,7 @@ function createCarCard(car) {
                             <span class="attribute-name text-gray-500">${car.kilometer} کیلومتر - ${car.gearbox}</span>
                         </div>
                 </div>
-                <div class="inline-flex items-center bg-green-100 text-green-800 px-3 py-1 rounded-lg text-xs font-semibold mb-3"
+                <div class="inline-flex items-center bg-green-100 text-green-800 px-3 py-1 rounded-lg text-xs mb-3"
                     style="color: ${car.status.statusColor}; background-color: ${car.status.bgColor}">
                     <i class="${car.status.statusIcon} ml-1"></i>
                     ${car.status.statusLabel}
@@ -606,7 +694,7 @@ function setupCarCardEvents() {
 
 // پاک کردن همه فیلترها
 function clearAllFilters() {
-    // غیرفعال کردن event listener موقتاً برای جلوگیری از درخواست‌های متعدد
+    // غیرفعال کردن event listener موقتاً
     filtersForm.querySelectorAll('input').forEach(input => {
         if (input.type === 'checkbox' || input.type === 'radio') {
             input.checked = false;
@@ -627,7 +715,6 @@ function clearAllFilters() {
         const maxVal = parseFloat(attr.max) || 100;
         slider.noUiSlider.set([minVal, maxVal]);
 
-        // به‌روزرسانی مقادیر نمایشی
         const minDisplay = document.getElementById(`${slug}-min-value`);
         const maxDisplay = document.getElementById(`${slug}-max-value`);
         if (minDisplay) minDisplay.textContent = formatNumber(minVal);
@@ -640,12 +727,12 @@ function clearAllFilters() {
     // به‌روزرسانی URL بدون پارامتر
     history.replaceState(null, '', window.location.pathname);
 
-    // بستن همه آکاردئون‌ها پس از پاک کردن فیلترها
+    // بستن همه آکاردئون‌ها
     document.querySelectorAll('.accordion-filter').forEach(acc => {
         acc.classList.remove('active');
     });
 
-    // باز کردن آکاردئون اول پس از پاک کردن
+    // باز کردن آکاردئون اول
     const firstAccordion = document.querySelector('.accordion-filter');
     if (firstAccordion) firstAccordion.classList.add('active');
 

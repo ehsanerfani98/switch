@@ -14,6 +14,7 @@ class Car extends Model
         'description',
         'status',
         'vip',
+        'keyword',
         'brand_id',
         'car_model_id',
     ];
@@ -26,7 +27,7 @@ class Car extends Model
     {
         return $this->belongsTo(Brand::class);
     }
-    
+
     public function car_model()
     {
         return $this->belongsTo(CarModel::class);

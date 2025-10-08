@@ -61,6 +61,13 @@
                                     <label>توضیحات</label>
                                     <textarea name="description" class="form-control" id="editor">{{ old('description', $car->description) }}</textarea>
                                 </div>
+                                <div class="form-group">
+                                    <div class="form-check">
+                                        <input type="checkbox" value="1" class="form-check-input" id="keyword"
+                                            name="keyword" {{ old('keyword', $car->keyword) ? 'checked' : '' }}>
+                                        <label class="form-check-label" for="keyword">نمایش در باکس جستجو</label>
+                                    </div>
+                                </div>
                             </div>
 
                             <!-- کانتینر ویژگی‌ها -->

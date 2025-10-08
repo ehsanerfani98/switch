@@ -69,7 +69,7 @@
                                                                     </g>
                                                                 </svg>
                                                             </div>
-                                                            <p class="text-xs font-semibold">+ 3 خودرو</p>
+                                                            <p class="text-xs font-semibold">+ {{ getCountCars($banner->link) }} خودرو</p>
                                                         </div>
                                                     </div>
                                                 </div>

@@ -45,6 +45,8 @@ use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 use App\Http\Resources\CarResource;
 use App\Models\Attribute;
+use App\QueryBuilder\Filters\CarModelFilter;
+use App\QueryBuilder\Filters\CarTitleFilter;
 
 /*
 |--------------------------------------------------------------------------
@@ -148,7 +150,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::resource('/admin/cars', CarController::class);
     Route::get('brands/{brand}/models', [CarController::class, 'getModelsByBrand'])->name('brands.models');
-    
+
     Route::resource('/admin/attributes', AttributeController::class);
     Route::resource('/admin/attribute-values', AttributeValueController::class);
     Route::resource('/admin/car-files', CarFileController::class);
@@ -192,9 +194,11 @@ Route::get('/filter', function () {
 
     // فیلتر برند
     $brandFilter = AllowedFilter::custom('brand', new BrandFilter());
+    $carmodelFilter = AllowedFilter::custom('car_model', new CarModelFilter());
+    $titleFilter = AllowedFilter::custom('title', new CarTitleFilter());
 
     // ترکیب همه فیلترها
-    $filters = array_merge($attributeFilters, [$brandFilter]);
+    $filters = array_merge($attributeFilters, [$brandFilter], [$carmodelFilter], [$titleFilter]);
 
     $cars = QueryBuilder::for(Car::with([
             'attributeValues.attribute',
@@ -222,9 +226,26 @@ Route::get('/attributes', function () {
             return $data;
         });
 });
+Route::get('/get-all-car-models', [ModelController::class, 'getAllCarModels'])->name('getAllCarModels');
 Route::get('/get-all-brands', [BrandController::class, 'getAllBrands'])->name('getAllBrands');
 Route::get('/get-by-brand/{brand_id}', [ModelController::class, 'getByBrand'])->name('getByBrand');
+Route::get('/car-suggestions', function (Request $request) {
+    $query = $request->get('q');
 
+    if (!$query || strlen($query) < 2) {
+        return response()->json([]);
+    }
+
+    $suggestions = Car::where('title', 'LIKE', "%{$query}%")
+        ->distinct()
+        ->take(10)
+        ->get(['title'])
+        ->map(function($car) {
+            return ['title' => $car->title];
+        });
+
+    return response()->json($suggestions);
+});
 
 
 

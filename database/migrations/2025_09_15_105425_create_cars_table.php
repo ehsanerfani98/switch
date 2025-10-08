@@ -22,6 +22,7 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->enum('status' , ['inreview', 'assessed', 'sold'])->default('inreview');
             $table->boolean('vip')->default(0);
+            $table->boolean('keyword')->default(0);
             $table->timestamps();
         });
     }

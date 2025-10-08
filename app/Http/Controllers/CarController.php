@@ -62,6 +62,7 @@ class CarController extends Controller
                 'description' => $request->description ?? null,
                 'status' => $request->status,
                 'vip' => $request->vip,
+                'keyword' => $request->keyword,
                 'brand_id' => $request->brand_id,
                 'car_model_id' => $request->car_model_id,
             ]);
@@ -156,6 +157,7 @@ class CarController extends Controller
                 'description' => $request->description ?? null,
                 'status' => $request->status,
                 'vip' => $request->vip,
+                'keyword' => $request->has('keyword'),
                 'brand_id' => $request->brand_id,
                 'car_model_id' => $request->car_model_id,
             ]);
@@ -240,4 +242,6 @@ class CarController extends Controller
         $models = $brand->carModels;
         return response()->json($models);
     }
+
+
 }
