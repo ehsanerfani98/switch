@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Oct 08, 2025 at 01:53 PM
+-- Generation Time: Oct 08, 2025 at 03:29 PM
 -- Server version: 8.0.30
 -- PHP Version: 8.2.23
 
@@ -871,6 +871,34 @@ INSERT INTO `media` (`id`, `filename`, `original_name`, `mime`, `size`, `user_id
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `menus`
+--
+
+CREATE TABLE `menus` (
+  `id` bigint UNSIGNED NOT NULL,
+  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `link` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `parent_id` bigint UNSIGNED DEFAULT NULL,
+  `order` int NOT NULL DEFAULT '0',
+  `is_active` tinyint(1) NOT NULL DEFAULT '1',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `menus`
+--
+
+INSERT INTO `menus` (`id`, `title`, `link`, `parent_id`, `order`, `is_active`, `created_at`, `updated_at`) VALUES
+(1, 'صفحه اصلی', 'http://127.0.0.1:8000', NULL, 0, 1, '2025-10-08 14:42:39', '2025-10-08 14:42:39'),
+(2, 'خرید خودرو', 'http://127.0.0.1:8000/carbuy', NULL, 1, 1, '2025-10-08 14:43:43', '2025-10-08 14:45:17'),
+(3, 'فروش خودرو', 'http://127.0.0.1:8000/carsell', NULL, 2, 1, '2025-10-08 14:45:49', '2025-10-08 14:45:49'),
+(4, 'خرید خودرو کارشناسی شده', 'http://127.0.0.1:8000/cars', NULL, 3, 1, '2025-10-08 14:47:08', '2025-10-08 14:47:08'),
+(5, 'کارشناسی خودرو', 'http://127.0.0.1:8000/carinspection', NULL, 4, 1, '2025-10-08 14:51:10', '2025-10-08 14:51:10');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `messages`
 --
 
@@ -955,7 +983,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (80, '2025_10_05_191640_add_brand_id_to_cars_table', 26),
 (81, '2025_10_07_180637_add_car_model_id_to_cars_table', 27),
 (82, '2025_10_07_204228_craete_banners_table', 28),
-(83, '2025_10_08_170953_add_keyword_cars_table', 29);
+(83, '2025_10_08_170953_add_keyword_cars_table', 29),
+(84, '2025_10_08_175745_create_menus_table', 30);
 
 -- --------------------------------------------------------
 
@@ -1221,7 +1250,11 @@ INSERT INTO `permissions` (`id`, `name`, `title`, `guard_name`, `created_at`, `u
 (92, 'car-request-create', 'ایجاد درخواست ', 'web', '2025-10-05 06:45:38', '2025-10-05 06:45:38'),
 (93, 'car-request-edit', 'ویرایش درخواست', 'web', '2025-10-05 06:45:38', '2025-10-05 06:45:38'),
 (94, 'car-request-delete', 'حذف درخواست', 'web', '2025-10-05 06:45:38', '2025-10-05 06:45:38'),
-(95, 'car-request-view', 'مشاهده جزئیات', 'web', '2025-10-05 07:20:12', '2025-10-05 07:20:12');
+(95, 'car-request-view', 'مشاهده جزئیات', 'web', '2025-10-05 07:20:12', '2025-10-05 07:20:12'),
+(96, 'menu-list', 'مدیریت منوها', 'web', '2025-10-08 14:31:53', '2025-10-08 14:31:53'),
+(97, 'menu-create', 'ایجاد منو ', 'web', '2025-10-08 14:31:53', '2025-10-08 14:31:53'),
+(98, 'menu-edit', 'ویرایش منو', 'web', '2025-10-08 14:31:53', '2025-10-08 14:31:53'),
+(99, 'menu-delete', 'حذف منو', 'web', '2025-10-08 14:31:53', '2025-10-08 14:31:53');
 
 -- --------------------------------------------------------
 
@@ -1383,6 +1416,10 @@ INSERT INTO `role_has_permissions` (`permission_id`, `role_id`) VALUES
 (93, 1),
 (94, 1),
 (95, 1),
+(96, 1),
+(97, 1),
+(98, 1),
+(99, 1),
 (11, 7),
 (1, 8),
 (2, 8),
@@ -1538,13 +1575,13 @@ INSERT INTO `settings` (`id`, `key`, `value`, `created_at`, `updated_at`) VALUES
 ('9efe49da-01e4-4a31-b271-79665eec440b', 'originator', '+983000505', '2025-05-25 05:12:59', '2025-05-25 05:13:22'),
 ('9efe49da-08ae-48b3-b051-7148672fdc97', 'patternCode', '2ekuy9pajpm6cq2', '2025-05-25 05:12:59', '2025-06-15 11:46:11'),
 ('9efe4b37-a212-459a-9292-41c88ef7756d', 'sms_status', '0', '2025-05-25 05:16:48', '2025-05-25 05:51:19'),
-('9f1c955f-a64c-4996-8c8c-b0a22052d3ab', 'company_name', 'سامانه ایونتیار', '2025-06-09 06:38:59', '2025-08-02 06:02:48'),
-('9f1c955f-ab47-41de-b341-383f8f44511b', 'company_content', 'راه حل هوشمند شما', '2025-06-09 06:38:59', '2025-06-09 06:38:59'),
-('9f1c955f-acae-4567-9057-fec857f04904', 'company_address', 'تهران ، بلوار نلسون ماندلا ، پایینتر از چهارراه جهان کودک نرسیده به میدان آرژانتین ، روبروی وزارت راه و‌شهرسازی ، کوچه حکمت پلاک ۲', '2025-06-09 06:38:59', '2025-06-09 06:38:59'),
-('9f1c955f-add7-48e5-86ae-4963a4e598d7', 'company_phone', '02188871006-8', '2025-06-09 06:38:59', '2025-06-09 06:46:28'),
-('9f1c955f-aef3-4023-81d6-d699f0973951', 'company_fax', '02188640230', '2025-06-09 06:38:59', '2025-06-09 06:38:59'),
+('9f1c955f-a64c-4996-8c8c-b0a22052d3ab', 'company_name', 'اسپاسان', '2025-06-09 06:38:59', '2025-10-08 15:11:29'),
+('9f1c955f-ab47-41de-b341-383f8f44511b', 'company_content', 'متخصص خرید و فروش خودروهای وارداتی و لوکس در قزوین', '2025-06-09 06:38:59', '2025-10-08 15:11:29'),
+('9f1c955f-acae-4567-9057-fec857f04904', 'company_address', 'قزوین، خیابان ولیعصر، نبش خیابان شهید فیاضی(فرشته)، پلاک ۱۵۲، ساختمان تجاری لئو مال، طبقه ۴، واحد ۳', '2025-06-09 06:38:59', '2025-10-08 15:11:29'),
+('9f1c955f-add7-48e5-86ae-4963a4e598d7', 'company_phone', '۰۲8-۷۵۳۴۶', '2025-06-09 06:38:59', '2025-10-08 15:11:29'),
+('9f1c955f-aef3-4023-81d6-d699f0973951', 'company_fax', '۰۲8-۷۵۳۴8', '2025-06-09 06:38:59', '2025-10-08 15:15:30'),
 ('9f1c955f-afda-466e-a9c4-b8ac85b5bc68', 'company_mobile', '09121234567', '2025-06-09 06:38:59', '2025-06-09 06:38:59'),
-('9f1c955f-b0be-4b1d-bb2a-1cf01d338e29', 'company_email', 'info@emigroup.ir', '2025-06-09 06:38:59', '2025-06-09 06:38:59'),
+('9f1c955f-b0be-4b1d-bb2a-1cf01d338e29', 'company_email', 'info@aspasan.ir', '2025-06-09 06:38:59', '2025-10-08 15:16:31'),
 ('9f208fb2-5507-4c18-9821-c6a2d980adfb', 'login_type', 'mobile', '2025-06-11 06:06:25', '2025-06-11 10:54:33'),
 ('9f209f58-d9ff-4ca2-bb53-2b8ff3b18557', 'mail_mailer', 'smtp', '2025-06-11 06:50:11', '2025-06-11 10:54:07'),
 ('9f209f58-e134-4da8-8425-c7ed7d08b6aa', 'mail_host', 'sandbox.smtp.mailtrap.io', '2025-06-11 06:50:11', '2025-06-11 10:52:12'),
@@ -1559,7 +1596,8 @@ INSERT INTO `settings` (`id`, `key`, `value`, `created_at`, `updated_at`) VALUES
 ('9f892971-8881-4a1c-b8cd-c5903ac4b1da', 'PUSHER_APP_SECRET', NULL, '2025-08-02 06:02:26', '2025-08-02 12:12:54'),
 ('9f892971-8a5e-4c78-8a2f-fd76f2f53bc4', 'PUSHER_APP_CLUSTER', NULL, '2025-08-02 06:02:26', '2025-08-02 06:02:26'),
 ('9f892971-8c53-4eb0-bf74-ac880eb635d2', 'PUSHER_PORT', NULL, '2025-08-02 06:02:26', '2025-08-02 06:02:26'),
-('9f892971-8de3-4025-a3ec-3ad8c1f4f7aa', 'PUSHER_SCHEME', NULL, '2025-08-02 06:02:26', '2025-08-02 06:02:26');
+('9f892971-8de3-4025-a3ec-3ad8c1f4f7aa', 'PUSHER_SCHEME', NULL, '2025-08-02 06:02:26', '2025-08-02 06:02:26'),
+('a010b8c2-2b7d-47f1-a4ca-cd7dc37263d0', 'tagline', 'مسیر معاملات خود را شفاف، ساده، امن و کوتاه کنید.', '2025-10-08 15:19:56', '2025-10-08 15:19:56');
 
 -- --------------------------------------------------------
 
@@ -1954,6 +1992,13 @@ ALTER TABLE `media`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `menus`
+--
+ALTER TABLE `menus`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `menus_parent_id_foreign` (`parent_id`);
+
+--
 -- Indexes for table `messages`
 --
 ALTER TABLE `messages`
@@ -2268,10 +2313,16 @@ ALTER TABLE `media`
   MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
+-- AUTO_INCREMENT for table `menus`
+--
+ALTER TABLE `menus`
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=84;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=85;
 
 --
 -- AUTO_INCREMENT for table `notifications`
@@ -2289,7 +2340,7 @@ ALTER TABLE `pages`
 -- AUTO_INCREMENT for table `permissions`
 --
 ALTER TABLE `permissions`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=96;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=100;
 
 --
 -- AUTO_INCREMENT for table `personal_access_tokens`
@@ -2441,6 +2492,12 @@ ALTER TABLE `events`
   ADD CONSTRAINT `events_contact_id_foreign` FOREIGN KEY (`contact_id`) REFERENCES `contacts` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `events_type_id_foreign` FOREIGN KEY (`type_id`) REFERENCES `event_types` (`id`),
   ADD CONSTRAINT `events_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `menus`
+--
+ALTER TABLE `menus`
+  ADD CONSTRAINT `menus_parent_id_foreign` FOREIGN KEY (`parent_id`) REFERENCES `menus` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `messages`
