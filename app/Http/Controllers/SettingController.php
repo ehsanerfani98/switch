@@ -32,6 +32,7 @@ class SettingController extends Controller
 
         update_setting('company_name', $request->company_name);
         update_setting('company_content', $request->company_content);
+        update_setting('tagline', $request->tagline);
         update_setting('company_address', $request->company_address);
         update_setting('company_phone', $request->company_phone);
         update_setting('company_fax', $request->company_fax);

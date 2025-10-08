@@ -194,12 +194,20 @@
                                         value="{{ old('company_name', get_setting_collection($settings, 'company_name')) }}">
                                 </div>
                             </div>
-                            <div class="col-lg-8 ">
+                            <div class="col-lg-4 ">
                                 <div class="form-group">
                                     <label for="company_content">شعار سامانه</label>
                                     <input type="text" name="company_content" class="form-control"
                                         id="company_content"
                                         value="{{ old('company_content', get_setting_collection($settings, 'company_content')) }}">
+                                </div>
+                            </div>
+                            <div class="col-lg-4 ">
+                                <div class="form-group">
+                                    <label for="tagline">شعار سامانه (تگ لابن)</label>
+                                    <input type="text" name="tagline" class="form-control"
+                                        id="tagline"
+                                        value="{{ old('tagline', get_setting_collection($settings, 'tagline')) }}">
                                 </div>
                             </div>
                             <div class="col-lg-12 ">

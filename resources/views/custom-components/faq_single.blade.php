@@ -7,7 +7,7 @@
             <!-- FAQ Item 1 -->
             <div class="py-3 my-3 border border-gray-200 rounded-xl bg-[#EBF0F4]">
                 <button class="flex justify-between items-center w-full py-2 px-3 text-right">
-                    <p class="font-bold text-base md:text-sm text-blue-700 py-2 pl-2">مراحل خرید خودرو از اسپاسان چگونه است؟</p>
+                    <p class="font-bold text-base md:text-sm text-blue-700 py-2 pl-2">مراحل خرید خودرو از {{ get_setting('company_name') }} چگونه است؟</p>
                     <div class="flex items-center justify-center">
                         <img width="25" alt="" class="transition-transform duration-300" src="/images/icons/arrow-up.svg">
                     </div>
@@ -22,7 +22,7 @@
             <!-- FAQ Item 2 -->
             <div class="py-3 my-3 border border-gray-200 rounded-xl bg-white">
                 <button class="flex justify-between items-center w-full py-2 px-3 text-right">
-                    <p class="font-bold text-base md:text-sm text-gray-900 py-2 pl-2">چرا باید به کمک اسپاسان، ماشین بخریم؟</p>
+                    <p class="font-bold text-base md:text-sm text-gray-900 py-2 pl-2">چرا باید به کمک {{ get_setting('company_name') }}، ماشین بخریم؟</p>
                     <div class="flex items-center justify-center">
                         <img width="25" alt="" class="transition-transform duration-300 rotate-180" src="/images/icons/arrow-up.svg">
                     </div>
@@ -39,7 +39,7 @@
                         </div>
                         <div class="flex items-start mr-3">
                             <div class="flex items-center justify-center mt-2 w-1.5 h-1.5 rounded-full border border-gray-800"></div>
-                            <p class="text-sm font-normal text-gray-900 py-2 px-4">انجام تمامی امور توسط مجموعه اسپاسان</p>
+                            <p class="text-sm font-normal text-gray-900 py-2 px-4">انجام تمامی امور توسط مجموعه {{ get_setting('company_name') }}</p>
                         </div>
                     </div>
                 </div>
@@ -48,14 +48,14 @@
             <!-- FAQ Item 3 -->
             <div class="py-3 my-3 border border-gray-200 rounded-xl bg-white">
                 <button class="flex justify-between items-center w-full py-2 px-3 text-right">
-                    <p class="font-bold text-base md:text-sm text-gray-900 py-2 pl-2">اسپاسان تا چه مرحله ای همراه من است؟</p>
+                    <p class="font-bold text-base md:text-sm text-gray-900 py-2 pl-2">{{ get_setting('company_name') }} تا چه مرحله ای همراه من است؟</p>
                     <div class="flex items-center justify-center">
                         <img width="25" alt="" class="transition-transform duration-300 rotate-180" src="/images/icons/arrow-up.svg">
                     </div>
                 </button>
                 <div class="overflow-hidden transition-all duration-300 max-h-0" id="faq-3">
                     <div class="pb-4">
-                        <p class="text-sm font-normal text-gray-900 px-3 md:px-3 mt-3">اسپاسان تنها پلتفرمی است که تا آخرین مرحله همراه شماست. حتی در پرداخت عوارض و خلافی خودرو، تنظیم سند، مشاوره حقوقی و اسناد، دفترخانه، تعویض پلاک و تحویل خودرو</p>
+                        <p class="text-sm font-normal text-gray-900 px-3 md:px-3 mt-3">{{ get_setting('company_name') }} تنها پلتفرمی است که تا آخرین مرحله همراه شماست. حتی در پرداخت عوارض و خلافی خودرو، تنظیم سند، مشاوره حقوقی و اسناد، دفترخانه، تعویض پلاک و تحویل خودرو</p>
                     </div>
                 </div>
             </div>
@@ -63,14 +63,14 @@
             <!-- FAQ Item 4 -->
             <div class="py-3 my-3 border border-gray-200 rounded-xl bg-white">
                 <button class="flex justify-between items-center w-full py-2 px-3 text-right">
-                    <p class="font-bold text-base md:text-sm text-gray-900 py-2 pl-2">آیا اسپاسان برای ماشینی که می‌خواهم خریداری کنم، کارشناسی انجام می‌دهد؟</p>
+                    <p class="font-bold text-base md:text-sm text-gray-900 py-2 pl-2">آیا {{ get_setting('company_name') }} برای ماشینی که می‌خواهم خریداری کنم، کارشناسی انجام می‌دهد؟</p>
                     <div class="flex items-center justify-center">
                         <img width="25" alt="" class="transition-transform duration-300 rotate-180" src="/images/icons/arrow-up.svg">
                     </div>
                 </button>
                 <div class="overflow-hidden transition-all duration-300 max-h-0" id="faq-4">
                     <div class="pb-4">
-                        <p class="text-sm font-normal text-gray-900 px-3 md:px-3 mt-3">بله. خودروها دوبار توسط اسپاسان کارشناسی می شوند. یکبار قبل از معرفی به خریداران و یکبار هم بعد از معرفی و در صورت پسند خریدار جهت صدور ضمانتنامه کارشناسی صورت میپذیرد.</p>
+                        <p class="text-sm font-normal text-gray-900 px-3 md:px-3 mt-3">بله. خودروها دوبار توسط {{ get_setting('company_name') }} کارشناسی می شوند. یکبار قبل از معرفی به خریداران و یکبار هم بعد از معرفی و در صورت پسند خریدار جهت صدور ضمانتنامه کارشناسی صورت میپذیرد.</p>
                     </div>
                 </div>
             </div>
@@ -78,14 +78,14 @@
             <!-- FAQ Item 5 -->
             <div class="py-3 my-3 border border-gray-200 rounded-xl bg-white">
                 <button class="flex justify-between items-center w-full py-2 px-3 text-right">
-                    <p class="font-bold text-base md:text-sm text-gray-900 py-2 pl-2">آیا اسپاسان، ماشین مورد نظر من را با قیمت پایین‌تری برایم خریداری می‌کند؟</p>
+                    <p class="font-bold text-base md:text-sm text-gray-900 py-2 pl-2">آیا {{ get_setting('company_name') }}، ماشین مورد نظر من را با قیمت پایین‌تری برایم خریداری می‌کند؟</p>
                     <div class="flex items-center justify-center">
                         <img width="25" alt="" class="transition-transform duration-300 rotate-180" src="/images/icons/arrow-up.svg">
                     </div>
                 </button>
                 <div class="overflow-hidden transition-all duration-300 max-h-0" id="faq-5">
                     <div class="pb-4">
-                        <p class="text-sm font-normal text-gray-900 px-3 md:px-3 mt-3">مجموعه اسپاسان ماشین‌ها با قیمت کارشناسی و مناسب برای خریداران به آنها معرفی می کند.</p>
+                        <p class="text-sm font-normal text-gray-900 px-3 md:px-3 mt-3">مجموعه {{ get_setting('company_name') }} ماشین‌ها با قیمت کارشناسی و مناسب برای خریداران به آنها معرفی می کند.</p>
                     </div>
                 </div>
             </div>
@@ -93,14 +93,14 @@
             <!-- FAQ Item 6 -->
             <div class="py-3 my-3 border border-gray-200 rounded-xl bg-white">
                 <button class="flex justify-between items-center w-full py-2 px-3 text-right">
-                    <p class="font-bold text-base md:text-sm text-gray-900 py-2 pl-2">چه ماشین‌هایی را می‌توانم از اسپاسان خریداری کنم؟</p>
+                    <p class="font-bold text-base md:text-sm text-gray-900 py-2 pl-2">چه ماشین‌هایی را می‌توانم از {{ get_setting('company_name') }} خریداری کنم؟</p>
                     <div class="flex items-center justify-center">
                         <img width="25" alt="" class="transition-transform duration-300 rotate-180" src="/images/icons/arrow-up.svg">
                     </div>
                 </button>
                 <div class="overflow-hidden transition-all duration-300 max-h-0" id="faq-6">
                     <div class="pb-4">
-                        <p class="text-sm font-normal text-gray-900 px-3 md:px-3 mt-3">شما می توانید همه خودروهای با ارزش 500 میلیون تومان و بیشتر از آن و خودروهای صفر کیلومتر کمتر از 500 میلیون تومان را در اسپاسان خریداری نمایید.</p>
+                        <p class="text-sm font-normal text-gray-900 px-3 md:px-3 mt-3">شما می توانید همه خودروهای با ارزش 500 میلیون تومان و بیشتر از آن و خودروهای صفر کیلومتر کمتر از 500 میلیون تومان را در {{ get_setting('company_name') }} خریداری نمایید.</p>
                     </div>
                 </div>
             </div>
@@ -115,7 +115,7 @@
                 </button>
                 <div class="overflow-hidden transition-all duration-300 max-h-0" id="faq-7">
                     <div class="pb-4">
-                        <p class="text-sm font-normal text-gray-900 px-3 md:px-3 mt-3">بله خودروهای فروخته شده توسط اسپاسان، ضمانت می شوند</p>
+                        <p class="text-sm font-normal text-gray-900 px-3 md:px-3 mt-3">بله خودروهای فروخته شده توسط {{ get_setting('company_name') }}، ضمانت می شوند</p>
                     </div>
                 </div>
             </div>

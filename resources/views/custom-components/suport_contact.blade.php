@@ -4,10 +4,10 @@
         <div class="w-full lg:w-1/2 p-0">
             <div class="py-6 md:py-3 lg:py-4 px-4 md:px-4 lg:mt-4">
                 <p class="text-gray-900 text-xl md:text-2xl font-bold max-w-[350px]">به کمک بیشتری نیاز دارید؟</p>
-                <p class="mt-3 text-base font-normal text-gray-600 pb-4">اسپاسان همواره همراه شماست.</p>
+                <p class="mt-3 text-base font-normal text-gray-600 pb-4">{{ get_setting('company_name') }} همواره همراه شماست.</p>
                 <p class="pr-2 md:pr-3 mt-4 md:mt-3 font-normal text-sm leading-8 border-r-2 border-transparent"
                    style="border-image: linear-gradient(rgb(7, 81, 160), rgb(8, 80, 158), rgb(19, 76, 153), rgb(38, 72, 144), rgb(64, 66, 130), rgb(98, 59, 112), rgb(141, 51, 89), rgb(189, 39, 63), rgb(236, 34, 39)) 1 / 1 / 0 stretch; background-clip: padding-box;">
-                    کارشناسان ما هر روز از ساعت ۸ تا ۲۱ آماده کمک و راهنمایی به شما هستند. اسپاسان برای خرید و فروش خودروهای کارکرده بستری مطمئن و به دور از دغدغه‌ها و مخاطرات شناخته شده واسطه‌گران فراهم کرده است.
+                    کارشناسان ما هر روز از ساعت ۸ تا ۲۱ آماده کمک و راهنمایی به شما هستند. {{ get_setting('company_name') }} برای خرید و فروش خودروهای کارکرده بستری مطمئن و به دور از دغدغه‌ها و مخاطرات شناخته شده واسطه‌گران فراهم کرده است.
                 </p>
 
                 <!-- دکمه تماس -->
@@ -30,7 +30,7 @@
                 alt="خرید و فروش تویوتا یاریس هاچ بک فول مدل 2008 نقد و اقساط"
                 title="خرید و فروش تویوتا یاریس هاچ بک فول مدل 2008 نقد و اقساط"
                 class="h-full object-cover"
-                src="https://www.switch.ir/images/home/imgg.png"
+                src="{{ asset('images/car/imgg.png') }}"
                 style="max-height: 377px; width: auto;"
             >
         </div>

@@ -216,6 +216,15 @@
                 @endcan
 
 
+                @can('menu-list')
+                    <li class="nav-item {{ request()->routeIs('menus.*') ? 'active' : '' }}">
+                        <a href="{{ route('menus.index') }}">
+                            <i class="ft-menu"></i>
+                            <span>مدیریت منوها</span>
+                        </a>
+                    </li>
+                @endcan
+
                 @can('page-list')
                     <li class="nav-item {{ request()->routeIs('pages.*') ? 'active' : '' }}">
                         <a href="{{ route('pages.index') }}">

@@ -63,7 +63,7 @@
 
                     <!-- تصویر -->
                     <div>
-                        <img class="w-full" src="https://www.switch.ir/images/new/buyy.webp">
+                        <img class="w-full" src="{{ asset('images/car/buyy.webp') }}">
                     </div>
                 </div>
             </div>
@@ -75,7 +75,7 @@
     <div class="w-full px-4 lg-px-0 py-16 bg-[#F0F4F7]">
         <!-- Header Section -->
         <div class="text-center mb-8">
-            <h1 class="font-bold text-2xl mb-2">مراحل خرید خودرو در اسپاسان</h1>
+            <h1 class="font-bold text-2xl mb-2">مراحل خرید خودرو در {{ get_setting('company_name') }}</h1>
             <p class="font-normal">تلاش ما بر این است شما را به خودروی دلخواهتان برسانیم.</p>
         </div>
 
@@ -107,12 +107,12 @@
 
                     <!-- Content Container -->
                     <div class="w-full lg:w-5/12 flex justify-center lg:justify-end mb-6 lg:mb-0 lg:pr-8">
-                        <img src="https://www.switch.ir/images/new/buy-step1-8b35a5a5.webp" alt="Step 1"
+                        <img src="{{ asset('images/car/buy-step1-8b35a5a5.webp') }}" alt="Step 1"
                             class="max-w-full h-auto rounded-lg shadow-md" />
                     </div>
                     <div class="w-full lg:w-5/12 lg:pl-8">
                         <p class="font-bold text-lg text-gray-900">مرحله یک</p>
-                        <p class="font-semibold text-gray-800 mt-2">ثبت درخواست و پیگیری آن توسط اسپاسان</p>
+                        <p class="font-semibold text-gray-800 mt-2">ثبت درخواست و پیگیری آن توسط {{ get_setting('company_name') }}</p>
                         <p class="font-normal text-gray-600 mt-2">بعد از ثبت مشخصات خودروی مد نظر، همکاران با شما تماس خواهند گرفت.</p>
                     </div>
                 </div>
@@ -144,7 +144,7 @@
                     </div>
                     <div
                         class="w-full lg:w-5/12 flex justify-center lg:justify-start mb-6 lg:mb-0 lg:pl-8 order-1 lg:order-2">
-                        <img src="https://www.switch.ir/images/new/buy-step2-6d9dfefe.webp" alt="Step 2"
+                        <img src="{{ asset('images/car/buy-step2-6d9dfefe.webp') }}" alt="Step 2"
                             class="max-w-full h-auto rounded-lg shadow-md" />
                     </div>
                 </div>
@@ -170,7 +170,7 @@
 
                     <!-- Content Container -->
                     <div class="w-full lg:w-5/12 flex justify-center lg:justify-end mb-6 lg:mb-0 lg:pr-8">
-                        <img src="https://www.switch.ir/images/new/buy-step3-6ac24a97.webp" alt="Step 3"
+                        <img src="{{ asset('images/car/buy-step3-6ac24a97.webp') }}" alt="Step 3"
                             class="max-w-full h-auto rounded-lg shadow-md" />
                     </div>
                     <div class="w-full lg:w-5/12 lg:pl-8">
@@ -207,7 +207,7 @@
                     </div>
                     <div
                         class="w-full lg:w-5/12 flex justify-center lg:justify-start mb-6 lg:mb-0 lg:pl-8 order-1 lg:order-2">
-                        <img src="https://www.switch.ir/images/new/buy-step4-0fc9ba1b.webp" alt="Step 4"
+                        <img src="{{ asset('images/car/buy-step4-0fc9ba1b.webp') }}" alt="Step 4"
                             class="max-w-full h-auto rounded-lg shadow-md" />
                     </div>
                 </div>
@@ -233,7 +233,7 @@
 
                         <!-- Content Container -->
                         <div class="w-full lg:w-5/12 flex justify-center lg:justify-end mb-6 lg:mb-0 lg:pr-8">
-                            <img src="https://www.switch.ir/images/new/buy-step5-72da2345.webp" alt="Step 3"
+                            <img src="{{ asset('images/car/buy-step5-72da2345.webp') }}" alt="Step 3"
                                 class="max-w-full h-auto rounded-lg shadow-md" />
                         </div>
                         <div class="w-full lg:w-5/12 lg:pl-8">

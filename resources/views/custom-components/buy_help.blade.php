@@ -17,12 +17,12 @@
                         alt="خرید و فروش تویوتا یاریس هاچ بک فول مدل 2008 نقد و اقساط"
                         title="خرید و فروش تویوتا یاریس هاچ بک فول مدل 2008 نقد و اقساط"
                         class="w-8 h-8"
-                        src="https://www.switch.ir/images/HF/location_searching.svg"
+                        src="{{ asset('images/car/location_searching.svg') }}"
                     >
                 </div>
                 <p class="mb-3 text-base font-bold text-gray-900">انتخاب خودرو</p>
                 <p class="text-sm text-center font-normal text-gray-900">
-                    اسپاسان مسیر معاملات خودرو را شفاف، ساده، امن و کوتاه می‌کند.
+                    {{ get_setting('company_name') }} مسیر معاملات خودرو را شفاف، ساده، امن و کوتاه می‌کند.
                 </p>
             </div>
 
@@ -33,28 +33,29 @@
                         alt="خرید و فروش تویوتا یاریس هاچ بک فول مدل 2008 نقد و اقساط"
                         title="خرید و فروش تویوتا یاریس هاچ بک فول مدل 2008 نقد و اقساط"
                         class="w-8 h-8"
-                        src="https://www.switch.ir/images/HF/content_paste.svg"
+                        src="{{ asset('images/car/content_paste.svg') }}"
                     >
                 </div>
                 <p class="mb-3 text-base font-bold text-gray-900">بررسی شرایط</p>
                 <p class="text-sm text-center font-normal text-gray-900">
-                    اسپاسان مسیر معاملات خودرو را شفاف، ساده، امن و کوتاه می‌کند.
+                    {{ get_setting('company_name') }} مسیر معاملات خودرو را شفاف، ساده، امن و کوتاه می‌کند.
                 </p>
             </div>
 
-            <!-- کارت ۳: تحویل خودرو از اسپاسان -->
+            <!-- کارت ۳: تحویل خودرو از {{ get_setting('company_name') }} -->
             <div class="flex flex-col items-center w-full py-6 md:py-8 px-4 mb-4 md:mb-0 bg-gradient-to-b from-white to-white/50 rounded-xl border-2 border-white shadow-sm">
                 <div class="flex items-center justify-center mb-4 bg-[#F0F4F7] rounded-full w-14 h-14">
                     <img
                         alt="خرید و فروش تویوتا یاریس هاچ بک فول مدل 2008 نقد و اقساط"
                         title="خرید و فروش تویوتا یاریس هاچ بک فول مدل 2008 نقد و اقساط"
                         class="w-8 h-8"
-                        src="https://www.switch.ir/images/HF/directions_car.svg"
+                        src="{{ asset('images/car/directions_car.svg') }}"
+
                     >
                 </div>
-                <p class="mb-3 text-base font-bold text-gray-900">تحویل خودرو از اسپاسان</p>
+                <p class="mb-3 text-base font-bold text-gray-900">تحویل خودرو از {{ get_setting('company_name') }}</p>
                 <p class="text-sm text-center font-normal text-gray-900">
-                    اسپاسان مسیر معاملات خودرو را شفاف، ساده، امن و کوتاه می‌کند.
+                    {{ get_setting('company_name') }} مسیر معاملات خودرو را شفاف، ساده، امن و کوتاه می‌کند.
                 </p>
             </div>
         </div>

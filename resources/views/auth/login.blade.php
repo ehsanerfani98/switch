@@ -400,7 +400,7 @@
     <div class="login-container">
         <div class="form-section">
             <div class="form-header">
-                <h2 class="form-title">ورود به سامانه اسپاسان</h2>
+                <h2 class="form-title">ورود به سامانه {{ get_setting('company_name') }}</h2>
                 <p class="form-subtitle">لطفا برای دسترسی به حساب کاربری خود، اطلاعات زیر را وارد نمایید</p>
             </div>
 

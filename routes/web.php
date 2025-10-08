@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\MenuController;
 use App\Http\Controllers\AdvisorsController;
 use App\Http\Controllers\AttributeController;
 use App\Http\Controllers\AttributeValueController;
@@ -170,6 +171,7 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('car-requests', CarRequestController::class);
     Route::post('/car-requests/save/sell', [CarRequestController::class, 'save_sell_request'])->name('save.sell.request')->middleware('throttle:3,1440');
     Route::post('/car-requests/save/buy', [CarRequestController::class, 'save_buy_request'])->name('save.buy.request')->middleware('throttle:3,1440');
+    Route::resource('menus', MenuController::class);
 
 });
 
@@ -355,11 +357,11 @@ Route::post('/otp/send-password', [OtpController::class, 'sendPassword'])->middl
 Route::get('/create-permissions', function () {
 
     $permisions = [
-        // 'car-request-list' => 'مدیریت درخواست ها',
-        // 'car-request-create' => 'ایجاد درخواست ',
-        // 'car-request-edit' => 'ویرایش درخواست',
-        // 'car-request-delete' => 'حذف درخواست',
-        'car-request-view' => 'مشاهده جزئیات',
+        'menu-list' => 'مدیریت منوها',
+        'menu-create' => 'ایجاد منو ',
+        'menu-edit' => 'ویرایش منو',
+        'menu-delete' => 'حذف منو',
+        // 'car-request-view' => 'مشاهده جزئیات',
     ];
 
     foreach ($permisions as $name => $title) {

@@ -64,7 +64,7 @@
 
                     <!-- تصویر -->
                     <div>
-                       <img class="w-full" src="https://www.switch.ir/images/new/header-automotive-expert.webp">
+                       <img class="w-full" src="{{ asset('images/car/header-automotive-expert.webp') }}">
                     </div>
                 </div>
             </div>
@@ -76,7 +76,7 @@
     <div class="w-full px-4 lg-px-0 py-16 bg-[#F0F4F7]">
         <!-- Header Section -->
         <div class="text-center mb-8">
-            <h1 class="font-bold text-2xl mb-2">مراحل فروش خودرو در اسپاسان</h1>
+            <h1 class="font-bold text-2xl mb-2">مراحل فروش خودرو در {{ get_setting('company_name') }}</h1>
             <p class="font-normal">تنها 4 قدم با فروش خودروی خود فاصله دارید</p>
         </div>
 
@@ -108,13 +108,13 @@
 
                     <!-- Content Container -->
                     <div class="w-full lg:w-5/12 flex justify-center lg:justify-end mb-6 lg:mb-0 lg:pr-8">
-                        <img src="https://www.switch.ir/images/new/buy-step1-8b35a5a5.webp" alt="Step 1"
+                        <img src="{{ asset('images/car/buy-step1-8b35a5a5.webp') }}" alt="Step 1"
                             class="max-w-full h-auto rounded-lg shadow-md" />
                     </div>
                     <div class="w-full lg:w-5/12 lg:pl-8">
                         <p class="font-bold text-lg text-gray-900">مرحله یک</p>
                         <p class="font-semibold text-gray-800 mt-2">ثبت درخواست</p>
-                        <p class="font-normal text-gray-600 mt-2">بعد از ثبت مشخصات خودرو، مشاوران اسپاسان با شما تماس
+                        <p class="font-normal text-gray-600 mt-2">بعد از ثبت مشخصات خودرو، مشاوران {{ get_setting('company_name') }} با شما تماس
                             خواهند گرفت.</p>
                     </div>
                 </div>
@@ -142,11 +142,11 @@
                     <div class="w-full lg:w-5/12 lg:pr-8 order-2 lg:order-1">
                         <p class="font-bold text-lg text-gray-900">مرحله دو</p>
                         <p class="font-semibold text-gray-800 mt-2">کارشناسی و مشاوره قیمت</p>
-                        <p class="font-normal text-gray-600 mt-2">با یکبار مراجعه به دفتر اسپاسان کارشناسی رایگان و سپس
+                        <p class="font-normal text-gray-600 mt-2">با یکبار مراجعه به دفتر {{ get_setting('company_name') }} کارشناسی رایگان و سپس
                             مشاوره قیمت با کارشناس اختصاصی شما انجام میشود.</p>
                     </div>
                     <div class="w-full lg:w-5/12 flex justify-center lg:justify-start mb-6 lg:mb-0 lg:pl-8 order-1 lg:order-2">
-                        <img src="https://www.switch.ir/images/new/buy-step2-6d9dfefe.webp" alt="Step 2"
+                        <img src="{{ asset('images/car/buy-step2-6d9dfefe.webp') }}" alt="Step 2"
                             class="max-w-full h-auto rounded-lg shadow-md" />
                     </div>
                 </div>
@@ -172,7 +172,7 @@
 
                     <!-- Content Container -->
                     <div class="w-full lg:w-5/12 flex justify-center lg:justify-end mb-6 lg:mb-0 lg:pr-8">
-                        <img src="https://www.switch.ir/images/new/buy-step3-6ac24a97.webp" alt="Step 3"
+                        <img src="{{ asset('images/car/buy-step3-6ac24a97.webp') }}" alt="Step 3"
                             class="max-w-full h-auto rounded-lg shadow-md" />
                     </div>
                     <div class="w-full lg:w-5/12 lg:pl-8">
@@ -207,10 +207,10 @@
                         <p class="font-bold text-lg text-gray-900">مرحله چهارم</p>
                         <p class="font-semibold text-gray-800 mt-2">فروش و انتقال سند</p>
                         <p class="font-normal text-gray-600 mt-2">با تایید مشتری توسط شما کارهای اداری مربوط به انتقال
-                            سند توسط تیم اسپاسان انجام شده و با امضای سند، مراحل فروش خودروی شما به پایان میرسد.</p>
+                            سند توسط تیم {{ get_setting('company_name') }} انجام شده و با امضای سند، مراحل فروش خودروی شما به پایان میرسد.</p>
                     </div>
                     <div class="w-full lg:w-5/12 flex justify-center lg:justify-start mb-6 lg:mb-0 lg:pl-8 order-1 lg:order-2">
-                        <img src="https://www.switch.ir/images/new/buy-step4-0fc9ba1b.webp" alt="Step 4"
+                        <img src="{{ asset('images/car/buy-step4-0fc9ba1b.webp') }}" alt="Step 4"
                             class="max-w-full h-auto rounded-lg shadow-md" />
                     </div>
                 </div>
