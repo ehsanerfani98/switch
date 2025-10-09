@@ -127,7 +127,7 @@
                 </div>
                 <div class="col-md-5 d-flex justify-content-md-end justify-content-start">
                     <p class="text-muted small mb-1 d-flex align-items-center confirm-document">
-                        <span class="title">وضعیت مدارک</span>
+                        <span class="title">وضعیت پروفایل</span>
                         <span
                             class="doc-status {{ $user->document->is_verified ? 'verified' : ($user->document->needs_correction ? 'correction' : 'not-verified') }}">
                             {{ $user->document->is_verified ? 'تایید شده' : ($user->document->needs_correction ? 'نیازمند اصلاح' : 'در انتظار بررسی') }}
@@ -268,7 +268,7 @@
                 @if ($user->document->files->isNotEmpty())
                     <div class="card card-profile">
                         <div class="card-body">
-                            <h6 class="mb-3">مدارک ارسال شده</h6>
+                            <h6 class="mb-3">پروفایل ارسال شده</h6>
                             <div class="row">
                                 @foreach ($user->document->files as $file)
                                     <div class="col-md-4 col-3 mb-3">

@@ -248,8 +248,10 @@ Route::get('/car-suggestions', function (Request $request) {
 
     return response()->json($suggestions);
 });
-
-
+Route::get('/c/{car_id}', function ($car_id) {
+    $car = Car::findOrFail($car_id);
+    return redirect()->route('car', $car->slug);
+})->name('share.car');
 
 
 

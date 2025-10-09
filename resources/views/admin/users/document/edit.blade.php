@@ -1,5 +1,5 @@
 @extends('admin.layout')
-@section('name', 'ویرایش مدارک کاربر: ' . $user->name)
+@section('name', 'ویرایش پروفایل کاربر: ' . $user->name)
 @section('actions')
     <a href="{{ route('documents.show', $user->id) }}" class="btn btn-primary btn-sm btn-icon-split">
         <span class="text-white-50">
@@ -31,7 +31,7 @@
 
         <div class="card shadow mb-4">
             <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">اطلاعات مدارک {{ $user->name }}</h6>
+                <h6 class="m-0 font-weight-bold text-primary">اطلاعات پروفایل {{ $user->name }}</h6>
             </div>
             <div class="card-body">
 
@@ -134,7 +134,7 @@
                     </div>
                 @endif
 
-                <button type="submit" class="btn btn-success">ذخیره مدارک</button>
+                <button type="submit" class="btn btn-success">ذخیره پروفایل</button>
             </div>
         </div>
     </form>

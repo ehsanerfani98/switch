@@ -83,12 +83,10 @@ class ModelController extends Controller
             ->with('success', 'مدل خودرو با موفقیت ویرایش شد.');
     }
 
-    public function destroy(CarModel $carModel)
+    public function destroy(CarModel $Model)
     {
-        $carModel->delete();
-
-        return redirect()->route('models.index')
-            ->with('success', 'مدل خودرو با موفقیت حذف شد.');
+        $Model->delete();
+        return redirect()->back()->with('success', 'مدل خودرو با موفقیت حذف شد.');
     }
 
     public function getByBrand($brand_id)

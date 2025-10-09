@@ -45,10 +45,10 @@
             </nav>
 
             <div class="header-actions flex items-center gap-3.5">
-                <a href="tel:02175346"
+                <a href="tel:{{get_setting('company_phone')}}"
                     class="btn bg-primary text-white px-3 py-1.5 rounded-md font-semibold text-base flex items-center gap-2.5 transition-colors hover:bg-blue-700">
                     <i class="fas fa-phone"></i>
-                    ۰۲۱-۷۵۳۴۶
+                    {{get_setting('company_phone')}}
                 </a>
                 <button
                     class="mobile-menu-btn md:hidden bg-transparent border-none text-primary text-2xl cursor-pointer z-50">
@@ -113,10 +113,10 @@
         </ul>
 
         <div class="mobile-menu-actions mt-7 pt-5 border-t border-border-color">
-            <a href="tel:02175346"
+            <a href="tel:{{get_setting('company_phone')}}"
                 class="btn bg-primary text-white px-3 py-1.5 rounded-md font-semibold text-base flex items-center justify-center gap-2.5 transition-colors hover:bg-blue-700 w-full mb-2.5">
                 <i class="fas fa-phone"></i>
-                ۰۲۱-۷۵۳۴۶
+                {{get_setting('company_phone')}}
             </a>
         </div>
     </div>

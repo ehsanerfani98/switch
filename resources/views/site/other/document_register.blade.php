@@ -30,7 +30,7 @@
     @if (isConfirmDoc())
         @if (boolval(optional($user->document)->needs_correction))
             <div class="alert alert-info text-center p-2" style="font-size: 14px">
-                مدارک شما نیاز به اصلاح دارند.
+                پروفایل شما نیاز به اصلاح دارند.
             </div>
             @if (!empty(optional($user->document)->description))
                 <div class="alert alert-warning text-center p-2" style="font-size: 14px">
@@ -131,7 +131,7 @@
 
                                     {{-- آپلود فایل --}}
                                     <div class="col-12">
-                                        <strong>بارگذاری اسناد و مدارک</strong>
+                                        <strong>بارگذاری اسناد و پروفایل</strong>
                                         <x-uploader />
                                     </div>
 
@@ -150,7 +150,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="alert alert-success text-center p-2" style="font-size: 14px">
-                        مدارک شما تایید شده است.
+                        پروفایل شما تایید شده است.
                     </div>
                     <div class="card">
                         <div class="card-body">
@@ -233,12 +233,12 @@
         @endif
     @else
         <div class="alert alert-info text-center p-2" style="font-size: 14px">
-            <p class="m-0">مدارک شما در حال بررسی است.</p>
-            <p class="m-0">پس از تأیید مدارک، به خدمات دسترسی خواهید داشت.</p>
+            <p class="m-0">پروفایل شما در حال بررسی است.</p>
+            <p class="m-0">پس از تأیید پروفایل، به خدمات دسترسی خواهید داشت.</p>
         </div>
         @if (!auth()->user()->hasActiveSubscription())
             <div class="alert alert-warning p-2 text-center" style="font-size: 14px">
-                <p class="m-0">چنانچه تمایل داشته باشید می توانید قبل از تایید مدارک ، حق اشتراک عضویت در سامانه را
+                <p class="m-0">چنانچه تمایل داشته باشید می توانید قبل از تایید پروفایل ، حق اشتراک عضویت در سامانه را
                     پرداخت نمایید.</p>
                 <a href="{{ route('user.subscript.plans') }}" class="btn btn-sm btn-success mt-3">انتخاب اشتراک عضویت</a>
             </div>

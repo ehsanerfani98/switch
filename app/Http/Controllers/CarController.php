@@ -9,6 +9,8 @@ use App\Models\CarFile;
 use App\Models\Brand;
 use App\Models\CarFileItem;
 use App\Models\CarFileItemValue;
+use App\Models\CarFileRating;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -30,13 +32,14 @@ class CarController extends Controller
 
     public function create()
     {
+        $users = User::with('document')->role('advisor')->get();
         $attributes = Attribute::with('values')->orderBy('sort_order')->get();
         $fileItems = CarFileItem::with('carFile')->get();
         $carFiles = CarFile::get();
         $brands = Brand::get();
         $models = [];
 
-        return view('admin.cars.create', compact('attributes', 'fileItems', 'carFiles', 'brands', 'models'));
+        return view('admin.cars.create', compact('attributes', 'fileItems', 'carFiles', 'brands', 'models', 'users'));
     }
 
     public function store(Request $request)
@@ -49,6 +52,7 @@ class CarController extends Controller
             'gallery'     => 'nullable|string',
             'description' => 'nullable|string',
             'brand_id' => 'required|exists:brands,id',
+            'user_id' => 'required|exists:users,id',
             'car_model_id' => 'required|exists:car_models,id',
         ]);
 
@@ -62,8 +66,9 @@ class CarController extends Controller
                 'description' => $request->description ?? null,
                 'status' => $request->status,
                 'vip' => $request->vip,
-                'keyword' => $request->keyword,
+                'keyword' => $request->has('keyword'),
                 'brand_id' => $request->brand_id,
+                'user_id' => $request->user_id,
                 'car_model_id' => $request->car_model_id,
             ]);
 
@@ -118,6 +123,18 @@ class CarController extends Controller
                     'status_description' => $data['status_description'] ?? null,
                 ]);
             }
+
+            if ($request->has('file_ratings')) {
+                foreach ($request->file_ratings as $carFileId => $rating) {
+                    if (!empty($rating)) {
+                        CarFileRating::create([
+                            'car_file_id' => $carFileId,
+                            'car_id' => $car->id,
+                            'rating' => $rating,
+                        ]);
+                    }
+                }
+            }
         });
 
         return redirect()->route('cars.index')->with('success', 'ماشین با موفقیت ایجاد شد');
@@ -125,14 +142,15 @@ class CarController extends Controller
 
     public function edit(Car $car)
     {
+        $users = User::with('document')->role('advisor')->get();
         $attributes = Attribute::with('values')->orderBy('sort_order')->get();
         $carFiles = CarFile::with('items')->get();
         $brands = Brand::get();
 
         $models = $car->brand ? $car->brand->carModels : [];
 
-        $car->load('attributeValues.attribute', 'attributeValues.attributeValue', 'fileItemValues');
-        return view('admin.cars.edit', compact('car', 'attributes', 'carFiles', 'brands', 'models'));
+        $car->load('attributeValues.attribute', 'attributeValues.attributeValue', 'fileItemValues', 'fileRatings');
+        return view('admin.cars.edit', compact('car', 'attributes', 'carFiles', 'brands', 'models', 'users'));
     }
 
     public function update(Request $request, Car $car)
@@ -144,6 +162,7 @@ class CarController extends Controller
             'gallery'     => 'nullable|string',
             'description' => 'nullable|string',
             'brand_id' => 'required|exists:brands,id',
+            'user_id' => 'required|exists:users,id',
             'car_model_id' => 'required|exists:car_models,id',
         ]);
 
@@ -159,6 +178,7 @@ class CarController extends Controller
                 'vip' => $request->vip,
                 'keyword' => $request->has('keyword'),
                 'brand_id' => $request->brand_id,
+                'user_id' => $request->user_id,
                 'car_model_id' => $request->car_model_id,
             ]);
 
@@ -218,6 +238,22 @@ class CarController extends Controller
                     'status_description' => $data['status_description'] ?? null,
                 ]);
             }
+
+
+            // مدیریت امتیاز پرونده‌ها
+            $car->fileRatings()->delete(); // حذف امتیازهای قبلی
+
+            if ($request->has('file_ratings')) {
+                foreach ($request->file_ratings as $carFileId => $rating) {
+                    if (!empty($rating)) {
+                        CarFileRating::create([
+                            'car_file_id' => $carFileId,
+                            'car_id' => $car->id,
+                            'rating' => $rating,
+                        ]);
+                    }
+                }
+            }
         });
 
         return redirect()->route('cars.index')->with('success', 'ماشین با موفقیت ویرایش شد');
@@ -242,6 +278,4 @@ class CarController extends Controller
         $models = $brand->carModels;
         return response()->json($models);
     }
-
-
 }

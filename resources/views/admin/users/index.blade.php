@@ -1,6 +1,44 @@
 @extends('admin.layout')
 @section('title', 'مدیریت کاربران')
 
+@push('style')
+    <style>
+        .bg-red {
+            background-color: #fa626b;
+            color: white;
+        }
+
+        .text-red {
+            color: #fa626b;
+        }
+
+        .list-group-item {
+            border: none;
+            transition: all 0.3s ease;
+        }
+
+        .list-group-item:hover {
+            background-color: #f8f9fa;
+        }
+
+        .modal-content {
+            border: none;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .modal-header {
+            border-bottom: 1px solid #e9ecef;
+            border-radius: 12px 12px 0 0 !important;
+        }
+
+        .modal-footer {
+            border-top: 1px solid #e9ecef;
+            border-radius: 0 0 12px 12px !important;
+        }
+    </style>
+@endpush
+
 @section('content')
 
     @session('error')
@@ -71,7 +109,7 @@
                                                 @endif
                                             </td>
                                             <td>
-                                                <button type="button" class="btn btn-sm btn-primary" data-toggle="modal"
+                                                <button type="button" class="btn btn-sm btn-success" data-toggle="modal"
                                                     data-target="#actionsModal-{{ $user->id }}">
                                                     گزینه ها
                                                 </button>
@@ -79,60 +117,68 @@
                                                 <div class="modal fade" id="actionsModal-{{ $user->id }}" tabindex="-1"
                                                     role="dialog" aria-labelledby="actionsModalLabel-{{ $user->id }}"
                                                     aria-hidden="true">
-                                                    <div class="modal-dialog modal-dialog-centered modal-sm"
-                                                        role="document">
+                                                    <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
                                                         <div class="modal-content">
-                                                            <div class="modal-header">
-                                                                <h6 class="modal-title"
-                                                                    id="actionsModalLabel-{{ $user->id }}">اقدامات
-                                                                    کاربر
+                                                            <div class="modal-header bg-red">
+                                                                <h6 class="modal-title font-weight-bold text-white"
+                                                                    id="actionsModalLabel-{{ $user->id }}">
+                                                                    <i class="fas fa-user-cog mr-1"></i>
+                                                                    اقدامات کاربر
                                                                 </h6>
-                                                                <button type="button" class="close" data-dismiss="modal"
+                                                                <button type="button" class="close text-white" data-dismiss="modal"
                                                                     aria-label="بستن">
                                                                     <span aria-hidden="true">&times;</span>
                                                                 </button>
                                                             </div>
-                                                            <div class="modal-body d-flex flex-column">
-                                                                @can('user-edit')
-                                                                    <a href="{{ route('users.edit', $user->id) }}"
-                                                                        class="btn btn-primary btn-sm">
-                                                                        ویرایش
+                                                            <div class="modal-body p-0">
+                                                                <div class="list-group list-group-flush">
+                                                                    @can('user-edit')
+                                                                        <a href="{{ route('users.edit', $user->id) }}"
+                                                                            class="list-group-item list-group-item-action d-flex align-items-center py-1">
+                                                                            <i class="fas fa-edit text-red"></i>
+                                                                            <span class="flex-grow-1">ویرایش اطلاعات
+                                                                                کاربر</span>
+                                                                            <i class="fas fa-chevron-left text-muted"></i>
+                                                                        </a>
+                                                                    @endcan
+
+                                                                    <a href="{{ route('documents.show', $user->id) }}"
+                                                                        class="list-group-item list-group-item-action d-flex align-items-center py-1">
+                                                                        <i class="fas fa-id-card text-red"></i>
+                                                                        <span class="flex-grow-1">مشاهده پروفایل</span>
+                                                                        <i class="fas fa-chevron-left text-muted"></i>
                                                                     </a>
-                                                                @endcan
 
-                                                                <a href="{{ route('documents.show', $user->id) }}"
-                                                                    class="btn btn-sm btn-success">
-                                                                    مشاهده مدارک
-                                                                </a>
-                                                                {{-- @can('user-delete')
-                                                                <form method="POST" action="{{ route('users.destroy', $user->id) }}"
-                                                                    onsubmit="return confirm('آیا از حذف کاربر مطمئن هستید؟')">
-                                                                    @csrf
-                                                                    @method('DELETE')
-                                                                    <button type="submit" class="btn btn-danger btn-sm mb-1 w-100">
-                                                                        <i class="fas fa-trash"></i> حذف
-                                                                    </button>
-                                                                </form>
-                                                            @endcan --}}
+                                                                    <a href="{{ route('transactions.show', $user->id) }}"
+                                                                        class="list-group-item list-group-item-action d-flex align-items-center py-1">
+                                                                        <i
+                                                                            class="fas fa-exchange-alt text-red"></i>
+                                                                        <span class="flex-grow-1">مدیریت تراکنش‌ها</span>
+                                                                        <i class="fas fa-chevron-left text-muted"></i>
+                                                                    </a>
 
-                                                                <a href="{{ route('transactions.show', $user->id) }}"
-                                                                    class="btn btn-sm btn-info btn-sm">
-                                                                    تراکنش‌ها
-                                                                </a>
+                                                                    <a href="{{ route('wallets.show', $user->id) }}"
+                                                                        class="list-group-item list-group-item-action d-flex align-items-center py-1">
+                                                                        <i class="fas fa-wallet text-red"></i>
+                                                                        <span class="flex-grow-1">مدیریت کیف پول</span>
+                                                                        <i class="fas fa-chevron-left text-muted"></i>
+                                                                    </a>
 
-                                                                <a href="{{ route('wallets.show', $user->id) }}"
-                                                                    class="btn btn-sm btn-warning btn-sm">
-                                                                    کیف پول
-                                                                </a>
+                                                                    <a href="{{ route('subscriptions.show', $user->id) }}"
+                                                                        class="list-group-item list-group-item-action d-flex align-items-center py-1">
+                                                                        <i class="fas fa-star text-red"></i>
+                                                                        <span class="flex-grow-1">مدیریت اشتراک‌ها</span>
+                                                                        <i class="fas fa-chevron-left text-muted"></i>
+                                                                    </a>
 
-                                                                <a href="{{ route('subscriptions.show', $user->id) }}"
-                                                                    class="btn btn-sm btn-secondary btn-sm">
-                                                                    اشتراک‌ها
-                                                                </a>
+                                                                </div>
                                                             </div>
+
                                                         </div>
                                                     </div>
                                                 </div>
+
+
                                             </td>
 
                                         </tr>

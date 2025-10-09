@@ -115,6 +115,26 @@
                     </div>
                 </div>
 
+                <!-- مشاور -->
+                <div class="card shadow">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h6 class="m-0 font-weight-bold text-primary">مشاور</h6>
+                    </div>
+                    <div class="card-body">
+                        <select name="user_id" id="user_id" class="form-control" required>
+                            <option value="">انتخاب مشاور</option>
+                            @foreach ($users as $user)
+                                <option value="{{ $user->id }}"
+                                    {{ old('user_id') == $user->id || (isset($car) && $car->user_id == $user->id) ? 'selected' : '' }}>
+                                    {{ optional($user->document)->first_name . ' ' . optional($user->document)->last_name }}
+                                    |
+                                    {{ $user->phone }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+
                 <!-- برندها -->
                 <div class="card shadow">
                     <div class="card-header d-flex justify-content-between align-items-center">
@@ -199,10 +219,35 @@
                                                 <h5 class="modal-title" id="modalLabel{{ $file->id }}">
                                                     پارامترهای پرونده: {{ $file->title }}
                                                 </h5>
-                                                <button type="button" class="close" data-dismiss="modal"
+                                                {{-- <button type="button" class="close" data-dismiss="modal"
                                                     aria-label="بستن">
                                                     <span aria-hidden="true">&times;</span>
-                                                </button>
+                                                </button> --}}
+
+                                                <div class="form-group">
+                                                    <select name="file_ratings[{{ $file->id }}]"
+                                                        id="file_rating_{{ $file->id }}" class="form-control">
+                                                        <option value="">-- انتخاب امتیاز --</option>
+                                                        <option value="ضعیف"
+                                                            {{ optional($car->fileRatings->where('car_file_id', $file->id)->first())->rating == 'ضعیف' ? 'selected' : '' }}>
+                                                            ضعیف
+                                                        </option>
+                                                        <option value="متوسط"
+                                                            {{ optional($car->fileRatings->where('car_file_id', $file->id)->first())->rating == 'متوسط' ? 'selected' : '' }}>
+                                                            متوسط
+                                                        </option>
+                                                        <option value="خوب"
+                                                            {{ optional($car->fileRatings->where('car_file_id', $file->id)->first())->rating == 'خوب' ? 'selected' : '' }}>
+                                                            خوب
+                                                        </option>
+                                                        <option value="عالی"
+                                                            {{ optional($car->fileRatings->where('car_file_id', $file->id)->first())->rating == 'عالی' ? 'selected' : '' }}>
+                                                            عالی
+                                                        </option>
+                                                    </select>
+                                                </div>
+
+
                                             </div>
                                             <div class="modal-body">
                                                 <div id="accordion{{ $file->id }}" class="accordion">
@@ -283,6 +328,10 @@
                         </div>
                     </div>
                 </div>
+
+
+
+
             </div>
         </div>
     </form>

@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('cars', function (Blueprint $table) {
             $table->id();
+            $table->foreignUuid('user_id')->nullable()->constrained('users')->nullOnDelete();
             $table->foreignId('brand_id')->nullable()->constrained()->onDelete('set null');
             $table->foreignId('car_model_id')->nullable()->constrained()->onDelete('set null');
             $table->string('thumbnail')->nullable();
@@ -20,7 +21,7 @@ return new class extends Migration
             $table->string('title');
             $table->string('slug')->unique();
             $table->text('description')->nullable();
-            $table->enum('status' , ['inreview', 'assessed', 'sold'])->default('inreview');
+            $table->enum('status', ['inreview', 'assessed', 'sold'])->default('inreview');
             $table->boolean('vip')->default(0);
             $table->boolean('keyword')->default(0);
             $table->timestamps();

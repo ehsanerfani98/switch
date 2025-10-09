@@ -15,6 +15,7 @@ class Car extends Model
         'status',
         'vip',
         'keyword',
+        'user_id',
         'brand_id',
         'car_model_id',
     ];
@@ -22,6 +23,11 @@ class Car extends Model
     protected $casts = [
         'gallery' => "json",
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 
     public function brand()
     {
@@ -72,5 +78,8 @@ class Car extends Model
         return $this->valueOf('price');
     }
 
-
+    public function fileRatings()
+    {
+        return $this->hasMany(CarFileRating::class);
+    }
 }

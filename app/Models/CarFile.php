@@ -13,4 +13,9 @@ class CarFile extends Model
     {
         return $this->hasMany(CarFileItem::class);
     }
+
+    public function ratings()
+    {
+        return $this->hasMany(CarFileRating::class);
+    }
 }

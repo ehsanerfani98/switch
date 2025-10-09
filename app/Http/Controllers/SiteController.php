@@ -33,6 +33,8 @@ class SiteController extends Controller
                 'attributeValues.attributeValue',
                 'brand',
                 'car_model',
+                'fileRatings',
+                'user.document'
             ])
             ->firstOrFail();
 
