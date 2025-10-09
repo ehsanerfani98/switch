@@ -1567,7 +1567,6 @@ namespace App\Models {
     /**
      * App\Models\Car
      *
-     * @property string|null $user_id
      * @property \Illuminate\Support\Carbon|null $updated_at
      * @property \Illuminate\Support\Carbon|null $created_at
      * @property bool $keyword
@@ -1579,6 +1578,7 @@ namespace App\Models {
      * @property string|null $thumbnail
      * @property int|null $car_model_id
      * @property int|null $brand_id
+     * @property string|null $user_id
      * @property int $id
      * @property-read mixed $gallery
      * @property-read mixed $gearbox
@@ -1594,6 +1594,7 @@ namespace App\Models {
      * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\CarFileRating> $fileRatings
      * @property-read int|null $fileRatings_count
      * @method static \Illuminate\Database\Eloquent\Builder<Car>|Car whereId($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<Car>|Car whereUserId($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Car>|Car whereBrandId($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Car>|Car whereCarModelId($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Car>|Car whereThumbnail($value)
@@ -1605,7 +1606,6 @@ namespace App\Models {
      * @method static \Illuminate\Database\Eloquent\Builder<Car>|Car whereKeyword($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Car>|Car whereCreatedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Car>|Car whereUpdatedAt($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<Car>|Car whereUserId($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Car>|Car newModelQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<Car>|Car newQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<Car>|Car query()

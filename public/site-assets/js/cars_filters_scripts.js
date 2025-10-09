@@ -7,33 +7,112 @@ const searchInput = document.querySelector('.search-input');
 
 // ذخیره داده‌های ویژگی‌ها برای استفاده در توابع دیگر
 let attributesData = [];
+// ذخیره داده‌های مدل‌ها
+let carModelsData = [];
 
-// بارگذاری فیلترها از سرور
-function loadFilters() {
-    // درخواست همزمان برای attributes و brands
-    Promise.all([
-        axios.get('/attributes'),
-        axios.get('/get-all-brands'),
-        axios.get('/get-all-car-models')
-    ])
-    .then(([attributesRes, brandsRes, carmodelsRes]) => {
-        attributesData = attributesRes.data;
-        renderFilters(attributesRes.data, brandsRes.data, carmodelsRes.data);
-        setupEventListeners();
+// تابع برای بارگذاری مدل‌ها بر اساس برندهای انتخاب شده
+function loadCarModelsByBrands(brandSlugs = []) {
+    return new Promise((resolve, reject) => {
+        if (brandSlugs.length === 0) {
+            updateCarModelFilter([]);
+            resolve([]);
+            return;
+        }
 
-        // اطمینان از اجرای applyUrlParams پس از مقداردهی اولیه
-        requestAnimationFrame(() => {
-            applyUrlParams();
-        });
-    })
-    .catch(error => {
-        console.error('خطا در بارگذاری فیلترها:', error);
-        resultsCount.textContent = "خطا در بارگذاری فیلترها";
+        axios.get('/car-models-by-brands', {
+            params: { brands: brandSlugs }
+        })
+            .then(response => {
+                carModelsData = response.data;
+                updateCarModelFilter(carModelsData);
+                resolve(carModelsData);
+            })
+            .catch(error => {
+                console.error('خطا در بارگذاری مدل‌ها:', error);
+                reject(error);
+            });
     });
 }
 
+// تابع برای به‌روزرسانی فیلتر مدل
+function updateCarModelFilter(carModels) {
+    const carModelContainer = document.querySelector('#carModelFilterContainer');
+    if (!carModelContainer) return;
+
+    let html = '';
+
+    if (carModels.length > 0) {
+        carModels.forEach(carmodel => {
+            html += `
+                <div class="flex items-center">
+                    <input class="form-checkbox h-4 w-4 text-primary rounded focus:ring-primary border-gray-300"
+                           type="checkbox"
+                           value="${carmodel.slug}"
+                           id="car_model-${carmodel.slug}"
+                           name="filter[car_model][]">
+                    <label class="mr-2 text-sm text-gray-700 flex items-center" for="car_model-${carmodel.slug}">
+                        ${carmodel.title}
+                    </label>
+                </div>
+            `;
+        });
+    } else {
+        html = '<p class="text-sm text-gray-500 text-center">هیچ مدلی یافت نشد</p>';
+    }
+
+    carModelContainer.innerHTML = html;
+
+    // اضافه کردن event listener به چک‌باکس‌های جدید
+    carModelContainer.querySelectorAll('input').forEach(input => {
+        input.addEventListener('change', function () {
+            const accordion = this.closest('.accordion-filter');
+            if (accordion) accordion.classList.add('active');
+            applyFilters();
+        });
+    });
+
+    // اعمال مقادیر از URL اگر وجود دارند
+    applyCarModelUrlParams();
+}
+
+// تابع برای اعمال پارامترهای URL روی فیلتر مدل
+function applyCarModelUrlParams() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const modelParams = urlParams.getAll('filter[car_model][]');
+
+    if (modelParams.length > 0) {
+        modelParams.forEach(slug => {
+            const input = document.querySelector(`input[name="filter[car_model][]"][value="${slug}"]`);
+            if (input) input.checked = true;
+        });
+    }
+}
+
+// بارگذاری فیلترها از سرور
+function loadFilters() {
+    // درخواست فقط برای attributes و brands
+    Promise.all([
+        axios.get('/attributes'),
+        axios.get('/get-all-brands')
+    ])
+        .then(([attributesRes, brandsRes]) => {
+            attributesData = attributesRes.data;
+            renderFilters(attributesRes.data, brandsRes.data);
+            setupEventListeners();
+
+            // اطمینان از اجرای applyUrlParams پس از مقداردهی اولیه
+            requestAnimationFrame(() => {
+                applyUrlParams();
+            });
+        })
+        .catch(error => {
+            console.error('خطا در بارگذاری فیلترها:', error);
+            resultsCount.textContent = "خطا در بارگذاری فیلترها";
+        });
+}
+
 // رندر کردن فیلترها در صفحه
-function renderFilters(attributes, brands = [], carmodels = []) {
+function renderFilters(attributes, brands = []) {
     filtersForm.innerHTML = '';
 
     // اضافه کردن فیلتر برند
@@ -42,11 +121,27 @@ function renderFilters(attributes, brands = [], carmodels = []) {
         filtersForm.innerHTML += brandFilterHtml;
     }
 
-    // اضافه کردن فیلتر مدل
-    if (carmodels.length > 0) {
-        const carmodelFilterHtml = createCarModelFilterHtml(carmodels);
-        filtersForm.innerHTML += carmodelFilterHtml;
-    }
+    // اضافه کردن فیلتر مدل (با container خالی)
+    const carmodelFilterHtml = `
+    <div class="accordion-filter border-b border-gray-200 py-4" id="carModelFilter">
+        <div class="accordion-header flex justify-between items-center cursor-pointer">
+            <div class="accordion-title flex items-center font-medium text-gray-800">
+                <i class="fas fa-car text-primary ml-2"></i>
+                مدل خودرو
+            </div>
+            <i class="fas fa-chevron-down accordion-icon text-gray-500 transition-transform"></i>
+        </div>
+        <div class="accordion-content mt-3">
+            <div class="accordion-content-inner">
+                <div class="filter-options space-y-2 max-h-60 overflow-y-auto" id="carModelFilterContainer">
+                    <p class="text-sm text-gray-500 text-center">لطفاً ابتدا برند را انتخاب کنید</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    `;
+
+    filtersForm.innerHTML += carmodelFilterHtml;
 
     // رندر فیلترهای عادی
     attributes.forEach(attr => {
@@ -54,7 +149,7 @@ function renderFilters(attributes, brands = [], carmodels = []) {
         filtersForm.innerHTML += filterHtml;
     });
 
-    // راه‌اندازی اسلایدرها پس از رندر کردن فیلترها
+    // راه‌اندازی اسلایدرها
     requestAnimationFrame(initializeRangeSliders);
 }
 
@@ -206,7 +301,7 @@ function createRangeFilter(attr) {
 function createFilterHtml(attr) {
 
     let px = '';
-    if(attr.type == 'range'){
+    if (attr.type == 'range') {
         px = 'px-4';
     }
 
@@ -346,14 +441,20 @@ function setupEventListeners() {
     });
 
     // رویداد تغییر برای فیلترها
-    filtersForm.querySelectorAll('input, select').forEach(el => {
-        if (!el.classList.contains('range-min-input') && !el.classList.contains('range-max-input')) {
-            el.addEventListener('change', function () {
-                const accordion = this.closest('.accordion-filter');
-                if (accordion) accordion.classList.add('active');
-                applyFilters();
-            });
+    filtersForm.addEventListener('change', function (e) {
+        if (e.target.name === 'filter[brand][]') {
+            // اگر فیلتر برند تغییر کرد
+            const selectedBrands = getSelectedBrands();
+            loadCarModelsByBrands(selectedBrands);
+
+            // همچنین فیلتر مدل‌های قبلی را پاک کنید
+            clearCarModelSelections();
         }
+
+        const accordion = e.target.closest('.accordion-filter');
+        if (accordion) accordion.classList.add('active');
+
+        applyFilters();
     });
 
     // رویداد کلیک برای دکمه پاک کردن فیلترها
@@ -363,64 +464,183 @@ function setupEventListeners() {
     searchInput.addEventListener('input', debounce(applyFilters, 500));
 }
 
+// تابع برای دریافت برندهای انتخاب شده
+function getSelectedBrands() {
+    const selectedBrands = [];
+    document.querySelectorAll('input[name="filter[brand][]"]:checked').forEach(checkbox => {
+        selectedBrands.push(checkbox.value);
+    });
+    return selectedBrands;
+}
+
+// تابع برای پاک کردن انتخاب‌های مدل
+function clearCarModelSelections() {
+    document.querySelectorAll('input[name="filter[car_model][]"]').forEach(checkbox => {
+        checkbox.checked = false;
+    });
+}
+
+// تابع  برای دریافت برندهای مربوط به مدل‌های انتخاب شده
+function getBrandsByModels(modelSlugs) {
+    if (modelSlugs.length === 0) return Promise.resolve([]);
+
+    return axios.get('/brands-by-models', {
+        params: { models: modelSlugs }
+    })
+        .then(response => response.data)
+        .catch(error => {
+            console.error('خطا در دریافت برندها:', error);
+            return [];
+        });
+}
+
 // تابع برای به‌کارگیری پارامترهای URL
 function applyUrlParams() {
     const urlParams = new URLSearchParams(window.location.search);
 
     if (urlParams.toString()) {
-        // اعمال مقادیر فقط به فیلترهای موجود در URL
-        for (let [key, value] of urlParams.entries()) {
-            // اگر پارامتر title باشد، آن را در input جستجو قرار بده
-            if (key === 'filter[title][]') {
-                searchInput.value = value;
-            } else {
-                const inputs = filtersForm.querySelectorAll(`[name="${key}"]`);
-                if (inputs.length) {
-                    inputs.forEach(input => {
-                        if ((input.type === "checkbox" || input.type === "radio") && input.value === value) {
-                            input.checked = true;
-                        } else if (input.type !== "checkbox" && input.type !== "radio") {
-                            input.value = value;
-                        }
+        // استخراج مدل‌های انتخاب شده از URL
+        const selectedModelSlugs = urlParams.getAll('filter[car_model][]');
+
+        // اگر مدلی انتخاب شده اما برندی انتخاب نشده، برندهای مربوط به مدل‌ها را دریافت و انتخاب کن
+        if (selectedModelSlugs.length > 0) {
+            const selectedBrands = getSelectedBrands();
+
+            if (selectedBrands.length === 0) {
+                // برندهای مربوط به مدل‌های انتخاب شده را از سرور بگیر
+                getBrandsByModels(selectedModelSlugs).then(requiredBrands => {
+                    const brandSlugs = requiredBrands.map(brand => brand.slug);
+
+                    // انتخاب برندها در فرم
+                    selectBrandsInForm(brandSlugs);
+
+                    // حالا مدل‌ها را بر اساس برندهای انتخاب شده بارگذاری کن
+                    loadCarModelsByBrands(brandSlugs).then(() => {
+                        // بعد از بارگذاری مدل‌ها، بقیه پارامترهای URL را اعمال کن
+                        applyRemainingUrlParams(urlParams);
                     });
-                }
+                });
+                return;
             }
         }
 
-        // اعمال مقادیر به اسلایدرها
-        document.querySelectorAll('.range-slider').forEach(slider => {
-            const slug = slider.id.replace('-slider', '');
-            const rangeParams = urlParams.getAll(`filter[${slug}][]`);
-
-            if (rangeParams.length >= 2 && slider.noUiSlider) {
-                const minParam = rangeParams[0];
-                const maxParam = rangeParams[1];
-
-                slider.noUiSlider.set([minParam, maxParam]);
-
-                const minInput = document.querySelector(`input[name="filter[${slug}][]"].range-min-input`);
-                const maxInput = document.querySelector(`input[name="filter[${slug}][]"].range-max-input`);
-                const minDisplay = document.getElementById(`${slug}-min-value`);
-                const maxDisplay = document.getElementById(`${slug}-max-value`);
-
-                if (minInput) minInput.value = minParam;
-                if (maxInput) maxInput.value = maxParam;
-                if (minDisplay) minDisplay.textContent = formatNumber(minParam);
-                if (maxDisplay) maxDisplay.textContent = formatNumber(maxParam);
-            }
-        });
-
-        // باز کردن آکاردئون‌های فعال
-        openActiveAccordions();
-
-        // بارگذاری ماشین‌ها با پارامترهای URL
-        loadCars(urlParams.toString());
+        // اگر حالت عادی است
+        applyUrlParamsNormal(urlParams);
     } else {
-        // باز کردن آکاردئون اول در حالت عادی
+        // حالت بدون پارامتر
         const firstAccordion = document.querySelector('.accordion-filter');
         if (firstAccordion) firstAccordion.classList.add('active');
         loadCars();
     }
+}
+
+// تابع برای انتخاب برندها در فرم
+function selectBrandsInForm(brandSlugs) {
+    brandSlugs.forEach(slug => {
+        const checkbox = document.querySelector(`input[name="filter[brand][]"][value="${slug}"]`);
+        if (checkbox) {
+            checkbox.checked = true;
+        }
+    });
+}
+
+// تابع برای اعمال بقیه پارامترهای URL بعد از بارگذاری مدل‌ها
+function applyRemainingUrlParams(urlParams) {
+    // اعمال مقادیر فقط به فیلترهای موجود در URL (به جز برند که قبلاً اعمال شده)
+    for (let [key, value] of urlParams.entries()) {
+        // اگر پارامتر title باشد، آن را در input جستجو قرار بده
+        if (key === 'filter[title][]') {
+            searchInput.value = value;
+        }
+        // اگر پارامتر car_model باشد، آن را در فیلتر مدل اعمال کن
+        else if (key === 'filter[car_model][]') {
+            const input = document.querySelector(`input[name="filter[car_model][]"][value="${value}"]`);
+            if (input) input.checked = true;
+        }
+        // سایر فیلترها
+        else if (!key.startsWith('filter[brand]')) {
+            const inputs = filtersForm.querySelectorAll(`[name="${key}"]`);
+            if (inputs.length) {
+                inputs.forEach(input => {
+                    if ((input.type === "checkbox" || input.type === "radio") && input.value === value) {
+                        input.checked = true;
+                    } else if (input.type !== "checkbox" && input.type !== "radio") {
+                        input.value = value;
+                    }
+                });
+            }
+        }
+    }
+
+    // اعمال مقادیر به اسلایدرها
+    applyRangeSlidersFromUrl(urlParams);
+
+    // باز کردن آکاردئون‌های فعال
+    openActiveAccordions();
+
+    // بارگذاری ماشین‌ها با پارامترهای URL
+    loadCars(urlParams.toString());
+}
+
+// تابع برای اعمال اسلایدرها از URL
+function applyRangeSlidersFromUrl(urlParams) {
+    document.querySelectorAll('.range-slider').forEach(slider => {
+        const slug = slider.id.replace('-slider', '');
+        const rangeParams = urlParams.getAll(`filter[${slug}][]`);
+
+        if (rangeParams.length >= 2 && slider.noUiSlider) {
+            const minParam = parseFloat(rangeParams[0]);
+            const maxParam = parseFloat(rangeParams[1]);
+
+            slider.noUiSlider.set([minParam, maxParam]);
+
+            const minInput = document.querySelector(`input[name="filter[${slug}][]"].range-min-input`);
+            const maxInput = document.querySelector(`input[name="filter[${slug}][]"].range-max-input`);
+            const minDisplay = document.getElementById(`${slug}-min-value`);
+            const maxDisplay = document.getElementById(`${slug}-max-value`);
+
+            if (minInput) minInput.value = minParam;
+            if (maxInput) maxInput.value = maxParam;
+            if (minDisplay) minDisplay.textContent = formatNumber(minParam);
+            if (maxDisplay) maxDisplay.textContent = formatNumber(maxParam);
+        }
+    });
+}
+
+// تابع عادی اعمال پارامترهای URL (بدون تغییر)
+function applyUrlParamsNormal(urlParams) {
+    // اعمال مقادیر فقط به فیلترهای موجود در URL
+    for (let [key, value] of urlParams.entries()) {
+        if (key === 'filter[title][]') {
+            searchInput.value = value;
+        } else {
+            const inputs = filtersForm.querySelectorAll(`[name="${key}"]`);
+            if (inputs.length) {
+                inputs.forEach(input => {
+                    if ((input.type === "checkbox" || input.type === "radio") && input.value === value) {
+                        input.checked = true;
+                    } else if (input.type !== "checkbox" && input.type !== "radio") {
+                        input.value = value;
+                    }
+                });
+            }
+        }
+    }
+
+    // بارگذاری مدل‌ها بر اساس برندهای انتخاب شده در URL
+    const selectedBrands = getSelectedBrands();
+    if (selectedBrands.length > 0) {
+        loadCarModelsByBrands(selectedBrands);
+    }
+
+    // اعمال اسلایدرها
+    applyRangeSlidersFromUrl(urlParams);
+
+    // باز کردن آکاردئون‌های فعال
+    openActiveAccordions();
+
+    // بارگذاری ماشین‌ها با پارامترهای URL
+    loadCars(urlParams.toString());
 }
 
 // باز کردن آکاردئون‌های دارای مقدار
@@ -723,6 +943,12 @@ function clearAllFilters() {
 
     // پاک کردن جستجو
     searchInput.value = '';
+
+    // ریست کردن فیلتر مدل
+    const carModelContainer = document.querySelector('#carModelFilterContainer');
+    if (carModelContainer) {
+        carModelContainer.innerHTML = '<p class="text-sm text-gray-500 text-center">لطفاً ابتدا برند را انتخاب کنید</p>';
+    }
 
     // به‌روزرسانی URL بدون پارامتر
     history.replaceState(null, '', window.location.pathname);

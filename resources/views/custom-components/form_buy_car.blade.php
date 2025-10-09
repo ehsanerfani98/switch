@@ -195,7 +195,7 @@
             <div class="lg:hidden flex justify-center border-t border-gray-200 pt-4">
                 <a href="tel:02175346" class="flex items-center text-gray-700">
                     <i class="fas fa-phone ml-2"></i>
-                    <span class="text-sm font-medium">تماس با پشتیبانی: ۰۲۱-۷۵۳۴۶</span>
+                    <span class="text-sm font-medium">تماس با پشتیبانی : {{get_setting('company_phone')}} </span>
                 </a>
             </div>
         </div>

@@ -46,6 +46,8 @@ use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 use App\Http\Resources\CarResource;
 use App\Models\Attribute;
+use App\Models\Brand;
+use App\Models\CarModel;
 use App\QueryBuilder\Filters\CarModelFilter;
 use App\QueryBuilder\Filters\CarTitleFilter;
 
@@ -231,6 +233,28 @@ Route::get('/attributes', function () {
 Route::get('/get-all-car-models', [ModelController::class, 'getAllCarModels'])->name('getAllCarModels');
 Route::get('/get-all-brands', [BrandController::class, 'getAllBrands'])->name('getAllBrands');
 Route::get('/get-by-brand/{brand_id}', [ModelController::class, 'getByBrand'])->name('getByBrand');
+Route::get('/car-models-by-brands', function (Request $request) {
+    $brandSlugs = $request->get('brands', []);
+
+    $models = CarModel::when(count($brandSlugs) > 0, function ($query) use ($brandSlugs) {
+            return $query->whereHas('brand', function ($q) use ($brandSlugs) {
+                $q->whereIn('slug', $brandSlugs);
+            });
+        })
+        ->get();
+
+    return $models;
+});
+Route::get('/brands-by-models', function (Request $request) {
+    $modelSlugs = $request->get('models', []);
+
+    $brands = Brand::whereHas('carModels', function ($query) use ($modelSlugs) {
+            $query->whereIn('slug', $modelSlugs);
+        })
+        ->get();
+
+    return $brands;
+});
 Route::get('/car-suggestions', function (Request $request) {
     $query = $request->get('q');
 

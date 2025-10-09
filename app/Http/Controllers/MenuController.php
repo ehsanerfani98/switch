@@ -11,7 +11,6 @@ class MenuController extends Controller
     public function index()
     {
         $menus = Menu::with('children')
-            ->root()
             ->ordered()
             ->latest()->paginate(10);
 
