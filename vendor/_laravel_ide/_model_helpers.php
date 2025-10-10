@@ -1606,6 +1606,7 @@ namespace App\Models {
      * @method static \Illuminate\Database\Eloquent\Builder<Car>|Car whereKeyword($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Car>|Car whereCreatedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Car>|Car whereUpdatedAt($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<Car>|Car orderByAttribute()
      * @method static \Illuminate\Database\Eloquent\Builder<Car>|Car newModelQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<Car>|Car newQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<Car>|Car query()

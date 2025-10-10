@@ -75,6 +75,29 @@ function updateCarModelFilter(carModels) {
     applyCarModelUrlParams();
 }
 
+
+// اضافه کردن event listener برای تغییر سایز پنجره
+window.addEventListener('resize', function() {
+    const filterSidebar = document.querySelector('aside');
+    const filterToggle = document.getElementById('mobileFilterToggle');
+
+    if (window.innerWidth >= 1024) {
+        // در دسکتاپ، مطمئن شویم فیلترها نمایش داده می‌شوند
+        if (filterSidebar) {
+            filterSidebar.classList.remove('hidden');
+        }
+        if (filterToggle) {
+            filterToggle.innerHTML = '<i class="fas fa-filter ml-2"></i> نمایش فیلترها';
+        }
+    } else {
+        // در موبایل، فیلترها مخفی باشند
+        if (filterSidebar && filterToggle) {
+            filterSidebar.classList.add('hidden');
+            filterToggle.innerHTML = '<i class="fas fa-filter ml-2"></i> نمایش فیلترها';
+        }
+    }
+});
+
 // تابع برای اعمال پارامترهای URL روی فیلتر مدل
 function applyCarModelUrlParams() {
     const urlParams = new URLSearchParams(window.location.search);
@@ -88,7 +111,7 @@ function applyCarModelUrlParams() {
     }
 }
 
-// بارگذاری فیلترها از سرور
+// تغییر تابع loadFilters برای راه‌اندازی مرتب‌سازی موبایل
 function loadFilters() {
     // درخواست فقط برای attributes و brands
     Promise.all([
@@ -99,6 +122,9 @@ function loadFilters() {
             attributesData = attributesRes.data;
             renderFilters(attributesRes.data, brandsRes.data);
             setupEventListeners();
+
+            // تنظیم گزینه مرتب‌سازی پیش‌فرض برای هر دو نسخه
+            setDefaultSortOption();
 
             // اطمینان از اجرای applyUrlParams پس از مقداردهی اولیه
             requestAnimationFrame(() => {
@@ -443,11 +469,8 @@ function setupEventListeners() {
     // رویداد تغییر برای فیلترها
     filtersForm.addEventListener('change', function (e) {
         if (e.target.name === 'filter[brand][]') {
-            // اگر فیلتر برند تغییر کرد
             const selectedBrands = getSelectedBrands();
             loadCarModelsByBrands(selectedBrands);
-
-            // همچنین فیلتر مدل‌های قبلی را پاک کنید
             clearCarModelSelections();
         }
 
@@ -462,6 +485,9 @@ function setupEventListeners() {
 
     // رویداد جستجو
     searchInput.addEventListener('input', debounce(applyFilters, 500));
+
+    // راه‌اندازی رویدادهای مرتب‌سازی
+    setupSortListeners();
 }
 
 // تابع برای دریافت برندهای انتخاب شده
@@ -613,6 +639,9 @@ function applyUrlParamsNormal(urlParams) {
     for (let [key, value] of urlParams.entries()) {
         if (key === 'filter[title][]') {
             searchInput.value = value;
+        } else if (key === 'sort') {
+            // اعمال مرتب‌سازی از URL
+            applySortFromUrl(value);
         } else {
             const inputs = filtersForm.querySelectorAll(`[name="${key}"]`);
             if (inputs.length) {
@@ -642,6 +671,7 @@ function applyUrlParamsNormal(urlParams) {
     // بارگذاری ماشین‌ها با پارامترهای URL
     loadCars(urlParams.toString());
 }
+
 
 // باز کردن آکاردئون‌های دارای مقدار
 function openActiveAccordions() {
@@ -705,6 +735,183 @@ function openActiveAccordions() {
     }
 }
 
+// تابع برای اعمال مرتب‌سازی از URL (به‌روزرسانی شده)
+function applySortFromUrl(sortValue) {
+    const sortMap = {
+        'created_at': 'newest',
+        '-created_at': 'newest',
+        'price': 'cheapest',
+        '-price': 'most_expensive',
+        '-year': 'newest_year',
+        'year': 'oldest_year',
+        'kilometer': 'lowest_kilometer',
+        '-kilometer': 'highest_kilometer'
+    };
+
+    const sortOption = sortMap[sortValue] || 'newest';
+    currentSort = sortOption;
+
+    // به‌روزرسانی هر دو نسخه دسکتاپ و موبایل
+    updateDesktopSortSelection(sortOption);
+    updateMobileSortDisplay(sortOption);
+}
+
+// متغیر global برای ذخیره مرتب‌سازی فعلی
+let currentSort = 'newest';
+
+// تابع برای راه‌اندازی رویدادهای مرتب‌سازی (هر دو نسخه دسکتاپ و موبایل)
+function setupSortListeners() {
+    // نسخه دسکتاپ
+    const sortOptions = document.querySelectorAll('#sortOptions .sort-option');
+
+    sortOptions.forEach(option => {
+        option.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            // حذف کلاس active از همه گزینه‌ها
+            sortOptions.forEach(opt => {
+                opt.classList.remove('active');
+                const input = opt.querySelector('input');
+                if (input) {
+                    input.checked = false;
+                }
+            });
+
+            // اضافه کردن کلاس active به گزینه انتخاب شده
+            this.classList.add('active');
+
+            // فعال کردن input مربوطه
+            const selectedInput = this.querySelector('input[type="radio"]');
+            if (selectedInput) {
+                selectedInput.checked = true;
+                currentSort = selectedInput.value;
+
+                // به‌روزرسانی نسخه موبایل
+                updateMobileSortDisplay(currentSort);
+
+                // اعمال فیلترها با مرتب‌سازی جدید
+                applyFilters();
+            }
+        });
+    });
+
+    // نسخه موبایل
+    const mobileSortSelect = document.getElementById('mobileSortSelect');
+    if (mobileSortSelect) {
+        mobileSortSelect.addEventListener('change', function() {
+            currentSort = this.value;
+
+            // به‌روزرسانی نمایش گزینه فعال در موبایل
+            updateMobileSortDisplay(currentSort);
+
+            // به‌روزرسانی نسخه دسکتاپ
+            updateDesktopSortSelection(currentSort);
+
+            // اعمال فیلترها با مرتب‌سازی جدید
+            applyFilters();
+        });
+    }
+
+    // راه‌اندازی دکمه نمایش/مخفی کردن فیلترها در موبایل
+    setupMobileFilterToggle();
+}
+
+// تابع برای به‌روزرسانی نمایش مرتب‌سازی در موبایل
+function updateMobileSortDisplay(sortValue) {
+    const mobileActiveSort = document.getElementById('mobileActiveSort');
+    const mobileSortSelect = document.getElementById('mobileSortSelect');
+
+    if (mobileActiveSort && mobileSortSelect) {
+        // به‌روزرسانی متن نمایش
+        const optionText = mobileSortSelect.querySelector(`option[value="${sortValue}"]`).textContent;
+        mobileActiveSort.textContent = optionText;
+
+        // به‌روزرسانی مقدار select
+        mobileSortSelect.value = sortValue;
+    }
+}
+
+// تابع برای به‌روزرسانی انتخاب مرتب‌سازی در دسکتاپ
+function updateDesktopSortSelection(sortValue) {
+    const sortOptions = document.querySelectorAll('#sortOptions .sort-option');
+
+    sortOptions.forEach(option => {
+        option.classList.remove('active');
+        const input = option.querySelector('input');
+        if (input && input.value === sortValue) {
+            option.classList.add('active');
+            input.checked = true;
+        } else if (input) {
+            input.checked = false;
+        }
+    });
+}
+
+// تابع برای راه‌اندازی دکمه نمایش/مخفی کردن فیلترها در موبایل
+function setupMobileFilterToggle() {
+    const filterToggle = document.getElementById('mobileFilterToggle');
+    const filterSidebar = document.querySelector('aside');
+
+    if (filterToggle && filterSidebar) {
+        filterToggle.addEventListener('click', function() {
+            filterSidebar.classList.toggle('hidden');
+
+            // تغییر متن دکمه
+            if (filterSidebar.classList.contains('hidden')) {
+                this.innerHTML = '<i class="fas fa-filter ml-2"></i> نمایش فیلترها';
+            } else {
+                this.innerHTML = '<i class="fas fa-times ml-2"></i> بستن فیلترها';
+            }
+        });
+
+        // مخفی کردن فیلترها در ابتدا در موبایل
+        if (window.innerWidth < 1024) {
+            filterSidebar.classList.add('hidden');
+        }
+    }
+}
+
+// تابع برای تنظیم گزینه مرتب‌سازی پیش‌فرض
+function setDefaultSortOption() {
+    currentSort = 'newest';
+    updateDesktopSortSelection('newest');
+    updateMobileSortDisplay('newest');
+}
+
+// تابع برای دریافت پارامترهای مرتب‌سازی
+function getSortParams() {
+    const params = new URLSearchParams();
+
+    switch(currentSort) {
+        case 'newest':
+            params.append('sort', 'created_at');
+            break;
+        case 'cheapest':
+            params.append('sort', 'price');
+            break;
+        case 'most_expensive':
+            params.append('sort', '-price');
+            break;
+        case 'newest_year':
+            params.append('sort', '-year');
+            break;
+        case 'oldest_year':
+            params.append('sort', 'year');
+            break;
+        case 'lowest_kilometer':
+            params.append('sort', 'kilometer');
+            break;
+        case 'highest_kilometer':
+            params.append('sort', '-kilometer');
+            break;
+        default:
+            params.append('sort', 'created_at');
+    }
+
+    return params;
+}
+
 // اعمال فیلترها و بارگذاری ماشین‌ها
 function applyFilters(updateUrl = true) {
     const formData = new FormData(filtersForm);
@@ -739,15 +946,10 @@ function applyFilters(updateUrl = true) {
         params.append('filter[title][]', searchInput.value.trim());
     }
 
-    // اعمال پارامترهای URL برای فیلتر title
-    const urlParams = new URLSearchParams(window.location.search);
-    const titleParams = urlParams.getAll('filter[title][]');
-
-    // اگر در URL پارامتر title وجود دارد اما در جستجو نیست، آن را اضافه کن
-    titleParams.forEach(title => {
-        if (title && !searchInput.value.trim()) {
-            params.append('filter[title][]', title);
-        }
+    // افزودن پارامتر مرتب‌سازی
+    const sortParams = getSortParams();
+    sortParams.forEach((value, key) => {
+        params.append(key, value);
     });
 
     // به‌روزرسانی URL
@@ -794,12 +996,11 @@ function loadCars(params = "") {
         </div>
     `;
 
-
-
     axios.get(`/filter?${params}`)
         .then(res => {
             const cars = res.data.data;
             renderCars(cars);
+            resultsCount.textContent = `${cars.length} ماشین یافت شد`;
         })
         .catch(error => {
             console.error('خطا در بارگذاری ماشین‌ها:', error);
@@ -922,6 +1123,22 @@ function clearAllFilters() {
             input.value = '';
         }
     });
+
+    // بازنشانی مرتب‌سازی به حالت پیش‌فرض
+    currentSort = 'newest';
+
+    // بازنشانی گزینه‌های مرتب‌سازی
+    const sortOptions = document.querySelectorAll('#sortOptions .sort-option');
+    sortOptions.forEach(option => {
+        option.classList.remove('active');
+        const input = option.querySelector('input');
+        if (input) {
+            input.checked = false;
+        }
+    });
+
+    // فعال کردن گزینه "جدیدترین ها"
+    setDefaultSortOption();
 
     // بازنشانی اسلایدرها به مقادیر پیش‌فرض
     document.querySelectorAll('.range-slider').forEach(slider => {

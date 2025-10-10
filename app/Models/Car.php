@@ -82,4 +82,17 @@ class Car extends Model
     {
         return $this->hasMany(CarFileRating::class);
     }
+
+    public function scopeOrderByAttribute($query, $attributeSlug, $direction = 'asc')
+    {
+        return $query->join('car_attribute_values as cav_' . $attributeSlug, function ($join) use ($attributeSlug) {
+            $join->on('cars.id', '=', 'cav_' . $attributeSlug . '.car_id')
+                ->join('attributes as a_' . $attributeSlug, function ($join) use ($attributeSlug) {
+                    $join->on('cav_' . $attributeSlug . '.attribute_id', '=', 'a_' . $attributeSlug . '.id')
+                        ->where('a_' . $attributeSlug . '.slug', $attributeSlug);
+                });
+        })
+            ->orderBy('cav_' . $attributeSlug . '.value_number', $direction)
+            ->select('cars.*');
+    }
 }

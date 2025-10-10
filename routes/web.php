@@ -37,12 +37,15 @@ use App\Models\Car;
 use App\Models\Permission;
 use App\QueryBuilder\Filters\CarFilter;
 use App\QueryBuilder\Filters\BrandFilter;
+use App\QueryBuilder\Sorts\AttributeSort;
+use App\QueryBuilder\Sorts\CreatedAtSort;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use App\Services\TelegramService\TelegramService;
 use Illuminate\Http\Request;
 use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\AllowedSort;
 use Spatie\QueryBuilder\QueryBuilder;
 use App\Http\Resources\CarResource;
 use App\Models\Attribute;
@@ -174,7 +177,6 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/car-requests/save/sell', [CarRequestController::class, 'save_sell_request'])->name('save.sell.request')->middleware('throttle:3,1440');
     Route::post('/car-requests/save/buy', [CarRequestController::class, 'save_buy_request'])->name('save.buy.request')->middleware('throttle:3,1440');
     Route::resource('menus', MenuController::class);
-
 });
 
 
@@ -201,18 +203,39 @@ Route::get('/filter', function () {
     $carmodelFilter = AllowedFilter::custom('car_model', new CarModelFilter());
     $titleFilter = AllowedFilter::custom('title', new CarTitleFilter());
 
+    // مرتب‌سازی‌های مجاز
+    $sorts = [
+        AllowedSort::custom('created_at', new CreatedAtSort()),
+        AllowedSort::custom('-created_at', new CreatedAtSort()),
+        AllowedSort::custom('price', new AttributeSort()),
+        AllowedSort::custom('-price', new AttributeSort()),
+        AllowedSort::custom('year', new AttributeSort()),
+        AllowedSort::custom('-year', new AttributeSort()),
+        AllowedSort::custom('kilometer', new AttributeSort()),
+        AllowedSort::custom('-kilometer', new AttributeSort()),
+    ];
+
     // ترکیب همه فیلترها
     $filters = array_merge($attributeFilters, [$brandFilter], [$carmodelFilter], [$titleFilter]);
 
-    $cars = QueryBuilder::for(Car::with([
-            'attributeValues.attribute',
-            'attributeValues.attributeValue',
-            'brand' // اضافه کردن رابطه برند
-        ]))
-        ->allowedFilters($filters)
-        ->get();
+    try {
+        $cars = QueryBuilder::for(Car::with([
+                'attributeValues.attribute',
+                'attributeValues.attributeValue',
+                'brand'
+            ]))
+            ->allowedFilters($filters)
+            ->allowedSorts($sorts)
+            ->get();
 
-    return CarResource::collection($cars);
+        return CarResource::collection($cars);
+    } catch (\Exception $e) {
+        // در صورت خطا، اطلاعات خطا را برگردان
+        return response()->json([
+            'error' => $e->getMessage(),
+            'trace' => $e->getTraceAsString()
+        ], 500);
+    }
 });
 Route::get('/attributes', function () {
     return Attribute::where('is_active', 1)
@@ -237,10 +260,10 @@ Route::get('/car-models-by-brands', function (Request $request) {
     $brandSlugs = $request->get('brands', []);
 
     $models = CarModel::when(count($brandSlugs) > 0, function ($query) use ($brandSlugs) {
-            return $query->whereHas('brand', function ($q) use ($brandSlugs) {
-                $q->whereIn('slug', $brandSlugs);
-            });
-        })
+        return $query->whereHas('brand', function ($q) use ($brandSlugs) {
+            $q->whereIn('slug', $brandSlugs);
+        });
+    })
         ->get();
 
     return $models;
@@ -249,8 +272,8 @@ Route::get('/brands-by-models', function (Request $request) {
     $modelSlugs = $request->get('models', []);
 
     $brands = Brand::whereHas('carModels', function ($query) use ($modelSlugs) {
-            $query->whereIn('slug', $modelSlugs);
-        })
+        $query->whereIn('slug', $modelSlugs);
+    })
         ->get();
 
     return $brands;
@@ -266,7 +289,7 @@ Route::get('/car-suggestions', function (Request $request) {
         ->distinct()
         ->take(10)
         ->get(['title'])
-        ->map(function($car) {
+        ->map(function ($car) {
             return ['title' => $car->title];
         });
 

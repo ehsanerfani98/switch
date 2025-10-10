@@ -1,4 +1,5 @@
 @extends('admin.layout')
+@section('title', 'مدیریت کتابخانه')
 
 @section('content')
     <div class="row">
@@ -21,8 +22,10 @@
                 </div>
             </div>
         </div>
-        {!! $media->links('pagination::bootstrap-5') !!}
 
+        <div class="col-12 text-center">
+            {!! $media->links('pagination::bootstrap-5') !!}
+        </div>
     </div>
 @endsection
 
@@ -59,7 +62,7 @@
   </div>
 </div>`;
                         // simple prepend
-                        grid.insertAdjacentHTML('afterbegin',  html );
+                        grid.insertAdjacentHTML('afterbegin', html);
                         input.value = '';
                     } else {
                         alert('خطا در آپلود');
