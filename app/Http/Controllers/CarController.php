@@ -50,6 +50,7 @@ class CarController extends Controller
             'slug'  => 'required|unique:cars,slug',
             'thumbnail' => 'nullable|string',
             'gallery'     => 'nullable|string',
+            'certificate'     => 'nullable|string',
             'description' => 'nullable|string',
             'brand_id' => 'required|exists:brands,id',
             'user_id' => 'required|exists:users,id',
@@ -63,6 +64,7 @@ class CarController extends Controller
                 'slug'  => standardizeSlug($request->slug),
                 'thumbnail' => $request->thumbnail ?? null,
                 'gallery' => $request->gallery ?? null,
+                'certificate' => $request->certificate ?? null,
                 'description' => $request->description ?? null,
                 'status' => $request->status,
                 'vip' => $request->vip,
@@ -160,6 +162,7 @@ class CarController extends Controller
             'slug'  => 'required|unique:cars,slug,' . $car->id,
             'thumbnail' => 'nullable|string',
             'gallery'     => 'nullable|string',
+            'certificate'     => 'nullable|string',
             'description' => 'nullable|string',
             'brand_id' => 'required|exists:brands,id',
             'user_id' => 'required|exists:users,id',
@@ -173,6 +176,7 @@ class CarController extends Controller
                 'slug'  => standardizeSlug($request->slug), // استفاده از تابع standardizeSlug مانند متد store
                 'thumbnail' => $request->thumbnail ?? null,
                 'gallery' => str_replace('&quot;', '"', $request->gallery) ?? null, // اضافه کردن فیلد gallery که در متد store وجود داشت
+                'certificate' => $request->certificate ?? null,
                 'description' => $request->description ?? null,
                 'status' => $request->status,
                 'vip' => $request->vip,

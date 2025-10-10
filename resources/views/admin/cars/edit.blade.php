@@ -194,6 +194,17 @@
                     </div>
                 </div>
 
+                <!-- گواهی فنی خودرو -->
+                <div class="card shadow">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h6 class="m-0 font-weight-bold text-primary">گواهی فنی خودرو</h6>
+                    </div>
+                    <div class="card-body" id="certificate_container">
+                        <x-media-picker name="certificate" id="certificate"
+                            value="{{ old('certificate', $car->certificate) }}" />
+                    </div>
+                </div>
+
                 <!-- پرونده‌های خودرو -->
                 <div class="card shadow">
                     <div class="card-header d-flex justify-content-between align-items-center">

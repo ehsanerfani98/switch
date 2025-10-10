@@ -11,6 +11,7 @@ class Car extends Model
         'slug',
         'thumbnail',
         'gallery',
+        'certificate',
         'description',
         'status',
         'vip',

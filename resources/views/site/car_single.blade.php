@@ -79,7 +79,8 @@
                 class="text-primary font-semibold hover:text-blue-700 transition-colors">{{ optional($car->car_model)->title }}</a>
             <span class="text-gray-400"><i class="fas fa-chevron-left text-xs"></i></span>
             <a href="{{ url('/cars?filter[car_model][]=' . optional($car->car_model)->slug . '&filter[year][]=' . $info_cars['year']) }}"
-                class="text-gray-500 font-semibold hover:text-blue-700 transition-colors">{{ optional($car->car_model)->title }} - {{$info_cars['year']}}</a>
+                class="text-gray-500 font-semibold hover:text-blue-700 transition-colors">{{ optional($car->car_model)->title }}
+                - {{ $info_cars['year'] }}</a>
         </nav>
 
         <!-- ساختار دوستون اصلی -->
@@ -345,18 +346,23 @@
         <!-- Tab Content -->
         <div id="expertise" class="tab-content active">
             <div class="mb-5">
+
                 <div class="flex justify-between items-center mb-4 flex-wrap gap-2">
                     <div class="flex items-center text-lg font-bold text-gray-900">
                         <i class="fas fa-clipboard-check text-primary ml-2"></i>
                         کارشناسی فنی خودرو
                     </div>
-                    <a href="#"
-                        class="flex items-center text-primary font-semibold hover:text-blue-700 transition-colors"
-                        target="_blank">
-                        <i class="fas fa-download ml-1"></i>
-                        <span class="hidden md:inline">دانلود گزارش کامل کارشناسی</span>
-                        <span class="md:hidden">دانلود گزارش کارشناسی</span>
-                    </a>
+
+                    @if (!is_null($car->certificate))
+                        <a href="{{ $car->certificate }}" download
+                            class="flex items-center text-primary font-semibold hover:text-blue-700 transition-colors"
+                            target="_blank">
+                            <i class="fas fa-download ml-1"></i>
+                            <span class="hidden md:inline">دانلود گزارش کامل کارشناسی</span>
+                            <span class="md:hidden">دانلود گزارش کارشناسی</span>
+                        </a>
+                    @endif
+
                 </div>
 
                 <!-- Legend (Desktop) -->

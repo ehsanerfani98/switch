@@ -122,7 +122,8 @@
                             <option value="">انتخاب مشاور</option>
                             @foreach ($users as $user)
                                 <option value="{{ $user->id }}">
-                                    {{ optional($user->document)->first_name . ' ' . optional($user->document)->last_name }} |
+                                    {{ optional($user->document)->first_name . ' ' . optional($user->document)->last_name }}
+                                    |
                                     {{ $user->phone }}
                                 </option>
                             @endforeach
@@ -185,6 +186,16 @@
                     </div>
                     <div class="card-body" id="gallery_container">
                         <x-media-picker name="gallery" id="gallery" value="{{ old('gallery') }}" :multiple="true" />
+                    </div>
+                </div>
+
+                <!-- گواهی فنی خودرو -->
+                <div class="card shadow ">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h6 class="m-0 font-weight-bold text-primary">گواهی فنی خودرو</h6>
+                    </div>
+                    <div class="card-body" id="certificate_container">
+                        <x-media-picker name="certificate" id="certificate" value="{{ old('certificate') }}" />
                     </div>
                 </div>
 

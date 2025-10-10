@@ -18,6 +18,7 @@ return new class extends Migration
             $table->foreignId('car_model_id')->nullable()->constrained()->onDelete('set null');
             $table->string('thumbnail')->nullable();
             $table->json('gallery')->nullable();
+            $table->string('certificate')->nullable();
             $table->string('title');
             $table->string('slug')->unique();
             $table->text('description')->nullable();
