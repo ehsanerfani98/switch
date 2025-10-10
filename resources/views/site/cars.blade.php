@@ -23,7 +23,7 @@
         </header>
 
         <!-- بخش مرتب‌سازی - طراحی ریسپانسیو و مدرن -->
-        <div class="bg-white rounded-lg p-4 mb-6 shadow-sm border border-gray-100">
+        <div class="bg-white rounded-lg p-4 mb-3 shadow-sm border border-gray-100">
             <!-- هدر بخش مرتب‌سازی برای موبایل -->
             <div class="lg:hidden mb-4">
                 <div class="flex justify-between items-center">
