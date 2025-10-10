@@ -32,6 +32,8 @@
                                     <td>
                                         @if ($carRequest->type == 'sell')
                                             <span class="badge badge-success">فروش</span>
+                                        @elseif ($carRequest->type == 'carinspection')
+                                            <span class="badge badge-primary">کارشناسی خودرو</span>
                                         @else
                                             <span class="badge badge-info">خرید</span>
                                         @endif
@@ -41,7 +43,8 @@
                                     <th>ماشین</th>
                                     <td>
                                         @if ($carRequest->car)
-                                            <a href="{{ route('car', $carRequest->car->slug)}}" target="_blank" rel="noopener noreferrer">{{ $carRequest->car->title ?? '' }}</a>
+                                            <a href="{{ route('car', $carRequest->car->slug) }}" target="_blank"
+                                                rel="noopener noreferrer">{{ $carRequest->car->title ?? '' }}</a>
                                         @else
                                             -
                                         @endif
@@ -57,16 +60,20 @@
                                         @switch($carRequest->status)
                                             @case('در حال بررسی')
                                                 <span class="badge badge-warning">{{ $carRequest->status }}</span>
-                                                @break
+                                            @break
+
                                             @case('تایید شد')
                                                 <span class="badge badge-success">{{ $carRequest->status }}</span>
-                                                @break
+                                            @break
+
                                             @case('رد شد')
                                                 <span class="badge badge-danger">{{ $carRequest->status }}</span>
-                                                @break
+                                            @break
+
                                             @case('انجام شد')
                                                 <span class="badge badge-primary">{{ $carRequest->status }}</span>
-                                                @break
+                                            @break
+
                                             @default
                                                 <span class="badge badge-secondary">{{ $carRequest->status }}</span>
                                         @endswitch
@@ -117,6 +124,15 @@
                                                     {{-- برای خوانایی بهتر، عدد کارکرد را با جداکننده نمایش می‌دهیم --}}
                                                     {{ number_format($carRequest->data['kilometer'] ?? 0) }} کیلومتر
                                                 </td>
+                                            </tr>
+                                            <tr>
+                                                <th>تاریخ مراجعه</th>
+                                                <td>{{ isset($carRequest->data['visit_date']) ? jdate($carRequest->data['visit_date'])->format('Y/m/d') : '-' }}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th>زمان مراجعه</th>
+                                                <td>{{ $carRequest->data['visit_time'] ?? '-' }}</td>
                                             </tr>
                                         </tbody>
                                     </table>

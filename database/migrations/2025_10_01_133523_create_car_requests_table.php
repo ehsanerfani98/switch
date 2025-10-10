@@ -11,10 +11,10 @@ return new class extends Migration
         Schema::create('car_requests', function (Blueprint $table) {
             $table->id();
             $table->uuid('user_id');
-            $table->enum('type', ['sell', 'buy']);
+            $table->enum('type', ['sell', 'buy', 'carinspection']);
             $table->foreignId('car_id')->nullable()->constrained()->onDelete('set null');
             $table->json('data')->nullable();
-            $table->enum('status', ['در حال بررسی','تایید شد','رد شد','انجام شد'])->default('در حال بررسی');
+            $table->enum('status', ['در حال بررسی', 'تایید شد', 'رد شد', 'انجام شد'])->default('در حال بررسی');
             $table->timestamps();
 
             // تعریف foreign key برای UUID

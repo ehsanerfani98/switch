@@ -79,5 +79,8 @@ class SiteController extends Controller
     public function carbuy(){
         return view('site.carbuy');
     }
+    public function carinspection(){
+        return view('site.carinspection');
+    }
 
 }

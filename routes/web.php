@@ -192,6 +192,7 @@ Route::get('/cars', [ControllersSiteController::class, 'cars'])->name('cars');
 Route::get('/car/{slug}', [ControllersSiteController::class, 'car_single'])->name('car');
 Route::get('/carsell', [ControllersSiteController::class, 'carsell'])->name('carsell');
 Route::get('/carbuy', [ControllersSiteController::class, 'carbuy'])->name('carbuy');
+Route::get('/carinspection', [ControllersSiteController::class, 'carinspection'])->name('carinspection');
 Route::get('/filter', function () {
     // فیلترهای عادی (Attribute-based)
     $attributeFilters = Attribute::where('is_active', 1)->pluck('slug')

@@ -59,6 +59,8 @@
                                         <td>
                                             @if ($carRequest->type == 'sell')
                                                 <span class="badge badge-success">فروش</span>
+                                            @elseif ($carRequest->type == 'carinspection')
+                                                <span class="badge badge-primary">کارشناسی خودرو</span>
                                             @else
                                                 <span class="badge badge-info">خرید</span>
                                             @endif
