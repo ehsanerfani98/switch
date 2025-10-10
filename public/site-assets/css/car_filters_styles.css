@@ -268,18 +268,7 @@ span.attribute-name {
     border-color: #3b82f6 !important;
 }
 
-/* اطمینان از نمایش صحیح در همه حالت‌ها */
-#sortOptions .sort-option.active {
-    background-color: #3b82f6;
-    color: white;
-    border-color: #3b82f6;
-}
 
-#sortOptions .sort-option.active span {
-    background-color: #3b82f6;
-    color: white;
-    border-color: #3b82f6;
-}
 
 /* استایل‌های بخش مرتب‌سازی ریسپانسیو */
 .sort-option.active span {
